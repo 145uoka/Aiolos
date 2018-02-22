@@ -39,7 +39,7 @@
                 <th class="text-center">正答数</th>
                 <th class="text-center">正答率</th>
                 <th class="text-center">経過時間</th>
-                <th class="text-center">Ranking</th>
+                <th class="text-center">スコア</th>
               </tr>
             </thead>
             <tr>
