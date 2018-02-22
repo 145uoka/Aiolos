@@ -33,6 +33,13 @@
             name="elapsed_time" required="true" size="19" type="BIGINT"/>
         <column dbType="int4" default="0" javaType="Integer"
             name="correct_sum" required="true" size="10" type="INTEGER"/>
+        <column dbType="bool" default="false" javaType="Boolean"
+            name="delete_flag" required="true" size="1" type="BIT"/>
+        <column dbType="timestamp" default="now()"
+            javaType="java.time.LocalDateTime" name="register_datetime"
+            required="true" size="26, 3" type="TIMESTAMP"/>
+        <column dbType="timestamp" javaType="java.time.LocalDateTime"
+            name="update_datetime" size="26, 3" type="TIMESTAMP"/>
     </table>
     <table name="question" schema="postgres.aiolos" type="TABLE">
         <column autoIncrement="true" dbType="serial"
@@ -45,6 +52,13 @@
             size="2147483647" type="VARCHAR"/>
         <column dbType="int4" javaType="Integer" name="order_num"
             size="10" type="INTEGER"/>
+        <column dbType="bool" default="false" javaType="Boolean"
+            name="delete_flag" required="true" size="1" type="BIT"/>
+        <column dbType="timestamp" default="now()"
+            javaType="java.time.LocalDateTime" name="register_datetime"
+            required="true" size="26, 3" type="TIMESTAMP"/>
+        <column dbType="timestamp" javaType="java.time.LocalDateTime"
+            name="update_datetime" size="26, 3" type="TIMESTAMP"/>
         <unique name="question_order_num_key">
             <unique-column name="order_num" position="1"/>
         </unique>

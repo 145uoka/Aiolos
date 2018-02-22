@@ -365,7 +365,7 @@ dl.procedurelist dd.column pre {
 	</tr>
 	<tr>
 		<td class="rownumcell">2</td>
-		<td class="namecell" data-name="challenge_history"><a href="#challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=6">challenge_history</a></td>
+		<td class="namecell" data-name="challenge_history"><a href="#challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=9">challenge_history</a></td>
 		<td class="typecell">TABLE</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
@@ -374,7 +374,7 @@ dl.procedurelist dd.column pre {
 	</tr>
 	<tr>
 		<td class="rownumcell">3</td>
-		<td class="namecell" data-name="question"><a href="#question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=4">question</a></td>
+		<td class="namecell" data-name="question"><a href="#question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=7">question</a></td>
 		<td class="typecell">TABLE</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell"><a href="#challenge_detail_history" class="additionalfk" title="FK_MEMBER_MEMBER_STATUS_CODE">challenge_detail_history</a></td>
@@ -496,7 +496,7 @@ challenge_detail_history
 	</tr>
 </table>
 
-<h2 id="challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=6">
+<h2 id="challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=9">
 challenge_history
 </h2>
 <div class="tablecomment challenge_history_comment" data-name="challenge_history"><pre></pre></div>
@@ -630,9 +630,63 @@ challenge_history
 		<td class="subcell">correctSum</td>
 		<td class="subcell">Integer</td>
 	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="challenge_history_delete_flag">delete_flag</td>
+		<td class="typecell">bool</td>
+		<td class="sizecell"> 1 </td>
+		<td class="defvalcell"> false</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">deleteFlag</td>
+		<td class="subcell">Boolean</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="comcolcell columnnamecell" id="challenge_history_register_datetime">register_datetime</td>
+		<td class="typecell">timestamp</td>
+		<td class="sizecell"> 26, 3 </td>
+		<td class="defvalcell"> now()</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">registerDatetime</td>
+		<td class="subcell">LocalDateTime</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="comcolcell columnnamecell" id="challenge_history_update_datetime">update_datetime</td>
+		<td class="typecell">timestamp</td>
+		<td class="sizecell"> 26, 3 </td>
+		<td class="defvalcell"> &nbsp;</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">updateDatetime</td>
+		<td class="subcell">LocalDateTime</td>
+	</tr>
 </table>
 
-<h2 id="question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=4">
+<h2 id="question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=7">
 question
 </h2>
 <div class="tablecomment question_comment" data-name="question"><pre></pre></div>
@@ -649,6 +703,7 @@ question
 		<th>Name</th>
 		<th>Type</th>
 		<th>Size</th>
+		<th>Default</th>
 		<th>ForeignTable</th>
 		<th>ReferrerTable</th>
 		<th>Classification</th>
@@ -667,6 +722,7 @@ question
 		<td class=" columnnamecell" id="question_question_id">question_id</td>
 		<td class="typecell">serial</td>
 		<td class="sizecell"> 10 </td>
+		<td class="defvalcell"> &nbsp;</td>
 		<td class="relcell">&nbsp;&nbsp;</td>
 		<td class="relcell"><a href="#challenge_detail_history" class="additionalfk" title="FK_MEMBER_MEMBER_STATUS_CODE">challenge_detail_history</a>&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
@@ -684,6 +740,7 @@ question
 		<td class=" columnnamecell" id="question_keyword">keyword</td>
 		<td class="typecell">text</td>
 		<td class="sizecell"> 2147483647 </td>
+		<td class="defvalcell"> &nbsp;</td>
 		<td class="relcell">&nbsp;&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
@@ -701,6 +758,7 @@ question
 		<td class=" columnnamecell" id="question_description">description</td>
 		<td class="typecell">text</td>
 		<td class="sizecell"> 2147483647 </td>
+		<td class="defvalcell"> &nbsp;</td>
 		<td class="relcell">&nbsp;&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
@@ -718,12 +776,67 @@ question
 		<td class=" columnnamecell" id="question_order_num">order_num</td>
 		<td class="typecell">int4</td>
 		<td class="sizecell"> 10 </td>
+		<td class="defvalcell"> &nbsp;</td>
 		<td class="relcell">&nbsp;&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
 		<td class="commentcell"><pre>&nbsp;</pre></td>
 		<td class="subcell">orderNum</td>
 		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="question_delete_flag">delete_flag</td>
+		<td class="typecell">bool</td>
+		<td class="sizecell"> 1 </td>
+		<td class="defvalcell"> false</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">deleteFlag</td>
+		<td class="subcell">Boolean</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class="comcolcell columnnamecell" id="question_register_datetime">register_datetime</td>
+		<td class="typecell">timestamp</td>
+		<td class="sizecell"> 26, 3 </td>
+		<td class="defvalcell"> now()</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">registerDatetime</td>
+		<td class="subcell">LocalDateTime</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">7</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="comcolcell columnnamecell" id="question_update_datetime">update_datetime</td>
+		<td class="typecell">timestamp</td>
+		<td class="sizecell"> 26, 3 </td>
+		<td class="defvalcell"> &nbsp;</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">updateDatetime</td>
+		<td class="subcell">LocalDateTime</td>
 	</tr>
 </table>
 
@@ -1147,6 +1260,15 @@ function Decomment() {
 				, 'correct_sum': {
 					'databaseComment': ''
 				}
+				, 'delete_flag': {
+					'databaseComment': ''
+				}
+				, 'register_datetime': {
+					'databaseComment': ''
+				}
+				, 'update_datetime': {
+					'databaseComment': ''
+				}
 			}
 		}
 		, 'question': {
@@ -1162,6 +1284,15 @@ function Decomment() {
 					'databaseComment': ''
 				}
 				, 'order_num': {
+					'databaseComment': ''
+				}
+				, 'delete_flag': {
+					'databaseComment': ''
+				}
+				, 'register_datetime': {
+					'databaseComment': ''
+				}
+				, 'update_datetime': {
 					'databaseComment': ''
 				}
 			}

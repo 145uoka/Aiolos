@@ -662,6 +662,180 @@ public abstract class AbstractBsQuestionCQ extends AbstractConditionQuery {
     protected void regOrderNum(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueOrderNum(), "order_num"); }
     protected abstract ConditionValue xgetCValueOrderNum();
 
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * delete_flag: {NotNull, bool(1), default=[false]}
+     * @param deleteFlag The value of deleteFlag as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDeleteFlag_Equal(Boolean deleteFlag) {
+        regDeleteFlag(CK_EQ, deleteFlag);
+    }
+
+    protected void regDeleteFlag(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDeleteFlag(), "delete_flag"); }
+    protected abstract ConditionValue xgetCValueDeleteFlag();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * @param registerDatetime The value of registerDatetime as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setRegisterDatetime_Equal(java.time.LocalDateTime registerDatetime) {
+        regRegisterDatetime(CK_EQ,  registerDatetime);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * @param registerDatetime The value of registerDatetime as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setRegisterDatetime_GreaterThan(java.time.LocalDateTime registerDatetime) {
+        regRegisterDatetime(CK_GT,  registerDatetime);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * @param registerDatetime The value of registerDatetime as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setRegisterDatetime_LessThan(java.time.LocalDateTime registerDatetime) {
+        regRegisterDatetime(CK_LT,  registerDatetime);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * @param registerDatetime The value of registerDatetime as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setRegisterDatetime_GreaterEqual(java.time.LocalDateTime registerDatetime) {
+        regRegisterDatetime(CK_GE,  registerDatetime);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * @param registerDatetime The value of registerDatetime as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setRegisterDatetime_LessEqual(java.time.LocalDateTime registerDatetime) {
+        regRegisterDatetime(CK_LE, registerDatetime);
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * <pre>e.g. setRegisterDatetime_FromTo(fromDate, toDate, op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">compareAsDate()</span>);</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of registerDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of registerDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of from-to. (NotNull)
+     */
+    public void setRegisterDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, ConditionOptionCall<FromToOption> opLambda) {
+        setRegisterDatetime_FromTo(fromDatetime, toDatetime, xcFTOP(opLambda));
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * <pre>e.g. setRegisterDatetime_FromTo(fromDate, toDate, new <span style="color: #CC4747">FromToOption</span>().compareAsDate());</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of registerDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of registerDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param fromToOption The option of from-to. (NotNull)
+     */
+    protected void setRegisterDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, FromToOption fromToOption) {
+        String nm = "register_datetime"; FromToOption op = fromToOption;
+        regFTQ(xfFTHD(fromDatetime, nm, op), xfFTHD(toDatetime, nm, op), xgetCValueRegisterDatetime(), nm, op);
+    }
+
+    protected void regRegisterDatetime(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueRegisterDatetime(), "register_datetime"); }
+    protected abstract ConditionValue xgetCValueRegisterDatetime();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     * @param updateDatetime The value of updateDatetime as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setUpdateDatetime_Equal(java.time.LocalDateTime updateDatetime) {
+        regUpdateDatetime(CK_EQ,  updateDatetime);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     * @param updateDatetime The value of updateDatetime as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setUpdateDatetime_GreaterThan(java.time.LocalDateTime updateDatetime) {
+        regUpdateDatetime(CK_GT,  updateDatetime);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     * @param updateDatetime The value of updateDatetime as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setUpdateDatetime_LessThan(java.time.LocalDateTime updateDatetime) {
+        regUpdateDatetime(CK_LT,  updateDatetime);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     * @param updateDatetime The value of updateDatetime as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setUpdateDatetime_GreaterEqual(java.time.LocalDateTime updateDatetime) {
+        regUpdateDatetime(CK_GE,  updateDatetime);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     * @param updateDatetime The value of updateDatetime as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setUpdateDatetime_LessEqual(java.time.LocalDateTime updateDatetime) {
+        regUpdateDatetime(CK_LE, updateDatetime);
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     * <pre>e.g. setUpdateDatetime_FromTo(fromDate, toDate, op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">compareAsDate()</span>);</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of updateDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of updateDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of from-to. (NotNull)
+     */
+    public void setUpdateDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, ConditionOptionCall<FromToOption> opLambda) {
+        setUpdateDatetime_FromTo(fromDatetime, toDatetime, xcFTOP(opLambda));
+    }
+
+    /**
+     * FromTo with various options. (versatile) {(default) fromDatetime &lt;= column &lt;= toDatetime} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     * <pre>e.g. setUpdateDatetime_FromTo(fromDate, toDate, new <span style="color: #CC4747">FromToOption</span>().compareAsDate());</pre>
+     * @param fromDatetime The from-datetime(yyyy/MM/dd HH:mm:ss.SSS) of updateDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param toDatetime The to-datetime(yyyy/MM/dd HH:mm:ss.SSS) of updateDatetime. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param fromToOption The option of from-to. (NotNull)
+     */
+    protected void setUpdateDatetime_FromTo(java.time.LocalDateTime fromDatetime, java.time.LocalDateTime toDatetime, FromToOption fromToOption) {
+        String nm = "update_datetime"; FromToOption op = fromToOption;
+        regFTQ(xfFTHD(fromDatetime, nm, op), xfFTHD(toDatetime, nm, op), xgetCValueUpdateDatetime(), nm, op);
+    }
+
+    /**
+     * IsNull {is null}. And OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     */
+    public void setUpdateDatetime_IsNull() { regUpdateDatetime(CK_ISN, DOBJ); }
+
+    /**
+     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
+     * update_datetime: {timestamp(26, 3)}
+     */
+    public void setUpdateDatetime_IsNotNull() { regUpdateDatetime(CK_ISNN, DOBJ); }
+
+    protected void regUpdateDatetime(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueUpdateDatetime(), "update_datetime"); }
+    protected abstract ConditionValue xgetCValueUpdateDatetime();
+
     // ===================================================================================
     //                                                                     ScalarCondition
     //                                                                     ===============

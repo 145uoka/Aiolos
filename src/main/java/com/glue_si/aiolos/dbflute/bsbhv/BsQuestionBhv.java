@@ -26,7 +26,7 @@ import com.glue_si.aiolos.dbflute.cbean.*;
  *     question_id
  *
  * [column]
- *     question_id, keyword, description, order_num
+ *     question_id, keyword, description, order_num, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     question_question_id_seq

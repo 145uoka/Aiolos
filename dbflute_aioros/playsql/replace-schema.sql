@@ -29,6 +29,9 @@ CREATE TABLE aiolos.challenge_history
 	user_name text NOT NULL,
 	elapsed_time bigint DEFAULT 0 NOT NULL,
 	correct_sum int DEFAULT 0 NOT NULL,
+	delete_flag boolean DEFAULT 'false' NOT NULL,
+	register_datetime timestamp(3) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	update_datetime timestamp(3),
 	PRIMARY KEY (challenge_history_id)
 ) WITHOUT OIDS;
 
@@ -39,6 +42,9 @@ CREATE TABLE aiolos.question
 	keyword text NOT NULL,
 	description text,
 	order_num int UNIQUE,
+	delete_flag boolean DEFAULT 'false' NOT NULL,
+	register_datetime timestamp(3) DEFAULT CURRENT_TIMESTAMP NOT NULL,
+	update_datetime timestamp(3),
 	PRIMARY KEY (question_id)
 ) WITHOUT OIDS;
 

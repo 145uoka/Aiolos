@@ -41,6 +41,7 @@
               <th class="text-center">正答数</th>
               <th class="text-center">正答率</th>
               <th class="text-center">経過時間</th>
+              <th class="text-center">実施日時</th>
             </tr>
           </thead>
           <c:forEach var="challengeResultDto" items="${challengeResultDtoList}" varStatus="status">
@@ -51,6 +52,7 @@
             <td class="text-center"><c:out value="${challengeResultDto.correctSum}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.attendanceRate}%"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.elapsedTime}"></c:out></td>
+            <td class="text-center"><c:out value="${challengeResultDto.registerDatetime}"></c:out></td>
           </tr>
           </c:forEach>
         </table>

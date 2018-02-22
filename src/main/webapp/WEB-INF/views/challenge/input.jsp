@@ -119,9 +119,32 @@
   }
 
   function answer() {
+      blocUIOn();
       $("#endTime").val((new Date).getTime());
+      $("#loading").hide();
       document.form.submit();
-    }
+  }
+
+  function blocUIOn() {
+      $.blockUI({
+          message: '<p><img src="${pageContext.request.contextPath}/resources/img/gif-load.gif" style="vertical-align:middle;" /> 読み込み中...</p>' ,
+          css: {
+              border: 'none',
+              padding: '10px',
+              backgroundColor: '#333',
+              opacity: .5,
+              color: '#fff'
+          },
+          overlayCSS: {
+              backgroundColor: '#000',
+              opacity: 0.6
+          }
+      });
+  }
+
+  function blocUIOff() {
+      $.unblockUI();
+  }
 </script>
 
 </body>

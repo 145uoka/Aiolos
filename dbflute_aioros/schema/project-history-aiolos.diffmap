@@ -1,4 +1,45 @@
 map:{
+    ; 2018/02/23 01:09:38 = map:{
+        ; diffDate = 2018/02/23 01:09:38
+        ; tableDiff = map:{
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; delete_flag = map:{
+                        ; columnName = delete_flag
+                        ; diffType = ADD
+                    }
+                    ; register_datetime = map:{
+                        ; columnName = register_datetime
+                        ; diffType = ADD
+                    }
+                    ; update_datetime = map:{
+                        ; columnName = update_datetime
+                        ; diffType = ADD
+                    }
+                }
+            }
+            ; question = map:{
+                ; tableName = question
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; delete_flag = map:{
+                        ; columnName = delete_flag
+                        ; diffType = ADD
+                    }
+                    ; register_datetime = map:{
+                        ; columnName = register_datetime
+                        ; diffType = ADD
+                    }
+                    ; update_datetime = map:{
+                        ; columnName = update_datetime
+                        ; diffType = ADD
+                    }
+                }
+            }
+        }
+    }
     ; 2018/02/22 20:35:22 = map:{
         ; diffDate = 2018/02/22 20:35:22
         ; tableDiff = map:{

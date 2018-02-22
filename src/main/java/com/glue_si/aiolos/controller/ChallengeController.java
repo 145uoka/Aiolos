@@ -1,6 +1,7 @@
 package com.glue_si.aiolos.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
@@ -98,6 +99,8 @@ public class ChallengeController {
             String timeFormatted = formatter.format(entity.getElapsedTime());
             challengeResultDto.setElapsedTime(timeFormatted);
 
+            challengeResultDto.setRegisterDatetime(entity.getRegisterDatetime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd(E) HH:mm:ss")));
+
             challengeResultDtoList.add(challengeResultDto);
         });;
 
@@ -107,7 +110,7 @@ public class ChallengeController {
     }
 
     @RequestMapping(value = "/history/{challengeHistoryId}", method = RequestMethod.GET)
-    public String detialHistory(@PathVariable Integer challengeHistoryId, Locale locale, Model model) {
+    public String detailHistory(@PathVariable Integer challengeHistoryId, Locale locale, Model model) {
 
         OptionalEntity<ChallengeHistory> challengeHistoryOpEntity =
                 challengeHistoryBhv.selectByPK(challengeHistoryId);
@@ -143,4 +146,5 @@ public class ChallengeController {
 
         return "/challenge/result";
     }
+
 }

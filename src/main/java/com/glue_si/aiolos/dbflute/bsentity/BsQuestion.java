@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.dbflute.dbmeta.DBMeta;
 import org.dbflute.dbmeta.AbstractEntity;
 import org.dbflute.dbmeta.accessory.DomainEntity;
+import com.glue_si.aiolos.dbflute.allcommon.EntityDefinedCommonColumn;
 import com.glue_si.aiolos.dbflute.allcommon.DBMetaInstanceHandler;
 import com.glue_si.aiolos.dbflute.exentity.*;
 
@@ -16,7 +17,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     question_id
  *
  * [column]
- *     question_id, keyword, description, order_num
+ *     question_id, keyword, description, order_num, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     question_question_id_seq
@@ -45,15 +46,21 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  * String keyword = entity.getKeyword();
  * String description = entity.getDescription();
  * Integer orderNum = entity.getOrderNum();
+ * Boolean deleteFlag = entity.getDeleteFlag();
+ * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
+ * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * entity.setQuestionId(questionId);
  * entity.setKeyword(keyword);
  * entity.setDescription(description);
  * entity.setOrderNum(orderNum);
+ * entity.setDeleteFlag(deleteFlag);
+ * entity.setRegisterDatetime(registerDatetime);
+ * entity.setUpdateDatetime(updateDatetime);
  * = = = = = = = = = =/
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
-public abstract class BsQuestion extends AbstractEntity implements DomainEntity {
+public abstract class BsQuestion extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
 
     // ===================================================================================
     //                                                                          Definition
@@ -75,6 +82,15 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity 
 
     /** order_num: {UQ, int4(10)} */
     protected Integer _orderNum;
+
+    /** delete_flag: {NotNull, bool(1), default=[false]} */
+    protected Boolean _deleteFlag;
+
+    /** register_datetime: {NotNull, timestamp(26, 3), default=[now()]} */
+    protected java.time.LocalDateTime _registerDatetime;
+
+    /** update_datetime: {timestamp(26, 3)} */
+    protected java.time.LocalDateTime _updateDatetime;
 
     // ===================================================================================
     //                                                                             DB Meta
@@ -176,6 +192,9 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity 
         sb.append(dm).append(xfND(_keyword));
         sb.append(dm).append(xfND(_description));
         sb.append(dm).append(xfND(_orderNum));
+        sb.append(dm).append(xfND(_deleteFlag));
+        sb.append(dm).append(xfND(_registerDatetime));
+        sb.append(dm).append(xfND(_updateDatetime));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -272,5 +291,59 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity 
     public void setOrderNum(Integer orderNum) {
         registerModifiedProperty("orderNum");
         _orderNum = orderNum;
+    }
+
+    /**
+     * [get] delete_flag: {NotNull, bool(1), default=[false]} <br>
+     * @return The value of the column 'delete_flag'. (basically NotNull if selected: for the constraint)
+     */
+    public Boolean getDeleteFlag() {
+        checkSpecifiedProperty("deleteFlag");
+        return _deleteFlag;
+    }
+
+    /**
+     * [set] delete_flag: {NotNull, bool(1), default=[false]} <br>
+     * @param deleteFlag The value of the column 'delete_flag'. (basically NotNull if update: for the constraint)
+     */
+    public void setDeleteFlag(Boolean deleteFlag) {
+        registerModifiedProperty("deleteFlag");
+        _deleteFlag = deleteFlag;
+    }
+
+    /**
+     * [get] register_datetime: {NotNull, timestamp(26, 3), default=[now()]} <br>
+     * @return The value of the column 'register_datetime'. (basically NotNull if selected: for the constraint)
+     */
+    public java.time.LocalDateTime getRegisterDatetime() {
+        checkSpecifiedProperty("registerDatetime");
+        return _registerDatetime;
+    }
+
+    /**
+     * [set] register_datetime: {NotNull, timestamp(26, 3), default=[now()]} <br>
+     * @param registerDatetime The value of the column 'register_datetime'. (basically NotNull if update: for the constraint)
+     */
+    public void setRegisterDatetime(java.time.LocalDateTime registerDatetime) {
+        registerModifiedProperty("registerDatetime");
+        _registerDatetime = registerDatetime;
+    }
+
+    /**
+     * [get] update_datetime: {timestamp(26, 3)} <br>
+     * @return The value of the column 'update_datetime'. (NullAllowed even if selected: for no constraint)
+     */
+    public java.time.LocalDateTime getUpdateDatetime() {
+        checkSpecifiedProperty("updateDatetime");
+        return _updateDatetime;
+    }
+
+    /**
+     * [set] update_datetime: {timestamp(26, 3)} <br>
+     * @param updateDatetime The value of the column 'update_datetime'. (NullAllowed: null update allowed for no constraint)
+     */
+    public void setUpdateDatetime(java.time.LocalDateTime updateDatetime) {
+        registerModifiedProperty("updateDatetime");
+        _updateDatetime = updateDatetime;
     }
 }

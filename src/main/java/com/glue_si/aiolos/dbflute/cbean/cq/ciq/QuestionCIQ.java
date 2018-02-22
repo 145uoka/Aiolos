@@ -75,6 +75,9 @@ public class QuestionCIQ extends AbstractBsQuestionCQ {
     protected ConditionValue xgetCValueKeyword() { return _myCQ.xdfgetKeyword(); }
     protected ConditionValue xgetCValueDescription() { return _myCQ.xdfgetDescription(); }
     protected ConditionValue xgetCValueOrderNum() { return _myCQ.xdfgetOrderNum(); }
+    protected ConditionValue xgetCValueDeleteFlag() { return _myCQ.xdfgetDeleteFlag(); }
+    protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
+    protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String pp) { return null; }
     public String keepScalarCondition(QuestionCQ sq)
     { throwIICBOE("ScalarCondition"); return null; }

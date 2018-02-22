@@ -48,6 +48,9 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getUserName(), (et, vl) -> ((ChallengeHistory)et).setUserName((String)vl), "userName");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getElapsedTime(), (et, vl) -> ((ChallengeHistory)et).setElapsedTime(ctl(vl)), "elapsedTime");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getCorrectSum(), (et, vl) -> ((ChallengeHistory)et).setCorrectSum(cti(vl)), "correctSum");
+        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getDeleteFlag(), (et, vl) -> ((ChallengeHistory)et).setDeleteFlag((Boolean)vl), "deleteFlag");
+        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getRegisterDatetime(), (et, vl) -> ((ChallengeHistory)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
+        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getUpdateDatetime(), (et, vl) -> ((ChallengeHistory)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
@@ -74,6 +77,9 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnUserName = cci("user_name", "user_name", null, null, String.class, "userName", null, false, false, true, "text", 2147483647, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnElapsedTime = cci("elapsed_time", "elapsed_time", null, null, Long.class, "elapsedTime", null, false, false, true, "int8", 19, 0, null, "0", false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCorrectSum = cci("correct_sum", "correct_sum", null, null, Integer.class, "correctSum", null, false, false, true, "int4", 10, 0, null, "0", false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnDeleteFlag = cci("delete_flag", "delete_flag", null, null, Boolean.class, "deleteFlag", null, false, false, true, "bool", 1, 0, null, "false", false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnRegisterDatetime = cci("register_datetime", "register_datetime", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "timestamp", 26, 3, null, "now()", true, null, null, null, null, null, false);
+    protected final ColumnInfo _columnUpdateDatetime = cci("update_datetime", "update_datetime", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, false, "timestamp", 26, 3, null, null, true, null, null, null, null, null, false);
 
     /**
      * challenge_history_id: {PK, ID, NotNull, serial(10)}
@@ -105,6 +111,21 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCorrectSum() { return _columnCorrectSum; }
+    /**
+     * delete_flag: {NotNull, bool(1), default=[false]}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnDeleteFlag() { return _columnDeleteFlag; }
+    /**
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnRegisterDatetime() { return _columnRegisterDatetime; }
+    /**
+     * update_datetime: {timestamp(26, 3)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnUpdateDatetime() { return _columnUpdateDatetime; }
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
@@ -114,6 +135,9 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
         ls.add(columnUserName());
         ls.add(columnElapsedTime());
         ls.add(columnCorrectSum());
+        ls.add(columnDeleteFlag());
+        ls.add(columnRegisterDatetime());
+        ls.add(columnUpdateDatetime());
         return ls;
     }
 
@@ -149,6 +173,13 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
     public String getSequenceName() { return "challenge_history_challenge_history_id_seq"; }
     public Integer getSequenceIncrementSize() { return 1; }
     public Integer getSequenceCacheSize() { return null; }
+    public boolean hasCommonColumn() { return true; }
+    public List<ColumnInfo> getCommonColumnInfoList()
+    { return newArrayList(columnRegisterDatetime(), columnUpdateDatetime()); }
+    public List<ColumnInfo> getCommonColumnInfoBeforeInsertList()
+    { return newArrayList(columnRegisterDatetime()); }
+    public List<ColumnInfo> getCommonColumnInfoBeforeUpdateList()
+    { return newArrayList(); }
 
     // ===================================================================================
     //                                                                           Type Name

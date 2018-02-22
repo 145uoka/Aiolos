@@ -19,14 +19,59 @@ public class ImplementedCommonColumnAutoSetupper implements CommonColumnAutoSetu
     private static final Logger _log = LoggerFactory.getLogger(ImplementedCommonColumnAutoSetupper.class);
 
     // =====================================================================================
+    //                                                                             Attribute
+    //                                                                             =========
+    // =====================================================================================
     //                                                                                Set up
     //                                                                                ======
     /** {@inheritDoc} */
     public void handleCommonColumnOfInsertIfNeeds(Entity targetEntity) {
+        final EntityDefinedCommonColumn entity = askIfEntitySetup(targetEntity);
+        if (entity == null) {
+            return;
+        }
+        if (isInternalDebugEnabled()) {
+            logSettingUp(entity, "INSERT");
+        }
+        doHandleCommonColumnOfInsertIfNeeds(entity);
+    }
+
+    protected void doHandleCommonColumnOfInsertIfNeeds(EntityDefinedCommonColumn entity) {
+        final java.time.LocalDateTime registerDatetime = org.dbflute.hook.AccessContext.getAccessLocalDateTimeOnThread();
+        entity.setRegisterDatetime(registerDatetime);
     }
 
     /** {@inheritDoc} */
     public void handleCommonColumnOfUpdateIfNeeds(Entity targetEntity) {
+        final EntityDefinedCommonColumn entity = askIfEntitySetup(targetEntity);
+        if (entity == null) {
+            return;
+        }
+        if (isInternalDebugEnabled()) {
+            logSettingUp(entity, "UPDATE");
+        }
+        doHandleCommonColumnOfUpdateIfNeeds(entity);
+    }
+
+    protected void doHandleCommonColumnOfUpdateIfNeeds(EntityDefinedCommonColumn entity) {
+    }
+
+    // =====================================================================================
+    //                                                                         Assist Helper
+    //                                                                         =============
+    protected EntityDefinedCommonColumn askIfEntitySetup(Entity targetEntity) {
+        if (!hasCommonColumn(targetEntity)) {
+            return null;
+        }
+        return downcastEntity(targetEntity);
+    }
+
+    protected boolean hasCommonColumn(Entity targetEntity) {
+        return targetEntity instanceof EntityDefinedCommonColumn;
+    }
+
+    protected EntityDefinedCommonColumn downcastEntity(Entity targetEntity) {
+        return (EntityDefinedCommonColumn)targetEntity;
     }
 
     // =====================================================================================

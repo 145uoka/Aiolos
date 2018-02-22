@@ -312,6 +312,21 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnCorrectSum() { return doColumn("correct_sum"); }
+        /**
+         * delete_flag: {NotNull, bool(1), default=[false]}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnDeleteFlag() { return doColumn("delete_flag"); }
+        /**
+         * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnRegisterDatetime() { return doColumn("register_datetime"); }
+        /**
+         * update_datetime: {timestamp(26, 3)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnUpdateDatetime() { return doColumn("update_datetime"); }
         public void everyColumn() { doEveryColumn(); }
         public void exceptRecordMetaColumn() { doExceptRecordMetaColumn(); }
         @Override

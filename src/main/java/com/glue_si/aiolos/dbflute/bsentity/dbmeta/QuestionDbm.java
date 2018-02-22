@@ -46,6 +46,9 @@ public class QuestionDbm extends AbstractDBMeta {
         setupEpg(_epgMap, et -> ((Question)et).getKeyword(), (et, vl) -> ((Question)et).setKeyword((String)vl), "keyword");
         setupEpg(_epgMap, et -> ((Question)et).getDescription(), (et, vl) -> ((Question)et).setDescription((String)vl), "description");
         setupEpg(_epgMap, et -> ((Question)et).getOrderNum(), (et, vl) -> ((Question)et).setOrderNum(cti(vl)), "orderNum");
+        setupEpg(_epgMap, et -> ((Question)et).getDeleteFlag(), (et, vl) -> ((Question)et).setDeleteFlag((Boolean)vl), "deleteFlag");
+        setupEpg(_epgMap, et -> ((Question)et).getRegisterDatetime(), (et, vl) -> ((Question)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
+        setupEpg(_epgMap, et -> ((Question)et).getUpdateDatetime(), (et, vl) -> ((Question)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
@@ -70,6 +73,9 @@ public class QuestionDbm extends AbstractDBMeta {
     protected final ColumnInfo _columnKeyword = cci("keyword", "keyword", null, null, String.class, "keyword", null, false, false, true, "text", 2147483647, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnDescription = cci("description", "description", null, null, String.class, "description", null, false, false, false, "text", 2147483647, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnOrderNum = cci("order_num", "order_num", null, null, Integer.class, "orderNum", null, false, false, false, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnDeleteFlag = cci("delete_flag", "delete_flag", null, null, Boolean.class, "deleteFlag", null, false, false, true, "bool", 1, 0, null, "false", false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnRegisterDatetime = cci("register_datetime", "register_datetime", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "timestamp", 26, 3, null, "now()", true, null, null, null, null, null, false);
+    protected final ColumnInfo _columnUpdateDatetime = cci("update_datetime", "update_datetime", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, false, "timestamp", 26, 3, null, null, true, null, null, null, null, null, false);
 
     /**
      * question_id: {PK, ID, NotNull, serial(10)}
@@ -91,6 +97,21 @@ public class QuestionDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnOrderNum() { return _columnOrderNum; }
+    /**
+     * delete_flag: {NotNull, bool(1), default=[false]}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnDeleteFlag() { return _columnDeleteFlag; }
+    /**
+     * register_datetime: {NotNull, timestamp(26, 3), default=[now()]}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnRegisterDatetime() { return _columnRegisterDatetime; }
+    /**
+     * update_datetime: {timestamp(26, 3)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnUpdateDatetime() { return _columnUpdateDatetime; }
 
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
@@ -98,6 +119,9 @@ public class QuestionDbm extends AbstractDBMeta {
         ls.add(columnKeyword());
         ls.add(columnDescription());
         ls.add(columnOrderNum());
+        ls.add(columnDeleteFlag());
+        ls.add(columnRegisterDatetime());
+        ls.add(columnUpdateDatetime());
         return ls;
     }
 
@@ -146,6 +170,13 @@ public class QuestionDbm extends AbstractDBMeta {
     public String getSequenceName() { return "question_question_id_seq"; }
     public Integer getSequenceIncrementSize() { return 1; }
     public Integer getSequenceCacheSize() { return null; }
+    public boolean hasCommonColumn() { return true; }
+    public List<ColumnInfo> getCommonColumnInfoList()
+    { return newArrayList(columnRegisterDatetime(), columnUpdateDatetime()); }
+    public List<ColumnInfo> getCommonColumnInfoBeforeInsertList()
+    { return newArrayList(columnRegisterDatetime()); }
+    public List<ColumnInfo> getCommonColumnInfoBeforeUpdateList()
+    { return newArrayList(); }
 
     // ===================================================================================
     //                                                                           Type Name

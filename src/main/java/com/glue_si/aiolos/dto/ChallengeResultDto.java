@@ -8,6 +8,7 @@ public class ChallengeResultDto {
     private Integer correctSum;
     private Integer score;
     private String userName;
+    private String registerDatetime;
     public Integer getAttendanceRate() {
         return attendanceRate;
     }
@@ -43,6 +44,12 @@ public class ChallengeResultDto {
     }
     public void setUserName(String userName) {
         this.userName = userName;
+    }
+    public String getRegisterDatetime() {
+        return registerDatetime;
+    }
+    public void setRegisterDatetime(String registerDatetime) {
+        this.registerDatetime = registerDatetime;
     }
 
 }

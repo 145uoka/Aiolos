@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import org.dbflute.dbmeta.DBMeta;
 import org.dbflute.dbmeta.AbstractEntity;
 import org.dbflute.dbmeta.accessory.DomainEntity;
+import com.glue_si.aiolos.dbflute.allcommon.EntityDefinedCommonColumn;
 import com.glue_si.aiolos.dbflute.allcommon.DBMetaInstanceHandler;
 import com.glue_si.aiolos.dbflute.exentity.*;
 
@@ -16,7 +17,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     challenge_history_id
  *
  * [column]
- *     challenge_history_id, score, attendance_rate, user_name, elapsed_time, correct_sum
+ *     challenge_history_id, score, attendance_rate, user_name, elapsed_time, correct_sum, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     challenge_history_challenge_history_id_seq
@@ -47,17 +48,23 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  * String userName = entity.getUserName();
  * Long elapsedTime = entity.getElapsedTime();
  * Integer correctSum = entity.getCorrectSum();
+ * Boolean deleteFlag = entity.getDeleteFlag();
+ * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
+ * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * entity.setChallengeHistoryId(challengeHistoryId);
  * entity.setScore(score);
  * entity.setAttendanceRate(attendanceRate);
  * entity.setUserName(userName);
  * entity.setElapsedTime(elapsedTime);
  * entity.setCorrectSum(correctSum);
+ * entity.setDeleteFlag(deleteFlag);
+ * entity.setRegisterDatetime(registerDatetime);
+ * entity.setUpdateDatetime(updateDatetime);
  * = = = = = = = = = =/
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
-public abstract class BsChallengeHistory extends AbstractEntity implements DomainEntity {
+public abstract class BsChallengeHistory extends AbstractEntity implements DomainEntity, EntityDefinedCommonColumn {
 
     // ===================================================================================
     //                                                                          Definition
@@ -85,6 +92,15 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
 
     /** correct_sum: {NotNull, int4(10), default=[0]} */
     protected Integer _correctSum;
+
+    /** delete_flag: {NotNull, bool(1), default=[false]} */
+    protected Boolean _deleteFlag;
+
+    /** register_datetime: {NotNull, timestamp(26, 3), default=[now()]} */
+    protected java.time.LocalDateTime _registerDatetime;
+
+    /** update_datetime: {timestamp(26, 3)} */
+    protected java.time.LocalDateTime _updateDatetime;
 
     // ===================================================================================
     //                                                                             DB Meta
@@ -154,6 +170,9 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
         sb.append(dm).append(xfND(_userName));
         sb.append(dm).append(xfND(_elapsedTime));
         sb.append(dm).append(xfND(_correctSum));
+        sb.append(dm).append(xfND(_deleteFlag));
+        sb.append(dm).append(xfND(_registerDatetime));
+        sb.append(dm).append(xfND(_updateDatetime));
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length());
         }
@@ -280,5 +299,59 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
     public void setCorrectSum(Integer correctSum) {
         registerModifiedProperty("correctSum");
         _correctSum = correctSum;
+    }
+
+    /**
+     * [get] delete_flag: {NotNull, bool(1), default=[false]} <br>
+     * @return The value of the column 'delete_flag'. (basically NotNull if selected: for the constraint)
+     */
+    public Boolean getDeleteFlag() {
+        checkSpecifiedProperty("deleteFlag");
+        return _deleteFlag;
+    }
+
+    /**
+     * [set] delete_flag: {NotNull, bool(1), default=[false]} <br>
+     * @param deleteFlag The value of the column 'delete_flag'. (basically NotNull if update: for the constraint)
+     */
+    public void setDeleteFlag(Boolean deleteFlag) {
+        registerModifiedProperty("deleteFlag");
+        _deleteFlag = deleteFlag;
+    }
+
+    /**
+     * [get] register_datetime: {NotNull, timestamp(26, 3), default=[now()]} <br>
+     * @return The value of the column 'register_datetime'. (basically NotNull if selected: for the constraint)
+     */
+    public java.time.LocalDateTime getRegisterDatetime() {
+        checkSpecifiedProperty("registerDatetime");
+        return _registerDatetime;
+    }
+
+    /**
+     * [set] register_datetime: {NotNull, timestamp(26, 3), default=[now()]} <br>
+     * @param registerDatetime The value of the column 'register_datetime'. (basically NotNull if update: for the constraint)
+     */
+    public void setRegisterDatetime(java.time.LocalDateTime registerDatetime) {
+        registerModifiedProperty("registerDatetime");
+        _registerDatetime = registerDatetime;
+    }
+
+    /**
+     * [get] update_datetime: {timestamp(26, 3)} <br>
+     * @return The value of the column 'update_datetime'. (NullAllowed even if selected: for no constraint)
+     */
+    public java.time.LocalDateTime getUpdateDatetime() {
+        checkSpecifiedProperty("updateDatetime");
+        return _updateDatetime;
+    }
+
+    /**
+     * [set] update_datetime: {timestamp(26, 3)} <br>
+     * @param updateDatetime The value of the column 'update_datetime'. (NullAllowed: null update allowed for no constraint)
+     */
+    public void setUpdateDatetime(java.time.LocalDateTime updateDatetime) {
+        registerModifiedProperty("updateDatetime");
+        _updateDatetime = updateDatetime;
     }
 }
