@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd"
+    >
+
+    <!-- The components of DBFlute Runtime. -->
+    <bean id="introduction" class="com.glue_si.aiolos.common.dbflute.ExtendedDBFluteInitializer">
+        <constructor-arg index="0"><ref bean="dataSource"/></constructor-arg>
+    </bean>
+    <bean id="invokerAssistant" class="com.glue_si.aiolos.dbflute.allcommon.ImplementedInvokerAssistant" autowire="byType">
+        <property name="dataSource"><ref bean="dataSource"/></property>
+        <property name="introduction"><ref bean="introduction"/></property>
+    </bean>
+    <bean id="commonColumnAutoSetupper" class="com.glue_si.aiolos.dbflute.allcommon.ImplementedCommonColumnAutoSetupper" autowire="byType"/>
+    <bean id="behaviorSelector" class="com.glue_si.aiolos.dbflute.allcommon.ImplementedBehaviorSelector" autowire="byType"/>
+    <bean id="behaviorCommandInvoker" class="org.dbflute.bhv.core.BehaviorCommandInvoker" autowire="byType">
+        <property name="invokerAssistant"><ref bean="invokerAssistant"/></property>
+    </bean>
+
+    <!-- The components of Behavior. -->
+	<bean id="challengeDetailHistoryBhv" class="com.glue_si.aiolos.dbflute.exbhv.ChallengeDetailHistoryBhv" autowire="byType">
+        <property name="behaviorCommandInvoker"><ref bean="behaviorCommandInvoker"/></property>
+        <property name="behaviorSelector"><ref bean="behaviorSelector"/></property>
+        <property name="commonColumnAutoSetupper"><ref bean="commonColumnAutoSetupper"/></property>
+    </bean>
+	<bean id="challengeHistoryBhv" class="com.glue_si.aiolos.dbflute.exbhv.ChallengeHistoryBhv" autowire="byType">
+        <property name="behaviorCommandInvoker"><ref bean="behaviorCommandInvoker"/></property>
+        <property name="behaviorSelector"><ref bean="behaviorSelector"/></property>
+        <property name="commonColumnAutoSetupper"><ref bean="commonColumnAutoSetupper"/></property>
+    </bean>
+	<bean id="questionBhv" class="com.glue_si.aiolos.dbflute.exbhv.QuestionBhv" autowire="byType">
+        <property name="behaviorCommandInvoker"><ref bean="behaviorCommandInvoker"/></property>
+        <property name="behaviorSelector"><ref bean="behaviorSelector"/></property>
+        <property name="commonColumnAutoSetupper"><ref bean="commonColumnAutoSetupper"/></property>
+    </bean>
+</beans>

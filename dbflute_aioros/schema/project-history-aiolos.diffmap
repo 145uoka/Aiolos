@@ -1,0 +1,77 @@
+map:{
+    ; 2018/02/22 20:35:22 = map:{
+        ; diffDate = 2018/02/22 20:35:22
+        ; tableDiff = map:{
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; correct_sum = map:{
+                        ; columnName = correct_sum
+                        ; diffType = ADD
+                    }
+                }
+            }
+        }
+    }
+    ; 2018/02/22 13:14:59 = map:{
+        ; diffDate = 2018/02/22 13:14:59
+        ; tableDiff = map:{
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; attendance_rate = map:{
+                        ; columnName = attendance_rate
+                        ; diffType = ADD
+                    }
+                    ; elapsed_time = map:{
+                        ; columnName = elapsed_time
+                        ; diffType = ADD
+                    }
+                    ; attendancerate = map:{
+                        ; columnName = attendancerate
+                        ; diffType = DELETE
+                    }
+                }
+            }
+        }
+    }
+    ; 2018/02/22 02:02:25 = map:{
+        ; diffDate = 2018/02/22 02:02:25
+        ; tableDiff = map:{
+            ; question = map:{
+                ; tableName = question
+                ; diffType = ADD
+            }
+            ; challenge_detail_history = map:{
+                ; tableName = challenge_detail_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; question_id = map:{
+                        ; columnName = question_id
+                        ; diffType = ADD
+                    }
+                    ; keyword_id = map:{
+                        ; columnName = keyword_id
+                        ; diffType = DELETE
+                    }
+                }
+            }
+            ; keyword = map:{
+                ; tableName = keyword
+                ; diffType = DELETE
+            }
+        }
+        ; sequenceDiff = map:{
+            ; postgres.aiolos.question_question_id_seq = map:{
+                ; sequenceName = postgres.aiolos.question_question_id_seq
+                ; diffType = ADD
+            }
+            ; postgres.aiolos.keyword_keyword_id_seq = map:{
+                ; sequenceName = postgres.aiolos.keyword_keyword_id_seq
+                ; diffType = DELETE
+            }
+        }
+    }
+}
