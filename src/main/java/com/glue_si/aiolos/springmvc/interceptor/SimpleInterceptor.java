@@ -1,6 +1,7 @@
 package com.glue_si.aiolos.springmvc.interceptor;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,7 +20,7 @@ public class SimpleInterceptor implements HandlerInterceptor {
         logger.info("RequestURI : {}", request.getRequestURI());
 
         AccessContext context = new AccessContext();
-        context.setAccessLocalDateTime(LocalDateTime.now());
+        context.setAccessLocalDateTime(LocalDateTime.now(ZoneId.of("Asia/Tokyo")));
         AccessContext.setAccessContextOnThread(context);
 
         return true;
