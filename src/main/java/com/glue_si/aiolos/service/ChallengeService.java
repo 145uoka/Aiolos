@@ -1,5 +1,7 @@
 package com.glue_si.aiolos.service;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,15 +72,26 @@ public class ChallengeService {
         challengeHistory.setUserName(form.getUserName());
         challengeHistory.setElapsedTime(form.getEndTime() - form.getStartTime());
 
-        int score = challengeHistory.getAttendanceRate() * 100;
-        int baseScore = form.getAnswer().length * 1000;
-        Long minusScore = (challengeHistory.getElapsedTime()*100 / baseScore);
-        score -= minusScore.intValue();
+        int score = calcScore(challengeHistory.getAttendanceRate(), challengeHistory.getElapsedTime(),
+                challengeDetailHistoryList.size());
         challengeHistory.setScore(score);
 
         challengeHistoryBhv.insert(challengeHistory);
         challengeDetailHistoryBhv.batchInsert(challengeDetailHistoryList);
 
         return challengeHistory.getChallengeHistoryId();
+    }
+
+    private int calcScore(int attendanceRate, Long elapsedTime, int questionNum) {
+
+        BigDecimal baseScore = new BigDecimal(attendanceRate * 100);
+        BigDecimal elapsedTimeBigDecimal = new BigDecimal(elapsedTime * 100);
+
+        BigDecimal questionNumDiv = new BigDecimal(questionNum * 2000);
+        BigDecimal minusScore = elapsedTimeBigDecimal.divide(questionNumDiv, 0, RoundingMode.HALF_UP);
+        minusScore = minusScore.multiply(new BigDecimal(10));
+        BigDecimal score = baseScore.subtract(minusScore);
+
+        return score.intValue();
     }
 }
