@@ -15,8 +15,13 @@
 			<param-value>true</param-value>
 		</init-param>
 	</filter>
+	<filter-mapping>
+		<filter-name>characterEncodingFilter</filter-name>
+		<servlet-name>/*</servlet-name>
+	</filter-mapping>
 
-	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
+	<!-- The definition of the Root Spring Container shared by all Servlets
+		and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>/WEB-INF/spring/root-context.xml</param-value>
@@ -44,10 +49,10 @@
 	</servlet-mapping>
 
 	<jsp-config>
-    <taglib>
-      <taglib-uri>/tags/spring-ext</taglib-uri>
-      <taglib-location>/WEB-INF/tld/spring-ext.tld</taglib-location>
-    </taglib>
-    </jsp-config>
+		<taglib>
+			<taglib-uri>/tags/spring-ext</taglib-uri>
+			<taglib-location>/WEB-INF/tld/spring-ext.tld</taglib-location>
+		</taglib>
+	</jsp-config>
 
 </web-app>
