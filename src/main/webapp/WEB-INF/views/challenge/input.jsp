@@ -27,6 +27,17 @@
       <%-- メッセージ領域 --%>
       <div class="row">
         <div class="col-md-offset-1 col-md-10">
+          <div class="alert alert-info" role="alert" align="left">
+            <h5>
+              <c:out value="ルール" />
+            </h5>
+            <ul>
+              <li><c:out value="氏名を入力し開始。全キーワードを打鍵で入力し、回答ボタン押下で終了" />
+              <li><c:out value="キーボードのホームポジションは守ること" />
+              <li><c:out value="各項目を入力し終わったら、TABキーで次のフォームへ移動します。早く入力する秘訣" />
+            </ul>
+          </div>
+
           <%@include file="/WEB-INF/fragment/messages.jspf"%>
         </div>
       </div>
