@@ -9,6 +9,7 @@ public class ChallengeResultDto {
     private Integer score;
     private String userName;
     private String registerDatetime;
+    private Boolean today = false;
     public Integer getAttendanceRate() {
         return attendanceRate;
     }
@@ -51,5 +52,13 @@ public class ChallengeResultDto {
     public void setRegisterDatetime(String registerDatetime) {
         this.registerDatetime = registerDatetime;
     }
+    public Boolean getToday() {
+        return today;
+    }
+    public void setToday(Boolean today) {
+        this.today = today;
+    }
+
+
 
 }

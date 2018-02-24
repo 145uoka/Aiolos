@@ -52,8 +52,15 @@
             <td class="text-center"><c:out value="${challengeResultDto.correctSum}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.attendanceRate}%"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.elapsedTime}"></c:out></td>
-            <td class="text-center"><c:out value="${challengeResultDto.registerDatetime}"></c:out></td>
-          </tr>
+            <td class="text-center">
+              <c:choose>
+                <c:when test="${challengeResultDto.today}">
+                  <span class="label label-danger" style="margin-left: 10px">NEW</span>
+                </c:when>
+              </c:choose>
+              <c:out value="${challengeResultDto.registerDatetime}"></c:out>
+            </td>
+            </tr>
           </c:forEach>
         </table>
       </div>

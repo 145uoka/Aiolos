@@ -1,6 +1,9 @@
 package com.glue_si.aiolos.controller;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +103,13 @@ public class ChallengeController {
             challengeResultDto.setElapsedTime(timeFormatted);
 
             challengeResultDto.setRegisterDatetime(entity.getRegisterDatetime().format(DateTimeFormatter.ofPattern("yyyy/MM/dd(E) HH:mm:ss")));
+
+            LocalDate today = LocalDateTime.now(ZoneId.of("Asia/Tokyo")).toLocalDate();
+            LocalDate registerDate = entity.getRegisterDatetime().toLocalDate();
+
+            if (registerDate.compareTo(today) >= 0) {
+                challengeResultDto.setToday(true);
+            }
 
             challengeResultDtoList.add(challengeResultDto);
         });;
