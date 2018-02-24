@@ -10,6 +10,7 @@
       <!-- メニュー -->
       <ul class="nav navbar-nav">
         <li><a href="${pageContext.request.contextPath}/challenge">TRY!!</a></li>
+        <li><a href="${pageContext.request.contextPath}/question">Description</a></li>
       </ul>
     </div>
   </nav>
