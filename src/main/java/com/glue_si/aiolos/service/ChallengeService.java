@@ -36,14 +36,18 @@ public class ChallengeService {
 
     private static final Logger logger = LoggerFactory.getLogger(ChallengeService.class);
 
+    public ListResultBean<Question> findAllQuestion() {
+        return questionBhv.selectList(cb-> {
+            cb.query().addOrderBy_OrderNum_Asc();
+        });
+    }
+
     public Integer store(ChallengeForm form) {
 
         ChallengeHistory challengeHistory = new ChallengeHistory();
         challengeHistory.setChallengeHistoryId(challengeHistoryBhv.selectNextVal());
 
-        ListResultBean<Question> questionList = questionBhv.selectList(cb-> {
-            cb.query().addOrderBy_OrderNum_Asc();
-        });
+        ListResultBean<Question> questionList = findAllQuestion();
 
         List<ChallengeDetailHistory> challengeDetailHistoryList = new ArrayList<ChallengeDetailHistory>();
         int correctCount = 0;
