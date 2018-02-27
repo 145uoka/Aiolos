@@ -42,8 +42,9 @@ public class ChallengeServiceTest {
     }
 
     @Test
-    public void getSkillsTest() {
+    public void storeTest() {
 
+        // mockの返却の設定
         Integer nextVal = 999;
 
         ListResultBean<Question> questionList = new ListResultBean<Question>();
@@ -52,11 +53,13 @@ public class ChallengeServiceTest {
         question.setKeyword("register");
         questionList.add(question);
 
+        // mockの設定
         new Expectations() {{
             challengeHistoryBhv.selectNextVal();      result = nextVal;
             challengeService.findAllQuestion(); result = questionList;
         }};
 
+        // テストメソッドのパラメータの作成
         ChallengeForm form = new ChallengeForm();
         form.setUserName("hoge");
         form.setAnswer(new String[]{"register,update"});
@@ -64,9 +67,11 @@ public class ChallengeServiceTest {
         form.setStartTime(123L);
 
 
-        // テスト対象メソッドの実行と、結果の検証
+        // テスト対象メソッドの実行
         Integer result = challengeService.store(form);
-        assertEquals(nextVal, result);
+
+        // 結果の検証
+        assertEquals(nextVal, new Integer(1000));
     }
 
 
