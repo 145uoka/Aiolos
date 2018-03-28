@@ -27,8 +27,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.glue_si.aiolos.dbflute.exbhv.ChallengeDetailHistoryBhv;
 import com.glue_si.aiolos.dbflute.exbhv.ChallengeHistoryBhv;
 import com.glue_si.aiolos.dbflute.exbhv.QuestionBhv;
+import com.glue_si.aiolos.dbflute.exentity.Answer;
 import com.glue_si.aiolos.dbflute.exentity.ChallengeHistory;
 import com.glue_si.aiolos.dbflute.exentity.Question;
+import com.glue_si.aiolos.dto.AnswerDto;
 import com.glue_si.aiolos.dto.ChallengeResultDetailDto;
 import com.glue_si.aiolos.dto.ChallengeResultDto;
 import com.glue_si.aiolos.dto.KeywordDto;
@@ -56,12 +58,14 @@ public class ChallengeController {
 
     private static final Logger logger = LoggerFactory.getLogger(ChallengeController.class);
 
-    @RequestMapping(method = {RequestMethod.GET})
-    public String index(ChallengeForm form, BindingResult bindingResult
+    @RequestMapping(value = "/{genreId}", method = {RequestMethod.GET})
+    public String index(@PathVariable Integer genreId, ChallengeForm form, BindingResult bindingResult
             , Locale locale, Model model) {
 
-        ListResultBean<Question> questionList = questionBhv.selectList(cb-> {
-            cb.query().addOrderBy_OrderNum_Asc();
+        ListResultBean<Question> questionList = challengeService.findQuestionByGenre(form.getGenreId());
+
+        questionBhv.loadAnswer(questionList, cb->{
+            cb.query().addOrderBy_BranchNo_Asc();
         });
 
         List<KeywordDto> questionDtoList = new ArrayList<KeywordDto>();
@@ -69,6 +73,15 @@ public class ChallengeController {
         for (Question question : questionList) {
             KeywordDto dto = new KeywordDto();
             BeanUtils.copyProperties(question, dto);
+
+            List<AnswerDto> answerDtoList = new ArrayList<AnswerDto>();
+            for (Answer answer : question.getAnswerList()) {
+                AnswerDto answerDto = new AnswerDto();
+                BeanUtils.copyProperties(answer, answerDto);
+                answerDtoList.add(answerDto);
+            }
+
+            dto.setAnswerDtoList(answerDtoList);
             questionDtoList.add(dto);
         }
 
@@ -92,10 +105,13 @@ public class ChallengeController {
 
         List<ChallengeResultDto> challengeResultDtoList = new ArrayList<ChallengeResultDto>();
         challengeHistoryBhv.selectList(cb->{
+            cb.setupSelect_Genre();
+            cb.query().queryGenre().innerJoin();
             cb.query().addOrderBy_Score_Desc();
         }).forEach(entity->{
             ChallengeResultDto challengeResultDto = new ChallengeResultDto();
             BeanUtils.copyProperties(entity, challengeResultDto);
+            challengeResultDto.setGenreName(entity.getGenre().get().getGenreName());
 
             SimpleDateFormat formatter = new SimpleDateFormat("mm:ss.SSS");
             formatter.setTimeZone(TimeZone.getTimeZone("GMT"));

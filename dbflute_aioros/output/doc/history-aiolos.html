@@ -118,11 +118,95 @@ p.tablecount {
 </div>
 
 <div class="section">
+	<h2><span class="dt">Diff Date: </span>2018/03/28 21:11:04</h2>
+	<p class="tablecount"><span class="dt">table count: </span>4&nbsp;-&gt;&nbsp;5</p>
+
+	<h3>Add Table</h3>
+	<ul class="table-content">
+		<li><a href="./schema-aiolos.html#genre">genre</a></li>
+	</ul>
+	<h3>Change Table</h3>
+	<div class="table-content">
+		<h4><a href="./schema-aiolos.html#challenge_history">challenge_history</a></h4>
+		<div class="change-table-content">
+			<h5>Add Column</h5>
+			<ul class="column-content">
+				<li>genre_id</li>
+			</ul>
+		</div>
+		<h4><a href="./schema-aiolos.html#question">question</a></h4>
+		<div class="change-table-content">
+			<h5>Add Column</h5>
+			<ul class="column-content">
+				<li>genre_id</li>
+				<li>question_num</li>
+				<li>answer_branch_no</li>
+			</ul>
+			<h5>Delete Column</h5>
+			<ul class="column-content">
+				<li>keyword</li>
+				<li>order_num</li>
+			</ul>
+			<h5>Delete UQ</h5>
+			<ul class="column-content">
+				<li>question_order_num_key</li>
+			</ul>
+		</div>
+	</div>
+	<h3>Add Sequence</h3>
+	<ul class="table-content">
+		<li>postgres.aiolos.genre_genre_id_seq</li>
+	</ul>
+</div>
+<div class="section">
+	<h2><span class="dt">Diff Date: </span>2018/03/28 20:40:16</h2>
+
+	<h3>Change Table</h3>
+	<div class="table-content">
+		<h4>challenge_history</h4>
+		<div class="change-table-content">
+			<h5>Change Column</h5>
+			<dl class="column-content">
+				<dt>score</dt>
+				<dd><span>Type</span>int4&nbsp;-&gt;&nbsp;float8</dd>
+				<dd><span>Size</span>10&nbsp;-&gt;&nbsp;17,&nbsp;17</dd>
+			</dl>
+		</div>
+	</div>
+</div>
+<div class="section">
+	<h2><span class="dt">Diff Date: </span>2018/03/28 20:33:04</h2>
+
+	<h3>Change Table</h3>
+	<div class="table-content">
+		<h4>challenge_history</h4>
+		<div class="change-table-content">
+			<h5>Add Column</h5>
+			<ul class="column-content">
+				<li>incorrect_sum</li>
+			</ul>
+		</div>
+	</div>
+</div>
+<div class="section">
+	<h2><span class="dt">Diff Date: </span>2018/03/28 19:24:07</h2>
+	<p class="tablecount"><span class="dt">table count: </span>3&nbsp;-&gt;&nbsp;4</p>
+
+	<h3>Add Table</h3>
+	<ul class="table-content">
+		<li>answer</li>
+	</ul>
+	<h3>Add Sequence</h3>
+	<ul class="table-content">
+		<li>postgres.aiolos.answer_anwer_id_seq</li>
+	</ul>
+</div>
+<div class="section">
 	<h2><span class="dt">Diff Date: </span>2018/03/28 13:10:09</h2>
 
 	<h3>Change Table</h3>
 	<div class="table-content">
-		<h4><a href="./schema-aiolos.html#challenge_history">challenge_history</a></h4>
+		<h4>challenge_history</h4>
 		<div class="change-table-content">
 			<h5>Change Column</h5>
 			<dl class="column-content">

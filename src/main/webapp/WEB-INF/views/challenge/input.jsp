@@ -32,9 +32,6 @@
               <c:out value="ルール" />
             </h5>
             <ul>
-              <li><c:out value="氏名を入力し開始。全キーワードを打鍵で入力し、回答ボタン押下で終了" />
-              <li><c:out value="キーボードのホームポジションは守ること" />
-              <li><c:out value="各項目を入力し終わったら、TABキーで次のフォームへ移動します。早く入力する秘訣" />
             </ul>
           </div>
 
@@ -73,36 +70,39 @@
       </div>
 
       <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-          <div class="panel panel-default main-border-color">
-            <div class="panel-body sub-background-color">
+        <div class="panel panel-default main-border-color">
+          <div class="panel-body sub-background-color">
+            <table class="table table-striped table-bordered ">
               <c:forEach var="list" items="${questionDtoList}" varStatus="status">
-                <div class="form-group">
-                  <label class="col-md-4 control-label"><c:out value="${list.keyword}"></c:out></label>
-                  <div class="col-md-6">
-                    <form:input path="answer[${list.questionId}]" class="form-control" disabled="true" />
-                  </div>
-                </div>
+
+                <tr>
+                  <td class="text-center">${status.count}</td>
+                  <td class="col-md-5 text-right"><c:out value="${list.description}"></c:out></td>
+                  <c:forEach var="answerList" items="${list.answerDtoList}" varStatus="status">
+                    <td class="col-md-1 text-center"><form:radiobutton path="answer[${list.questionId}]" value="${answerList.branchNo}" /><span><c:out value="${answerList.label}"></c:out></span></td>
+                  </c:forEach>
+                  <td class="col-md-3 text-center"><form:radiobutton path="answer[${list.questionId}]" /><span><c:out value="未回答"></c:out></span></td>
               </c:forEach>
-            </div>
-          </div>
-        </div>
-
-        <form:hidden path="startTime" />
-        <form:hidden path="endTime" />
-
-        <div class="row">
-          <div class="col-md-offset-1 col-md-10" align="center">
-            <table style="margin-bottom: 20px">
-              <tr>
-                <td style="vertical-align: middle;">
-                  <button id="answerButton" type="button" class="btn btn-info" onClick="answer()" disabled="true">
-                    <i class="glyphicon glyphicon-floppy-save"></i>&nbsp;&nbsp;&nbsp;回答
-                  </button>
-                </td>
-              </tr>
             </table>
           </div>
+        </div>
+      </div>
+
+      <form:hidden path="startTime" />
+      <form:hidden path="endTime" />
+      <form:hidden path="genreId" />
+
+      <div class="row">
+        <div class="col-md-offset-1 col-md-10" align="center">
+          <table style="margin-bottom: 20px">
+            <tr>
+              <td style="vertical-align: middle;">
+                <button id="answerButton" type="button" class="btn btn-info" onClick="answer()" disabled="true">
+                  <i class="glyphicon glyphicon-floppy-save"></i>&nbsp;&nbsp;&nbsp;回答
+                </button>
+              </td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>

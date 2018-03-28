@@ -356,32 +356,145 @@ dl.procedurelist dd.column pre {
 	<tbody id="table-list-body">
 	<tr>
 		<td class="rownumcell">1</td>
+		<td class="namecell" data-name="answer"><a href="#answer" title="type=TABLE, primaryKey={anwer_id}, nameLength=6, columnCount=4">answer</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell"><a href="#question" class="additionalfk" title="FK_question_answer_question_id">question</a></td>
+		<td class="relcell">&nbsp;</td>
+		<td class="commentcell answer_comment"><pre>&nbsp;</pre></td>
+		<td class="subcell">Answer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
 		<td class="namecell" data-name="challenge_detail_history"><a href="#challenge_detail_history" title="type=TABLE, primaryKey={histroy_detail_id}, nameLength=24, columnCount=5">challenge_detail_history</a></td>
 		<td class="typecell">TABLE</td>
-		<td class="relcell"><a href="#question" class="additionalfk" title="FK_MEMBER_MEMBER_STATUS_CODE">question</a></td>
+		<td class="relcell"><a href="#question" class="additionalfk" title="FK_question_detail_history_question_id">question</a></td>
 		<td class="relcell">&nbsp;</td>
 		<td class="commentcell challenge_detail_history_comment"><pre>&nbsp;</pre></td>
 		<td class="subcell">ChallengeDetailHistory</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">2</td>
-		<td class="namecell" data-name="challenge_history"><a href="#challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=10">challenge_history</a></td>
+		<td class="rownumcell">3</td>
+		<td class="namecell" data-name="challenge_history"><a href="#challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=12">challenge_history</a></td>
 		<td class="typecell">TABLE</td>
-		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#genre" class="additionalfk" title="FK_genre_challenge_history_genre_id">genre</a></td>
 		<td class="relcell">&nbsp;</td>
 		<td class="commentcell challenge_history_comment"><pre>&nbsp;</pre></td>
 		<td class="subcell">ChallengeHistory</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">3</td>
-		<td class="namecell" data-name="question"><a href="#question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=7">question</a></td>
+		<td class="rownumcell">4</td>
+		<td class="namecell" data-name="genre"><a href="#genre" title="type=TABLE, primaryKey={genre_id}, nameLength=5, columnCount=2">genre</a></td>
 		<td class="typecell">TABLE</td>
 		<td class="relcell">&nbsp;</td>
-		<td class="relcell"><a href="#challenge_detail_history" class="additionalfk" title="FK_MEMBER_MEMBER_STATUS_CODE">challenge_detail_history</a></td>
+		<td class="relcell"><a href="#challenge_history" class="additionalfk" title="FK_genre_challenge_history_genre_id">challenge_history</a></td>
+		<td class="commentcell genre_comment"><pre>&nbsp;</pre></td>
+		<td class="subcell">Genre</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">5</td>
+		<td class="namecell" data-name="question"><a href="#question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=8">question</a></td>
+		<td class="typecell">TABLE</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"><a href="#challenge_detail_history" class="additionalfk" title="FK_question_detail_history_question_id">challenge_detail_history</a>, <a href="#answer" class="additionalfk" title="FK_question_answer_question_id">answer</a></td>
 		<td class="commentcell question_comment"><pre>&nbsp;</pre></td>
 		<td class="subcell">Question</td>
 	</tr>
 	</tbody>
+</table>
+
+<h2 id="answer" title="type=TABLE, primaryKey={anwer_id}, nameLength=6, columnCount=4">
+answer
+</h2>
+<div class="tablecomment answer_comment" data-name="answer"><pre></pre></div>
+<input type="hidden" value="answer">
+<table class="tablecontent">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>ColumnComment</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="answer_pkey :: sequence=answer_anwer_id_seq:minimum(1),maximum(9223372036854775807),increment(1)">o</td>
+		<td class="flgcell">o</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="answer_anwer_id">anwer_id</td>
+		<td class="typecell">serial</td>
+		<td class="sizecell"> 10 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">anwerId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell" title="answer_question_id_branch_no_key(question_id, branch_no)">o<span class="flgplus">+</span></td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="answer_question_id">question_id</td>
+		<td class="typecell">int4</td>
+		<td class="sizecell"> 10 </td>
+		<td class="relcell"><a href="#question" class="additionalfk" title="FK_question_answer_question_id">question</a>&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">questionId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell" title="answer_question_id_branch_no_key(question_id, branch_no)"><span class="flgplus">+</span>o</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="answer_branch_no">branch_no</td>
+		<td class="typecell">int4</td>
+		<td class="sizecell"> 10 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">branchNo</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class=" columnnamecell" id="answer_label">label</td>
+		<td class="typecell">text</td>
+		<td class="sizecell"> 2147483647 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">label</td>
+		<td class="subcell">String</td>
+	</tr>
 </table>
 
 <h2 id="challenge_detail_history" title="type=TABLE, primaryKey={histroy_detail_id}, nameLength=24, columnCount=5">
@@ -453,7 +566,7 @@ challenge_detail_history
 		<td class=" columnnamecell" id="challenge_detail_history_question_id">question_id</td>
 		<td class="typecell">int4</td>
 		<td class="sizecell"> 10 </td>
-		<td class="relcell"><a href="#question" class="additionalfk" title="FK_MEMBER_MEMBER_STATUS_CODE">question</a>&nbsp;</td>
+		<td class="relcell"><a href="#question" class="additionalfk" title="FK_question_detail_history_question_id">question</a>&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
 		<td class="commentcell"><pre>&nbsp;</pre></td>
@@ -496,7 +609,7 @@ challenge_detail_history
 	</tr>
 </table>
 
-<h2 id="challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=10">
+<h2 id="challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=12">
 challenge_history
 </h2>
 <div class="tablecomment challenge_history_comment" data-name="challenge_history"><pre></pre></div>
@@ -547,37 +660,19 @@ challenge_history
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">*</td>
-		<td class=" columnnamecell" id="challenge_history_score">score</td>
+		<td class=" columnnamecell" id="challenge_history_genre_id">genre_id</td>
 		<td class="typecell">int4</td>
 		<td class="sizecell"> 10 </td>
 		<td class="defvalcell"> &nbsp;</td>
-		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#genre" class="additionalfk" title="FK_genre_challenge_history_genre_id">genre</a>&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
 		<td class="commentcell"><pre>&nbsp;</pre></td>
-		<td class="subcell">score</td>
+		<td class="subcell">genreId</td>
 		<td class="subcell">Integer</td>
 	</tr>
 	<tr>
 		<td class="rownumcell">3</td>
-		<td class="flgcell">&nbsp;</td>
-		<td class="flgcell"> &nbsp;</td>
-		<td class="flgcell">&nbsp;</td>
-		<td class="flgcell">&nbsp;</td>
-		<td class="flgcell">*</td>
-		<td class=" columnnamecell" id="challenge_history_attendance_rate">attendance_rate</td>
-		<td class="typecell">int4</td>
-		<td class="sizecell"> 10 </td>
-		<td class="defvalcell"> &nbsp;</td>
-		<td class="relcell">&nbsp;&nbsp;</td>
-		<td class="relcell">&nbsp;</td>
-		<td class="relcell"> &nbsp;</td>
-		<td class="commentcell"><pre>&nbsp;</pre></td>
-		<td class="subcell">attendanceRate</td>
-		<td class="subcell">Integer</td>
-	</tr>
-	<tr>
-		<td class="rownumcell">4</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -595,7 +690,43 @@ challenge_history
 		<td class="subcell">String</td>
 	</tr>
 	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="challenge_history_score">score</td>
+		<td class="typecell">float8</td>
+		<td class="sizecell"> 17, 17 </td>
+		<td class="defvalcell"> &nbsp;</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">score</td>
+		<td class="subcell">BigDecimal</td>
+	</tr>
+	<tr>
 		<td class="rownumcell">5</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="challenge_history_attendance_rate">attendance_rate</td>
+		<td class="typecell">int4</td>
+		<td class="sizecell"> 10 </td>
+		<td class="defvalcell"> &nbsp;</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">attendanceRate</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">6</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -613,7 +744,7 @@ challenge_history
 		<td class="subcell">Long</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">6</td>
+		<td class="rownumcell">7</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -631,7 +762,25 @@ challenge_history
 		<td class="subcell">Integer</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">7</td>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="challenge_history_incorrect_sum">incorrect_sum</td>
+		<td class="typecell">int4</td>
+		<td class="sizecell"> 10 </td>
+		<td class="defvalcell"> 0</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">incorrectSum</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">9</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -649,7 +798,7 @@ challenge_history
 		<td class="subcell">Boolean</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">8</td>
+		<td class="rownumcell">10</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -667,7 +816,7 @@ challenge_history
 		<td class="subcell">Boolean</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">9</td>
+		<td class="rownumcell">11</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -685,7 +834,7 @@ challenge_history
 		<td class="subcell">LocalDateTime</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">10</td>
+		<td class="rownumcell">12</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -704,7 +853,68 @@ challenge_history
 	</tr>
 </table>
 
-<h2 id="question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=7">
+<h2 id="genre" title="type=TABLE, primaryKey={genre_id}, nameLength=5, columnCount=2">
+genre
+</h2>
+<div class="tablecomment genre_comment" data-name="genre"><pre></pre></div>
+<input type="hidden" value="genre">
+<table class="tablecontent">
+	<thead>
+	<tr>
+		<th class="rownumhead">No.</th>
+		<th>PK</th>
+		<th>ID</th>
+		<th>UQ</th>
+		<th>IX</th>
+		<th>Not<br />Null</th>
+		<th>Name</th>
+		<th>Type</th>
+		<th>Size</th>
+		<th>ForeignTable</th>
+		<th>ReferrerTable</th>
+		<th>Classification</th>
+		<th>ColumnComment</th>
+		<th>PropertyName</th>
+		<th>JavaType</th>
+	</tr>
+	</thead>
+	<tr>
+		<td class="rownumcell">1</td>
+		<td class="flgcell" title="genre_pkey :: sequence=genre_genre_id_seq:minimum(1),maximum(9223372036854775807),increment(1)">o</td>
+		<td class="flgcell">o</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="genre_genre_id">genre_id</td>
+		<td class="typecell">serial</td>
+		<td class="sizecell"> 10 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell"><a href="#challenge_history" class="additionalfk" title="FK_genre_challenge_history_genre_id">challenge_history</a>&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">genreId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">2</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="genre_genre_name">genre_name</td>
+		<td class="typecell">text</td>
+		<td class="sizecell"> 2147483647 </td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">genreName</td>
+		<td class="subcell">String</td>
+	</tr>
+</table>
+
+<h2 id="question" title="type=TABLE, primaryKey={question_id}, nameLength=8, columnCount=8">
 question
 </h2>
 <div class="tablecomment question_comment" data-name="question"><pre></pre></div>
@@ -742,7 +952,7 @@ question
 		<td class="sizecell"> 10 </td>
 		<td class="defvalcell"> &nbsp;</td>
 		<td class="relcell">&nbsp;&nbsp;</td>
-		<td class="relcell"><a href="#challenge_detail_history" class="additionalfk" title="FK_MEMBER_MEMBER_STATUS_CODE">challenge_detail_history</a>&nbsp;</td>
+		<td class="relcell"><a href="#challenge_detail_history" class="additionalfk" title="FK_question_detail_history_question_id">challenge_detail_history</a>,<br><a href="#answer" class="additionalfk" title="FK_question_answer_question_id">answer</a>&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
 		<td class="commentcell"><pre>&nbsp;</pre></td>
 		<td class="subcell">questionId</td>
@@ -755,7 +965,43 @@ question
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">*</td>
-		<td class=" columnnamecell" id="question_keyword">keyword</td>
+		<td class=" columnnamecell" id="question_genre_id">genre_id</td>
+		<td class="typecell">int4</td>
+		<td class="sizecell"> 10 </td>
+		<td class="defvalcell"> &nbsp;</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">genreId</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">3</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="question_question_num">question_num</td>
+		<td class="typecell">int4</td>
+		<td class="sizecell"> 10 </td>
+		<td class="defvalcell"> &nbsp;</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">questionNum</td>
+		<td class="subcell">Integer</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">4</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="question_answer_branch_no">answer_branch_no</td>
 		<td class="typecell">text</td>
 		<td class="sizecell"> 2147483647 </td>
 		<td class="defvalcell"> &nbsp;</td>
@@ -763,11 +1009,11 @@ question
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell"> &nbsp;</td>
 		<td class="commentcell"><pre>&nbsp;</pre></td>
-		<td class="subcell">keyword</td>
+		<td class="subcell">answerBranchNo</td>
 		<td class="subcell">String</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">3</td>
+		<td class="rownumcell">5</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -785,25 +1031,7 @@ question
 		<td class="subcell">String</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">4</td>
-		<td class="flgcell">&nbsp;</td>
-		<td class="flgcell"> &nbsp;</td>
-		<td class="flgcell" title="question_order_num_key(order_num)">o</td>
-		<td class="flgcell">&nbsp;</td>
-		<td class="flgcell"> &nbsp;</td>
-		<td class=" columnnamecell" id="question_order_num">order_num</td>
-		<td class="typecell">int4</td>
-		<td class="sizecell"> 10 </td>
-		<td class="defvalcell"> &nbsp;</td>
-		<td class="relcell">&nbsp;&nbsp;</td>
-		<td class="relcell">&nbsp;</td>
-		<td class="relcell"> &nbsp;</td>
-		<td class="commentcell"><pre>&nbsp;</pre></td>
-		<td class="subcell">orderNum</td>
-		<td class="subcell">Integer</td>
-	</tr>
-	<tr>
-		<td class="rownumcell">5</td>
+		<td class="rownumcell">6</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -821,7 +1049,7 @@ question
 		<td class="subcell">Boolean</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">6</td>
+		<td class="rownumcell">7</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -839,7 +1067,7 @@ question
 		<td class="subcell">LocalDateTime</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">7</td>
+		<td class="rownumcell">8</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -1237,7 +1465,24 @@ function Decomment() {
 		]
 	}
 	this.pickupStore = {
-		'challenge_detail_history': {
+		'answer': {
+			'databaseComment': ''
+			, 'columns': {
+				'anwer_id': {
+					'databaseComment': ''
+				}
+				, 'question_id': {
+					'databaseComment': ''
+				}
+				, 'branch_no': {
+					'databaseComment': ''
+				}
+				, 'label': {
+					'databaseComment': ''
+				}
+			}
+		}
+		, 'challenge_detail_history': {
 			'databaseComment': ''
 			, 'columns': {
 				'histroy_detail_id': {
@@ -1263,19 +1508,25 @@ function Decomment() {
 				'challenge_history_id': {
 					'databaseComment': ''
 				}
+				, 'genre_id': {
+					'databaseComment': ''
+				}
+				, 'user_name': {
+					'databaseComment': ''
+				}
 				, 'score': {
 					'databaseComment': ''
 				}
 				, 'attendance_rate': {
 					'databaseComment': ''
 				}
-				, 'user_name': {
-					'databaseComment': ''
-				}
 				, 'elapsed_time': {
 					'databaseComment': ''
 				}
 				, 'correct_sum': {
+					'databaseComment': ''
+				}
+				, 'incorrect_sum': {
 					'databaseComment': ''
 				}
 				, 'detail_clean_flag': {
@@ -1292,19 +1543,33 @@ function Decomment() {
 				}
 			}
 		}
+		, 'genre': {
+			'databaseComment': ''
+			, 'columns': {
+				'genre_id': {
+					'databaseComment': ''
+				}
+				, 'genre_name': {
+					'databaseComment': ''
+				}
+			}
+		}
 		, 'question': {
 			'databaseComment': ''
 			, 'columns': {
 				'question_id': {
 					'databaseComment': ''
 				}
-				, 'keyword': {
+				, 'genre_id': {
+					'databaseComment': ''
+				}
+				, 'question_num': {
+					'databaseComment': ''
+				}
+				, 'answer_branch_no': {
 					'databaseComment': ''
 				}
 				, 'description': {
-					'databaseComment': ''
-				}
-				, 'order_num': {
 					'databaseComment': ''
 				}
 				, 'delete_flag': {

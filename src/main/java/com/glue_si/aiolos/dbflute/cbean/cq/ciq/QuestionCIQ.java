@@ -64,17 +64,28 @@ public class QuestionCIQ extends AbstractBsQuestionCQ {
     protected ConditionValue xgetCValueQuestionId() { return _myCQ.xdfgetQuestionId(); }
     public String keepQuestionId_ExistsReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq)
     { throwIICBOE("ExistsReferrer"); return null; }
+    public String keepQuestionId_ExistsReferrer_AnswerList(AnswerCQ sq)
+    { throwIICBOE("ExistsReferrer"); return null; }
     public String keepQuestionId_NotExistsReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq)
     { throwIICBOE("NotExistsReferrer"); return null; }
+    public String keepQuestionId_NotExistsReferrer_AnswerList(AnswerCQ sq)
+    { throwIICBOE("NotExistsReferrer"); return null; }
     public String keepQuestionId_SpecifyDerivedReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq)
+    { throwIICBOE("(Specify)DerivedReferrer"); return null; }
+    public String keepQuestionId_SpecifyDerivedReferrer_AnswerList(AnswerCQ sq)
     { throwIICBOE("(Specify)DerivedReferrer"); return null; }
     public String keepQuestionId_QueryDerivedReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
     public String keepQuestionId_QueryDerivedReferrer_ChallengeDetailHistoryListParameter(Object vl)
     { throwIICBOE("(Query)DerivedReferrer"); return null; }
-    protected ConditionValue xgetCValueKeyword() { return _myCQ.xdfgetKeyword(); }
+    public String keepQuestionId_QueryDerivedReferrer_AnswerList(AnswerCQ sq)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    public String keepQuestionId_QueryDerivedReferrer_AnswerListParameter(Object vl)
+    { throwIICBOE("(Query)DerivedReferrer"); return null; }
+    protected ConditionValue xgetCValueGenreId() { return _myCQ.xdfgetGenreId(); }
+    protected ConditionValue xgetCValueQuestionNum() { return _myCQ.xdfgetQuestionNum(); }
+    protected ConditionValue xgetCValueAnswerBranchNo() { return _myCQ.xdfgetAnswerBranchNo(); }
     protected ConditionValue xgetCValueDescription() { return _myCQ.xdfgetDescription(); }
-    protected ConditionValue xgetCValueOrderNum() { return _myCQ.xdfgetOrderNum(); }
     protected ConditionValue xgetCValueDeleteFlag() { return _myCQ.xdfgetDeleteFlag(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }

@@ -26,7 +26,7 @@ import com.glue_si.aiolos.dbflute.cbean.*;
  *     challenge_history_id
  *
  * [column]
- *     challenge_history_id, score, attendance_rate, user_name, elapsed_time, correct_sum, detail_clean_flag, delete_flag, register_datetime, update_datetime
+ *     challenge_history_id, genre_id, user_name, score, attendance_rate, elapsed_time, correct_sum, incorrect_sum, detail_clean_flag, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     challenge_history_challenge_history_id_seq
@@ -38,13 +38,13 @@ import com.glue_si.aiolos.dbflute.cbean.*;
  *     
  *
  * [foreign table]
- *     
+ *     genre
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     
+ *     genre
  *
  * [referrer property]
  *     
@@ -379,6 +379,14 @@ public abstract class BsChallengeHistoryBhv extends AbstractBehaviorWritable<Cha
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================
+    /**
+     * Pull out the list of foreign table 'Genre'.
+     * @param challengeHistoryList The list of challengeHistory. (NotNull, EmptyAllowed)
+     * @return The list of foreign table. (NotNull, EmptyAllowed, NotNullElement)
+     */
+    public List<Genre> pulloutGenre(List<ChallengeHistory> challengeHistoryList)
+    { return helpPulloutInternally(challengeHistoryList, "genre"); }
+
     // ===================================================================================
     //                                                                      Extract Column
     //                                                                      ==============

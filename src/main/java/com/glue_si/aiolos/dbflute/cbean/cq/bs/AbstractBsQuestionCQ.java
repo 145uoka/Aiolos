@@ -177,6 +177,25 @@ public abstract class AbstractBsQuestionCQ extends AbstractConditionQuery {
     public abstract String keepQuestionId_ExistsReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq);
 
     /**
+     * Set up ExistsReferrer (correlated sub-query). <br>
+     * {exists (select question_id from answer where ...)} <br>
+     * answer by question_id, named 'answerAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">existsAnswer</span>(answerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     answerCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of AnswerList for 'exists'. (NotNull)
+     */
+    public void existsAnswer(SubQuery<AnswerCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        AnswerCB cb = new AnswerCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepQuestionId_ExistsReferrer_AnswerList(cb.query());
+        registerExistsReferrer(cb.query(), "question_id", "question_id", pp, "answerList");
+    }
+    public abstract String keepQuestionId_ExistsReferrer_AnswerList(AnswerCQ sq);
+
+    /**
      * Set up NotExistsReferrer (correlated sub-query). <br>
      * {not exists (select question_id from challenge_detail_history where ...)} <br>
      * challenge_detail_history by question_id, named 'challengeDetailHistoryAsOne'.
@@ -195,6 +214,25 @@ public abstract class AbstractBsQuestionCQ extends AbstractConditionQuery {
     }
     public abstract String keepQuestionId_NotExistsReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq);
 
+    /**
+     * Set up NotExistsReferrer (correlated sub-query). <br>
+     * {not exists (select question_id from answer where ...)} <br>
+     * answer by question_id, named 'answerAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">notExistsAnswer</span>(answerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     answerCB.query().set...
+     * });
+     * </pre>
+     * @param subCBLambda The callback for sub-query of QuestionId_NotExistsReferrer_AnswerList for 'not exists'. (NotNull)
+     */
+    public void notExistsAnswer(SubQuery<AnswerCB> subCBLambda) {
+        assertObjectNotNull("subCBLambda", subCBLambda);
+        AnswerCB cb = new AnswerCB(); cb.xsetupForExistsReferrer(this);
+        lockCall(() -> subCBLambda.query(cb)); String pp = keepQuestionId_NotExistsReferrer_AnswerList(cb.query());
+        registerNotExistsReferrer(cb.query(), "question_id", "question_id", pp, "answerList");
+    }
+    public abstract String keepQuestionId_NotExistsReferrer_AnswerList(AnswerCQ sq);
+
     public void xsderiveChallengeDetailHistoryList(String fn, SubQuery<ChallengeDetailHistoryCB> sq, String al, DerivedReferrerOption op) {
         assertObjectNotNull("subQuery", sq);
         ChallengeDetailHistoryCB cb = new ChallengeDetailHistoryCB(); cb.xsetupForDerivedReferrer(this);
@@ -202,6 +240,14 @@ public abstract class AbstractBsQuestionCQ extends AbstractConditionQuery {
         registerSpecifyDerivedReferrer(fn, cb.query(), "question_id", "question_id", pp, "challengeDetailHistoryList", al, op);
     }
     public abstract String keepQuestionId_SpecifyDerivedReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq);
+
+    public void xsderiveAnswerList(String fn, SubQuery<AnswerCB> sq, String al, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        AnswerCB cb = new AnswerCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String pp = keepQuestionId_SpecifyDerivedReferrer_AnswerList(cb.query());
+        registerSpecifyDerivedReferrer(fn, cb.query(), "question_id", "question_id", pp, "answerList", al, op);
+    }
+    public abstract String keepQuestionId_SpecifyDerivedReferrer_AnswerList(AnswerCQ sq);
 
     /**
      * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
@@ -231,6 +277,33 @@ public abstract class AbstractBsQuestionCQ extends AbstractConditionQuery {
     public abstract String keepQuestionId_QueryDerivedReferrer_ChallengeDetailHistoryListParameter(Object vl);
 
     /**
+     * Prepare for (Query)DerivedReferrer (correlated sub-query). <br>
+     * {FOO &lt;= (select max(BAR) from answer where ...)} <br>
+     * answer by question_id, named 'answerAsOne'.
+     * <pre>
+     * cb.query().<span style="color: #CC4747">derivedAnswer()</span>.<span style="color: #CC4747">max</span>(answerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     answerCB.specify().<span style="color: #CC4747">columnFoo...</span> <span style="color: #3F7E5E">// derived column by function</span>
+     *     answerCB.query().setBar... <span style="color: #3F7E5E">// referrer condition</span>
+     * }).<span style="color: #CC4747">greaterEqual</span>(123); <span style="color: #3F7E5E">// condition to derived column</span>
+     * </pre>
+     * @return The object to set up a function for referrer table. (NotNull)
+     */
+    public HpQDRFunction<AnswerCB> derivedAnswer() {
+        return xcreateQDRFunctionAnswerList();
+    }
+    protected HpQDRFunction<AnswerCB> xcreateQDRFunctionAnswerList() {
+        return xcQDRFunc((fn, sq, rd, vl, op) -> xqderiveAnswerList(fn, sq, rd, vl, op));
+    }
+    public void xqderiveAnswerList(String fn, SubQuery<AnswerCB> sq, String rd, Object vl, DerivedReferrerOption op) {
+        assertObjectNotNull("subQuery", sq);
+        AnswerCB cb = new AnswerCB(); cb.xsetupForDerivedReferrer(this);
+        lockCall(() -> sq.query(cb)); String sqpp = keepQuestionId_QueryDerivedReferrer_AnswerList(cb.query()); String prpp = keepQuestionId_QueryDerivedReferrer_AnswerListParameter(vl);
+        registerQueryDerivedReferrer(fn, cb.query(), "question_id", "question_id", sqpp, "answerList", rd, vl, prpp, op);
+    }
+    public abstract String keepQuestionId_QueryDerivedReferrer_AnswerList(AnswerCQ sq);
+    public abstract String keepQuestionId_QueryDerivedReferrer_AnswerListParameter(Object vl);
+
+    /**
      * IsNull {is null}. And OnlyOnceRegistered. <br>
      * question_id: {PK, ID, NotNull, serial(10)}
      */
@@ -246,139 +319,373 @@ public abstract class AbstractBsQuestionCQ extends AbstractConditionQuery {
     protected abstract ConditionValue xgetCValueQuestionId();
 
     /**
-     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreId The value of genreId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setKeyword_Equal(String keyword) {
-        doSetKeyword_Equal(fRES(keyword));
+    public void setGenreId_Equal(Integer genreId) {
+        doSetGenreId_Equal(genreId);
     }
 
-    protected void doSetKeyword_Equal(String keyword) {
-        regKeyword(CK_EQ, keyword);
+    protected void doSetGenreId_Equal(Integer genreId) {
+        regGenreId(CK_EQ, genreId);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreId The value of genreId as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setGenreId_NotEqual(Integer genreId) {
+        doSetGenreId_NotEqual(genreId);
+    }
+
+    protected void doSetGenreId_NotEqual(Integer genreId) {
+        regGenreId(CK_NES, genreId);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreId The value of genreId as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setGenreId_GreaterThan(Integer genreId) {
+        regGenreId(CK_GT, genreId);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreId The value of genreId as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setGenreId_LessThan(Integer genreId) {
+        regGenreId(CK_LT, genreId);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreId The value of genreId as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setGenreId_GreaterEqual(Integer genreId) {
+        regGenreId(CK_GE, genreId);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreId The value of genreId as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setGenreId_LessEqual(Integer genreId) {
+        regGenreId(CK_LE, genreId);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param minNumber The min number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setGenreId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setGenreId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param minNumber The min number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setGenreId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueGenreId(), "genre_id", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreIdList The collection of genreId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setGenreId_InScope(Collection<Integer> genreIdList) {
+        doSetGenreId_InScope(genreIdList);
+    }
+
+    protected void doSetGenreId_InScope(Collection<Integer> genreIdList) {
+        regINS(CK_INS, cTL(genreIdList), xgetCValueGenreId(), "genre_id");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * genre_id: {NotNull, int4(10)}
+     * @param genreIdList The collection of genreId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setGenreId_NotInScope(Collection<Integer> genreIdList) {
+        doSetGenreId_NotInScope(genreIdList);
+    }
+
+    protected void doSetGenreId_NotInScope(Collection<Integer> genreIdList) {
+        regINS(CK_NINS, cTL(genreIdList), xgetCValueGenreId(), "genre_id");
+    }
+
+    protected void regGenreId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueGenreId(), "genre_id"); }
+    protected abstract ConditionValue xgetCValueGenreId();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNum The value of questionNum as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setQuestionNum_Equal(Integer questionNum) {
+        doSetQuestionNum_Equal(questionNum);
+    }
+
+    protected void doSetQuestionNum_Equal(Integer questionNum) {
+        regQuestionNum(CK_EQ, questionNum);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNum The value of questionNum as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setQuestionNum_NotEqual(Integer questionNum) {
+        doSetQuestionNum_NotEqual(questionNum);
+    }
+
+    protected void doSetQuestionNum_NotEqual(Integer questionNum) {
+        regQuestionNum(CK_NES, questionNum);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNum The value of questionNum as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setQuestionNum_GreaterThan(Integer questionNum) {
+        regQuestionNum(CK_GT, questionNum);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNum The value of questionNum as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setQuestionNum_LessThan(Integer questionNum) {
+        regQuestionNum(CK_LT, questionNum);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNum The value of questionNum as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setQuestionNum_GreaterEqual(Integer questionNum) {
+        regQuestionNum(CK_GE, questionNum);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNum The value of questionNum as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setQuestionNum_LessEqual(Integer questionNum) {
+        regQuestionNum(CK_LE, questionNum);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param minNumber The min number of questionNum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of questionNum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setQuestionNum_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setQuestionNum_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param minNumber The min number of questionNum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of questionNum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setQuestionNum_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueQuestionNum(), "question_num", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNumList The collection of questionNum as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setQuestionNum_InScope(Collection<Integer> questionNumList) {
+        doSetQuestionNum_InScope(questionNumList);
+    }
+
+    protected void doSetQuestionNum_InScope(Collection<Integer> questionNumList) {
+        regINS(CK_INS, cTL(questionNumList), xgetCValueQuestionNum(), "question_num");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * question_num: {NotNull, int4(10)}
+     * @param questionNumList The collection of questionNum as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setQuestionNum_NotInScope(Collection<Integer> questionNumList) {
+        doSetQuestionNum_NotInScope(questionNumList);
+    }
+
+    protected void doSetQuestionNum_NotInScope(Collection<Integer> questionNumList) {
+        regINS(CK_NINS, cTL(questionNumList), xgetCValueQuestionNum(), "question_num");
+    }
+
+    protected void regQuestionNum(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueQuestionNum(), "question_num"); }
+    protected abstract ConditionValue xgetCValueQuestionNum();
+
+    /**
+     * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as equal. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setAnswerBranchNo_Equal(String answerBranchNo) {
+        doSetAnswerBranchNo_Equal(fRES(answerBranchNo));
+    }
+
+    protected void doSetAnswerBranchNo_Equal(String answerBranchNo) {
+        regAnswerBranchNo(CK_EQ, answerBranchNo);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as notEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setKeyword_NotEqual(String keyword) {
-        doSetKeyword_NotEqual(fRES(keyword));
+    public void setAnswerBranchNo_NotEqual(String answerBranchNo) {
+        doSetAnswerBranchNo_NotEqual(fRES(answerBranchNo));
     }
 
-    protected void doSetKeyword_NotEqual(String keyword) {
-        regKeyword(CK_NES, keyword);
+    protected void doSetAnswerBranchNo_NotEqual(String answerBranchNo) {
+        regAnswerBranchNo(CK_NES, answerBranchNo);
     }
 
     /**
      * GreaterThan(&gt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as greaterThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setKeyword_GreaterThan(String keyword) {
-        regKeyword(CK_GT, fRES(keyword));
+    public void setAnswerBranchNo_GreaterThan(String answerBranchNo) {
+        regAnswerBranchNo(CK_GT, fRES(answerBranchNo));
     }
 
     /**
      * LessThan(&lt;). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as lessThan. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setKeyword_LessThan(String keyword) {
-        regKeyword(CK_LT, fRES(keyword));
+    public void setAnswerBranchNo_LessThan(String answerBranchNo) {
+        regAnswerBranchNo(CK_LT, fRES(answerBranchNo));
     }
 
     /**
      * GreaterEqual(&gt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as greaterEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setKeyword_GreaterEqual(String keyword) {
-        regKeyword(CK_GE, fRES(keyword));
+    public void setAnswerBranchNo_GreaterEqual(String answerBranchNo) {
+        regAnswerBranchNo(CK_GE, fRES(answerBranchNo));
     }
 
     /**
      * LessEqual(&lt;=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as lessEqual. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setKeyword_LessEqual(String keyword) {
-        regKeyword(CK_LE, fRES(keyword));
+    public void setAnswerBranchNo_LessEqual(String answerBranchNo) {
+        regAnswerBranchNo(CK_LE, fRES(answerBranchNo));
     }
 
     /**
      * InScope {in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keywordList The collection of keyword as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNoList The collection of answerBranchNo as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setKeyword_InScope(Collection<String> keywordList) {
-        doSetKeyword_InScope(keywordList);
+    public void setAnswerBranchNo_InScope(Collection<String> answerBranchNoList) {
+        doSetAnswerBranchNo_InScope(answerBranchNoList);
     }
 
-    protected void doSetKeyword_InScope(Collection<String> keywordList) {
-        regINS(CK_INS, cTL(keywordList), xgetCValueKeyword(), "keyword");
+    protected void doSetAnswerBranchNo_InScope(Collection<String> answerBranchNoList) {
+        regINS(CK_INS, cTL(answerBranchNoList), xgetCValueAnswerBranchNo(), "answer_branch_no");
     }
 
     /**
      * NotInScope {not in ('a', 'b')}. And NullOrEmptyIgnored, NullOrEmptyElementIgnored, SeveralRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keywordList The collection of keyword as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNoList The collection of answerBranchNo as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setKeyword_NotInScope(Collection<String> keywordList) {
-        doSetKeyword_NotInScope(keywordList);
+    public void setAnswerBranchNo_NotInScope(Collection<String> answerBranchNoList) {
+        doSetAnswerBranchNo_NotInScope(answerBranchNoList);
     }
 
-    protected void doSetKeyword_NotInScope(Collection<String> keywordList) {
-        regINS(CK_NINS, cTL(keywordList), xgetCValueKeyword(), "keyword");
+    protected void doSetAnswerBranchNo_NotInScope(Collection<String> answerBranchNoList) {
+        regINS(CK_NINS, cTL(answerBranchNoList), xgetCValueAnswerBranchNo(), "answer_branch_no");
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * keyword: {NotNull, text(2147483647)} <br>
-     * <pre>e.g. setKeyword_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
-     * @param keyword The value of keyword as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)} <br>
+     * <pre>e.g. setAnswerBranchNo_LikeSearch("xxx", op <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> op.<span style="color: #CC4747">likeContain()</span>);</pre>
+     * @param answerBranchNo The value of answerBranchNo as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setKeyword_LikeSearch(String keyword, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setKeyword_LikeSearch(keyword, xcLSOP(opLambda));
+    public void setAnswerBranchNo_LikeSearch(String answerBranchNo, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setAnswerBranchNo_LikeSearch(answerBranchNo, xcLSOP(opLambda));
     }
 
     /**
      * LikeSearch with various options. (versatile) {like '%xxx%' escape ...}. And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * keyword: {NotNull, text(2147483647)} <br>
-     * <pre>e.g. setKeyword_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
-     * @param keyword The value of keyword as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)} <br>
+     * <pre>e.g. setAnswerBranchNo_LikeSearch("xxx", new <span style="color: #CC4747">LikeSearchOption</span>().likeContain());</pre>
+     * @param answerBranchNo The value of answerBranchNo as likeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of like-search. (NotNull)
      */
-    protected void setKeyword_LikeSearch(String keyword, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_LS, fRES(keyword), xgetCValueKeyword(), "keyword", likeSearchOption);
+    protected void setAnswerBranchNo_LikeSearch(String answerBranchNo, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_LS, fRES(answerBranchNo), xgetCValueAnswerBranchNo(), "answer_branch_no", likeSearchOption);
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param opLambda The callback for option of like-search. (NotNull)
      */
-    public void setKeyword_NotLikeSearch(String keyword, ConditionOptionCall<LikeSearchOption> opLambda) {
-        setKeyword_NotLikeSearch(keyword, xcLSOP(opLambda));
+    public void setAnswerBranchNo_NotLikeSearch(String answerBranchNo, ConditionOptionCall<LikeSearchOption> opLambda) {
+        setAnswerBranchNo_NotLikeSearch(answerBranchNo, xcLSOP(opLambda));
     }
 
     /**
      * NotLikeSearch with various options. (versatile) {not like 'xxx%' escape ...} <br>
      * And NullOrEmptyIgnored, SeveralRegistered. <br>
-     * keyword: {NotNull, text(2147483647)}
-     * @param keyword The value of keyword as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @param answerBranchNo The value of answerBranchNo as notLikeSearch. (basically NotNull, NotEmpty: error as default, or no condition as option)
      * @param likeSearchOption The option of not-like-search. (NotNull)
      */
-    protected void setKeyword_NotLikeSearch(String keyword, LikeSearchOption likeSearchOption) {
-        regLSQ(CK_NLS, fRES(keyword), xgetCValueKeyword(), "keyword", likeSearchOption);
+    protected void setAnswerBranchNo_NotLikeSearch(String answerBranchNo, LikeSearchOption likeSearchOption) {
+        regLSQ(CK_NLS, fRES(answerBranchNo), xgetCValueAnswerBranchNo(), "answer_branch_no", likeSearchOption);
     }
 
-    protected void regKeyword(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueKeyword(), "keyword"); }
-    protected abstract ConditionValue xgetCValueKeyword();
+    protected void regAnswerBranchNo(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueAnswerBranchNo(), "answer_branch_no"); }
+    protected abstract ConditionValue xgetCValueAnswerBranchNo();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
@@ -532,135 +839,6 @@ public abstract class AbstractBsQuestionCQ extends AbstractConditionQuery {
 
     protected void regDescription(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDescription(), "description"); }
     protected abstract ConditionValue xgetCValueDescription();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNum The value of orderNum as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setOrderNum_Equal(Integer orderNum) {
-        doSetOrderNum_Equal(orderNum);
-    }
-
-    protected void doSetOrderNum_Equal(Integer orderNum) {
-        regOrderNum(CK_EQ, orderNum);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNum The value of orderNum as notEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setOrderNum_NotEqual(Integer orderNum) {
-        doSetOrderNum_NotEqual(orderNum);
-    }
-
-    protected void doSetOrderNum_NotEqual(Integer orderNum) {
-        regOrderNum(CK_NES, orderNum);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNum The value of orderNum as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setOrderNum_GreaterThan(Integer orderNum) {
-        regOrderNum(CK_GT, orderNum);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNum The value of orderNum as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setOrderNum_LessThan(Integer orderNum) {
-        regOrderNum(CK_LT, orderNum);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNum The value of orderNum as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setOrderNum_GreaterEqual(Integer orderNum) {
-        regOrderNum(CK_GE, orderNum);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNum The value of orderNum as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setOrderNum_LessEqual(Integer orderNum) {
-        regOrderNum(CK_LE, orderNum);
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param minNumber The min number of orderNum. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of orderNum. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
-     */
-    public void setOrderNum_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setOrderNum_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param minNumber The min number of orderNum. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of orderNum. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
-     */
-    protected void setOrderNum_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueOrderNum(), "order_num", rangeOfOption);
-    }
-
-    /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNumList The collection of orderNum as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setOrderNum_InScope(Collection<Integer> orderNumList) {
-        doSetOrderNum_InScope(orderNumList);
-    }
-
-    protected void doSetOrderNum_InScope(Collection<Integer> orderNumList) {
-        regINS(CK_INS, cTL(orderNumList), xgetCValueOrderNum(), "order_num");
-    }
-
-    /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     * @param orderNumList The collection of orderNum as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setOrderNum_NotInScope(Collection<Integer> orderNumList) {
-        doSetOrderNum_NotInScope(orderNumList);
-    }
-
-    protected void doSetOrderNum_NotInScope(Collection<Integer> orderNumList) {
-        regINS(CK_NINS, cTL(orderNumList), xgetCValueOrderNum(), "order_num");
-    }
-
-    /**
-     * IsNull {is null}. And OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     */
-    public void setOrderNum_IsNull() { regOrderNum(CK_ISN, DOBJ); }
-
-    /**
-     * IsNotNull {is not null}. And OnlyOnceRegistered. <br>
-     * order_num: {UQ, int4(10)}
-     */
-    public void setOrderNum_IsNotNull() { regOrderNum(CK_ISNN, DOBJ); }
-
-    protected void regOrderNum(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueOrderNum(), "order_num"); }
-    protected abstract ConditionValue xgetCValueOrderNum();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>

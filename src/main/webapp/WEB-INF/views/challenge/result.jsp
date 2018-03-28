@@ -36,7 +36,8 @@
           <table class="table table-striped table-bordered table-hover table-condensed">
             <thead class="main-background-color">
               <tr>
-                <th class="text-center">正答数</th>
+                <th class="text-center">正解数</th>
+                <th class="text-center">不正解数</th>
                 <th class="text-center">正答率</th>
                 <th class="text-center">経過時間</th>
                 <th class="text-center">スコア</th>
@@ -44,6 +45,7 @@
             </thead>
             <tr>
               <td class="text-center"><c:out value="${challengeResultDto.correctSum}"></c:out></td>
+              <td class="text-center"><c:out value="${challengeResultDto.incorrectSum}"></c:out></td>
               <td class="text-center"><c:out value="${challengeResultDto.attendanceRate}%"></c:out></td>
               <td class="text-center"><c:out value="${challengeResultDto.elapsedTime}"></c:out></td>
               <td class="text-center"><c:out value="${challengeResultDto.score}"></c:out></td>
@@ -66,7 +68,7 @@
             <c:forEach var="detailDto" items="${detailDtoList}" varStatus="status">
               <tr>
                 <td class="text-center"><c:out value="${status.count}"></c:out></td>
-                <td class="text-center"><c:out value="${detailDto.keyword}"></c:out></td>
+                <td class="text-center"><c:out value="${detailDto.answerBranchNo}"></c:out></td>
                 <td class="text-center"><c:out value="${detailDto.answer}"></c:out></td>
 
                 <td class="text-center">

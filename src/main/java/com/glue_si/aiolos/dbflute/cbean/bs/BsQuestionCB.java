@@ -90,18 +90,6 @@ public class BsQuestionCB extends AbstractConditionBean {
         return (QuestionCB)this;
     }
 
-    /**
-     * Accept the query condition of unique key as equal.
-     * @param orderNum : UQ, int4(10). (NotNull)
-     * @return this. (NotNull)
-     */
-    public QuestionCB acceptUniqueOf(Integer orderNum) {
-        assertObjectNotNull("orderNum", orderNum);
-        BsQuestionCB cb = this;
-        cb.query().setOrderNum_Equal(orderNum);
-        return (QuestionCB)this;
-    }
-
     public ConditionBean addOrderBy_PK_Asc() {
         query().addOrderBy_QuestionId_Asc();
         return this;
@@ -300,20 +288,25 @@ public class BsQuestionCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnQuestionId() { return doColumn("question_id"); }
         /**
-         * keyword: {NotNull, text(2147483647)}
+         * genre_id: {NotNull, int4(10)}
          * @return The information object of specified column. (NotNull)
          */
-        public SpecifiedColumn columnKeyword() { return doColumn("keyword"); }
+        public SpecifiedColumn columnGenreId() { return doColumn("genre_id"); }
+        /**
+         * question_num: {NotNull, int4(10)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnQuestionNum() { return doColumn("question_num"); }
+        /**
+         * answer_branch_no: {NotNull, text(2147483647)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnAnswerBranchNo() { return doColumn("answer_branch_no"); }
         /**
          * description: {text(2147483647)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnDescription() { return doColumn("description"); }
-        /**
-         * order_num: {UQ, int4(10)}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnOrderNum() { return doColumn("order_num"); }
         /**
          * delete_flag: {NotNull, bool(1), default=[false]}
          * @return The information object of specified column. (NotNull)
@@ -353,6 +346,23 @@ public class BsQuestionCB extends AbstractConditionBean {
             assertDerived("challengeDetailHistoryList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
             return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<ChallengeDetailHistoryCB> sq, QuestionCQ cq, String al, DerivedReferrerOption op)
                     -> cq.xsderiveChallengeDetailHistoryList(fn, sq, al, op), _dbmetaProvider);
+        }
+        /**
+         * Prepare for (Specify)DerivedReferrer (correlated sub-query). <br>
+         * {select max(FOO) from answer where ...) as FOO_MAX} <br>
+         * answer by question_id, named 'answerList'.
+         * <pre>
+         * cb.specify().<span style="color: #CC4747">derived${relationMethodIdentityName}()</span>.<span style="color: #CC4747">max</span>(answerCB <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+         *     answerCB.specify().<span style="color: #CC4747">column...</span> <span style="color: #3F7E5E">// derived column by function</span>
+         *     answerCB.query().set... <span style="color: #3F7E5E">// referrer condition</span>
+         * }, Answer.<span style="color: #CC4747">ALIAS_foo...</span>);
+         * </pre>
+         * @return The object to set up a function for referrer table. (NotNull)
+         */
+        public HpSDRFunction<AnswerCB, QuestionCQ> derivedAnswer() {
+            assertDerived("answerList"); if (xhasSyncQyCall()) { xsyncQyCall().qy(); } // for sync (for example, this in ColumnQuery)
+            return cHSDRF(_baseCB, _qyCall.qy(), (String fn, SubQuery<AnswerCB> sq, QuestionCQ cq, String al, DerivedReferrerOption op)
+                    -> cq.xsderiveAnswerList(fn, sq, al, op), _dbmetaProvider);
         }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).

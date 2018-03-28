@@ -1,4 +1,122 @@
 map:{
+    ; 2018/03/28 21:11:04 = map:{
+        ; diffDate = 2018/03/28 21:11:04
+        ; tableCount = map:{
+            ; next = 5
+            ; previous = 4
+        }
+        ; tableDiff = map:{
+            ; genre = map:{
+                ; tableName = genre
+                ; diffType = ADD
+            }
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; genre_id = map:{
+                        ; columnName = genre_id
+                        ; diffType = ADD
+                    }
+                }
+            }
+            ; question = map:{
+                ; tableName = question
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; genre_id = map:{
+                        ; columnName = genre_id
+                        ; diffType = ADD
+                    }
+                    ; question_num = map:{
+                        ; columnName = question_num
+                        ; diffType = ADD
+                    }
+                    ; answer_branch_no = map:{
+                        ; columnName = answer_branch_no
+                        ; diffType = ADD
+                    }
+                    ; keyword = map:{
+                        ; columnName = keyword
+                        ; diffType = DELETE
+                    }
+                    ; order_num = map:{
+                        ; columnName = order_num
+                        ; diffType = DELETE
+                    }
+                }
+                ; uniqueKeyDiff = map:{
+                    ; question_order_num_key = map:{
+                        ; constraintName = question_order_num_key
+                        ; diffType = DELETE
+                    }
+                }
+            }
+        }
+        ; sequenceDiff = map:{
+            ; postgres.aiolos.genre_genre_id_seq = map:{
+                ; sequenceName = postgres.aiolos.genre_genre_id_seq
+                ; diffType = ADD
+            }
+        }
+    }
+    ; 2018/03/28 20:40:16 = map:{
+        ; diffDate = 2018/03/28 20:40:16
+        ; tableDiff = map:{
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; score = map:{
+                        ; columnName = score
+                        ; diffType = CHANGE
+                        ; dbTypeDiff = map:{
+                            ; next = float8
+                            ; previous = int4
+                        }
+                        ; columnSizeDiff = map:{
+                            ; next = 17, 17
+                            ; previous = 10
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ; 2018/03/28 20:33:04 = map:{
+        ; diffDate = 2018/03/28 20:33:04
+        ; tableDiff = map:{
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; incorrect_sum = map:{
+                        ; columnName = incorrect_sum
+                        ; diffType = ADD
+                    }
+                }
+            }
+        }
+    }
+    ; 2018/03/28 19:24:07 = map:{
+        ; diffDate = 2018/03/28 19:24:07
+        ; tableCount = map:{
+            ; next = 4
+            ; previous = 3
+        }
+        ; tableDiff = map:{
+            ; answer = map:{
+                ; tableName = answer
+                ; diffType = ADD
+            }
+        }
+        ; sequenceDiff = map:{
+            ; postgres.aiolos.answer_anwer_id_seq = map:{
+                ; sequenceName = postgres.aiolos.answer_anwer_id_seq
+                ; diffType = ADD
+            }
+        }
+    }
     ; 2018/03/28 13:10:09 = map:{
         ; diffDate = 2018/03/28 13:10:09
         ; tableDiff = map:{

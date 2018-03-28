@@ -148,7 +148,7 @@ public class ChallengeDetailHistoryDbm extends AbstractDBMeta {
      */
     public ForeignInfo foreignQuestion() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnQuestionId(), QuestionDbm.getInstance().columnQuestionId());
-        return cfi("FK_MEMBER_MEMBER_STATUS_CODE", "question", this, QuestionDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, true, null, null, false, "challengeDetailHistoryList", false);
+        return cfi("FK_question_detail_history_question_id", "question", this, QuestionDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, true, null, null, false, "challengeDetailHistoryList", false);
     }
 
     // -----------------------------------------------------

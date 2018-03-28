@@ -3,9 +3,11 @@ package com.glue_si.aiolos.dbflute.bsentity;
 import java.util.List;
 import java.util.ArrayList;
 
+import org.dbflute.Entity;
 import org.dbflute.dbmeta.DBMeta;
 import org.dbflute.dbmeta.AbstractEntity;
 import org.dbflute.dbmeta.accessory.DomainEntity;
+import org.dbflute.optional.OptionalEntity;
 import com.glue_si.aiolos.dbflute.allcommon.EntityDefinedCommonColumn;
 import com.glue_si.aiolos.dbflute.allcommon.DBMetaInstanceHandler;
 import com.glue_si.aiolos.dbflute.exentity.*;
@@ -17,7 +19,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     challenge_history_id
  *
  * [column]
- *     challenge_history_id, score, attendance_rate, user_name, elapsed_time, correct_sum, detail_clean_flag, delete_flag, register_datetime, update_datetime
+ *     challenge_history_id, genre_id, user_name, score, attendance_rate, elapsed_time, correct_sum, incorrect_sum, detail_clean_flag, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     challenge_history_challenge_history_id_seq
@@ -29,13 +31,13 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     
+ *     genre
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     
+ *     genre
  *
  * [referrer property]
  *     
@@ -43,21 +45,25 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * Integer challengeHistoryId = entity.getChallengeHistoryId();
- * Integer score = entity.getScore();
- * Integer attendanceRate = entity.getAttendanceRate();
+ * Integer genreId = entity.getGenreId();
  * String userName = entity.getUserName();
+ * java.math.BigDecimal score = entity.getScore();
+ * Integer attendanceRate = entity.getAttendanceRate();
  * Long elapsedTime = entity.getElapsedTime();
  * Integer correctSum = entity.getCorrectSum();
+ * Integer incorrectSum = entity.getIncorrectSum();
  * Boolean detailCleanFlag = entity.getDetailCleanFlag();
  * Boolean deleteFlag = entity.getDeleteFlag();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * entity.setChallengeHistoryId(challengeHistoryId);
+ * entity.setGenreId(genreId);
+ * entity.setUserName(userName);
  * entity.setScore(score);
  * entity.setAttendanceRate(attendanceRate);
- * entity.setUserName(userName);
  * entity.setElapsedTime(elapsedTime);
  * entity.setCorrectSum(correctSum);
+ * entity.setIncorrectSum(incorrectSum);
  * entity.setDetailCleanFlag(detailCleanFlag);
  * entity.setDeleteFlag(deleteFlag);
  * entity.setRegisterDatetime(registerDatetime);
@@ -80,20 +86,26 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
     /** challenge_history_id: {PK, ID, NotNull, serial(10)} */
     protected Integer _challengeHistoryId;
 
-    /** score: {NotNull, int4(10)} */
-    protected Integer _score;
-
-    /** attendance_rate: {NotNull, int4(10)} */
-    protected Integer _attendanceRate;
+    /** genre_id: {NotNull, int4(10), FK to genre} */
+    protected Integer _genreId;
 
     /** user_name: {NotNull, text(2147483647)} */
     protected String _userName;
+
+    /** score: {NotNull, float8(17, 17)} */
+    protected java.math.BigDecimal _score;
+
+    /** attendance_rate: {NotNull, int4(10)} */
+    protected Integer _attendanceRate;
 
     /** elapsed_time: {NotNull, int8(19), default=[0]} */
     protected Long _elapsedTime;
 
     /** correct_sum: {NotNull, int4(10), default=[0]} */
     protected Integer _correctSum;
+
+    /** incorrect_sum: {NotNull, int4(10), default=[0]} */
+    protected Integer _incorrectSum;
 
     /** detail_clean_flag: {NotNull, bool(1), default=[false]} */
     protected Boolean _detailCleanFlag;
@@ -132,6 +144,27 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
+    /** genre by my genre_id, named 'genre'. */
+    protected OptionalEntity<Genre> _genre;
+
+    /**
+     * [get] genre by my genre_id, named 'genre'. <br>
+     * Optional: alwaysPresent(), ifPresent().orElse(), get(), ...
+     * @return The entity of foreign property 'genre'. (NotNull, EmptyAllowed: when e.g. null FK column, no setupSelect)
+     */
+    public OptionalEntity<Genre> getGenre() {
+        if (_genre == null) { _genre = OptionalEntity.relationEmpty(this, "genre"); }
+        return _genre;
+    }
+
+    /**
+     * [set] genre by my genre_id, named 'genre'.
+     * @param genre The entity of foreign property 'genre'. (NullAllowed)
+     */
+    public void setGenre(OptionalEntity<Genre> genre) {
+        _genre = genre;
+    }
+
     // ===================================================================================
     //                                                                   Referrer Property
     //                                                                   =================
@@ -163,18 +196,26 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
 
     @Override
     protected String doBuildStringWithRelation(String li) {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (_genre != null && _genre.isPresent())
+        { sb.append(li).append(xbRDS(_genre, "genre")); }
+        return sb.toString();
+    }
+    protected <ET extends Entity> String xbRDS(org.dbflute.optional.OptionalEntity<ET> et, String name) { // buildRelationDisplayString()
+        return et.get().buildDisplayString(name, true, true);
     }
 
     @Override
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_challengeHistoryId));
+        sb.append(dm).append(xfND(_genreId));
+        sb.append(dm).append(xfND(_userName));
         sb.append(dm).append(xfND(_score));
         sb.append(dm).append(xfND(_attendanceRate));
-        sb.append(dm).append(xfND(_userName));
         sb.append(dm).append(xfND(_elapsedTime));
         sb.append(dm).append(xfND(_correctSum));
+        sb.append(dm).append(xfND(_incorrectSum));
         sb.append(dm).append(xfND(_detailCleanFlag));
         sb.append(dm).append(xfND(_deleteFlag));
         sb.append(dm).append(xfND(_registerDatetime));
@@ -188,7 +229,13 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
 
     @Override
     protected String doBuildRelationString(String dm) {
-        return "";
+        StringBuilder sb = new StringBuilder();
+        if (_genre != null && _genre.isPresent())
+        { sb.append(dm).append("genre"); }
+        if (sb.length() > dm.length()) {
+            sb.delete(0, dm.length()).insert(0, "(").append(")");
+        }
+        return sb.toString();
     }
 
     @Override
@@ -218,19 +265,55 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
     }
 
     /**
-     * [get] score: {NotNull, int4(10)} <br>
+     * [get] genre_id: {NotNull, int4(10), FK to genre} <br>
+     * @return The value of the column 'genre_id'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getGenreId() {
+        checkSpecifiedProperty("genreId");
+        return _genreId;
+    }
+
+    /**
+     * [set] genre_id: {NotNull, int4(10), FK to genre} <br>
+     * @param genreId The value of the column 'genre_id'. (basically NotNull if update: for the constraint)
+     */
+    public void setGenreId(Integer genreId) {
+        registerModifiedProperty("genreId");
+        _genreId = genreId;
+    }
+
+    /**
+     * [get] user_name: {NotNull, text(2147483647)} <br>
+     * @return The value of the column 'user_name'. (basically NotNull if selected: for the constraint)
+     */
+    public String getUserName() {
+        checkSpecifiedProperty("userName");
+        return _userName;
+    }
+
+    /**
+     * [set] user_name: {NotNull, text(2147483647)} <br>
+     * @param userName The value of the column 'user_name'. (basically NotNull if update: for the constraint)
+     */
+    public void setUserName(String userName) {
+        registerModifiedProperty("userName");
+        _userName = userName;
+    }
+
+    /**
+     * [get] score: {NotNull, float8(17, 17)} <br>
      * @return The value of the column 'score'. (basically NotNull if selected: for the constraint)
      */
-    public Integer getScore() {
+    public java.math.BigDecimal getScore() {
         checkSpecifiedProperty("score");
         return _score;
     }
 
     /**
-     * [set] score: {NotNull, int4(10)} <br>
+     * [set] score: {NotNull, float8(17, 17)} <br>
      * @param score The value of the column 'score'. (basically NotNull if update: for the constraint)
      */
-    public void setScore(Integer score) {
+    public void setScore(java.math.BigDecimal score) {
         registerModifiedProperty("score");
         _score = score;
     }
@@ -251,24 +334,6 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
     public void setAttendanceRate(Integer attendanceRate) {
         registerModifiedProperty("attendanceRate");
         _attendanceRate = attendanceRate;
-    }
-
-    /**
-     * [get] user_name: {NotNull, text(2147483647)} <br>
-     * @return The value of the column 'user_name'. (basically NotNull if selected: for the constraint)
-     */
-    public String getUserName() {
-        checkSpecifiedProperty("userName");
-        return _userName;
-    }
-
-    /**
-     * [set] user_name: {NotNull, text(2147483647)} <br>
-     * @param userName The value of the column 'user_name'. (basically NotNull if update: for the constraint)
-     */
-    public void setUserName(String userName) {
-        registerModifiedProperty("userName");
-        _userName = userName;
     }
 
     /**
@@ -305,6 +370,24 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
     public void setCorrectSum(Integer correctSum) {
         registerModifiedProperty("correctSum");
         _correctSum = correctSum;
+    }
+
+    /**
+     * [get] incorrect_sum: {NotNull, int4(10), default=[0]} <br>
+     * @return The value of the column 'incorrect_sum'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getIncorrectSum() {
+        checkSpecifiedProperty("incorrectSum");
+        return _incorrectSum;
+    }
+
+    /**
+     * [set] incorrect_sum: {NotNull, int4(10), default=[0]} <br>
+     * @param incorrectSum The value of the column 'incorrect_sum'. (basically NotNull if update: for the constraint)
+     */
+    public void setIncorrectSum(Integer incorrectSum) {
+        registerModifiedProperty("incorrectSum");
+        _incorrectSum = incorrectSum;
     }
 
     /**

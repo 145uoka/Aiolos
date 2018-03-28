@@ -17,7 +17,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     question_id
  *
  * [column]
- *     question_id, keyword, description, order_num, delete_flag, register_datetime, update_datetime
+ *     question_id, genre_id, question_num, answer_branch_no, description, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     question_question_id_seq
@@ -32,27 +32,29 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     
  *
  * [referrer table]
- *     challenge_detail_history
+ *     challenge_detail_history, answer
  *
  * [foreign property]
  *     
  *
  * [referrer property]
- *     challengeDetailHistoryList
+ *     challengeDetailHistoryList, answerList
  *
  * [get/set template]
  * /= = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = = =
  * Integer questionId = entity.getQuestionId();
- * String keyword = entity.getKeyword();
+ * Integer genreId = entity.getGenreId();
+ * Integer questionNum = entity.getQuestionNum();
+ * String answerBranchNo = entity.getAnswerBranchNo();
  * String description = entity.getDescription();
- * Integer orderNum = entity.getOrderNum();
  * Boolean deleteFlag = entity.getDeleteFlag();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
  * entity.setQuestionId(questionId);
- * entity.setKeyword(keyword);
+ * entity.setGenreId(genreId);
+ * entity.setQuestionNum(questionNum);
+ * entity.setAnswerBranchNo(answerBranchNo);
  * entity.setDescription(description);
- * entity.setOrderNum(orderNum);
  * entity.setDeleteFlag(deleteFlag);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setUpdateDatetime(updateDatetime);
@@ -74,14 +76,17 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
     /** question_id: {PK, ID, NotNull, serial(10)} */
     protected Integer _questionId;
 
-    /** keyword: {NotNull, text(2147483647)} */
-    protected String _keyword;
+    /** genre_id: {NotNull, int4(10)} */
+    protected Integer _genreId;
+
+    /** question_num: {NotNull, int4(10)} */
+    protected Integer _questionNum;
+
+    /** answer_branch_no: {NotNull, text(2147483647)} */
+    protected String _answerBranchNo;
 
     /** description: {text(2147483647)} */
     protected String _description;
-
-    /** order_num: {UQ, int4(10)} */
-    protected Integer _orderNum;
 
     /** delete_flag: {NotNull, bool(1), default=[false]} */
     protected Boolean _deleteFlag;
@@ -114,17 +119,6 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
         return true;
     }
 
-    /**
-     * To be unique by the unique column. <br>
-     * You can update the entity by the key when entity update (NOT batch update).
-     * @param orderNum : UQ, int4(10). (NotNull)
-     */
-    public void uniqueBy(Integer orderNum) {
-        __uniqueDrivenProperties.clear();
-        __uniqueDrivenProperties.addPropertyName("orderNum");
-        setOrderNum(orderNum);
-    }
-
     // ===================================================================================
     //                                                                    Foreign Property
     //                                                                    ================
@@ -149,6 +143,26 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
      */
     public void setChallengeDetailHistoryList(List<ChallengeDetailHistory> challengeDetailHistoryList) {
         _challengeDetailHistoryList = challengeDetailHistoryList;
+    }
+
+    /** answer by question_id, named 'answerList'. */
+    protected List<Answer> _answerList;
+
+    /**
+     * [get] answer by question_id, named 'answerList'.
+     * @return The entity list of referrer property 'answerList'. (NotNull: even if no loading, returns empty list)
+     */
+    public List<Answer> getAnswerList() {
+        if (_answerList == null) { _answerList = newReferrerList(); }
+        return _answerList;
+    }
+
+    /**
+     * [set] answer by question_id, named 'answerList'.
+     * @param answerList The entity list of referrer property 'answerList'. (NullAllowed)
+     */
+    public void setAnswerList(List<Answer> answerList) {
+        _answerList = answerList;
     }
 
     protected <ELEMENT> List<ELEMENT> newReferrerList() { // overriding to import
@@ -182,6 +196,8 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
         StringBuilder sb = new StringBuilder();
         if (_challengeDetailHistoryList != null) { for (ChallengeDetailHistory et : _challengeDetailHistoryList)
         { if (et != null) { sb.append(li).append(xbRDS(et, "challengeDetailHistoryList")); } } }
+        if (_answerList != null) { for (Answer et : _answerList)
+        { if (et != null) { sb.append(li).append(xbRDS(et, "answerList")); } } }
         return sb.toString();
     }
 
@@ -189,9 +205,10 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
     protected String doBuildColumnString(String dm) {
         StringBuilder sb = new StringBuilder();
         sb.append(dm).append(xfND(_questionId));
-        sb.append(dm).append(xfND(_keyword));
+        sb.append(dm).append(xfND(_genreId));
+        sb.append(dm).append(xfND(_questionNum));
+        sb.append(dm).append(xfND(_answerBranchNo));
         sb.append(dm).append(xfND(_description));
-        sb.append(dm).append(xfND(_orderNum));
         sb.append(dm).append(xfND(_deleteFlag));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -207,6 +224,8 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
         StringBuilder sb = new StringBuilder();
         if (_challengeDetailHistoryList != null && !_challengeDetailHistoryList.isEmpty())
         { sb.append(dm).append("challengeDetailHistoryList"); }
+        if (_answerList != null && !_answerList.isEmpty())
+        { sb.append(dm).append("answerList"); }
         if (sb.length() > dm.length()) {
             sb.delete(0, dm.length()).insert(0, "(").append(")");
         }
@@ -240,21 +259,57 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
     }
 
     /**
-     * [get] keyword: {NotNull, text(2147483647)} <br>
-     * @return The value of the column 'keyword'. (basically NotNull if selected: for the constraint)
+     * [get] genre_id: {NotNull, int4(10)} <br>
+     * @return The value of the column 'genre_id'. (basically NotNull if selected: for the constraint)
      */
-    public String getKeyword() {
-        checkSpecifiedProperty("keyword");
-        return _keyword;
+    public Integer getGenreId() {
+        checkSpecifiedProperty("genreId");
+        return _genreId;
     }
 
     /**
-     * [set] keyword: {NotNull, text(2147483647)} <br>
-     * @param keyword The value of the column 'keyword'. (basically NotNull if update: for the constraint)
+     * [set] genre_id: {NotNull, int4(10)} <br>
+     * @param genreId The value of the column 'genre_id'. (basically NotNull if update: for the constraint)
      */
-    public void setKeyword(String keyword) {
-        registerModifiedProperty("keyword");
-        _keyword = keyword;
+    public void setGenreId(Integer genreId) {
+        registerModifiedProperty("genreId");
+        _genreId = genreId;
+    }
+
+    /**
+     * [get] question_num: {NotNull, int4(10)} <br>
+     * @return The value of the column 'question_num'. (basically NotNull if selected: for the constraint)
+     */
+    public Integer getQuestionNum() {
+        checkSpecifiedProperty("questionNum");
+        return _questionNum;
+    }
+
+    /**
+     * [set] question_num: {NotNull, int4(10)} <br>
+     * @param questionNum The value of the column 'question_num'. (basically NotNull if update: for the constraint)
+     */
+    public void setQuestionNum(Integer questionNum) {
+        registerModifiedProperty("questionNum");
+        _questionNum = questionNum;
+    }
+
+    /**
+     * [get] answer_branch_no: {NotNull, text(2147483647)} <br>
+     * @return The value of the column 'answer_branch_no'. (basically NotNull if selected: for the constraint)
+     */
+    public String getAnswerBranchNo() {
+        checkSpecifiedProperty("answerBranchNo");
+        return _answerBranchNo;
+    }
+
+    /**
+     * [set] answer_branch_no: {NotNull, text(2147483647)} <br>
+     * @param answerBranchNo The value of the column 'answer_branch_no'. (basically NotNull if update: for the constraint)
+     */
+    public void setAnswerBranchNo(String answerBranchNo) {
+        registerModifiedProperty("answerBranchNo");
+        _answerBranchNo = answerBranchNo;
     }
 
     /**
@@ -273,24 +328,6 @@ public abstract class BsQuestion extends AbstractEntity implements DomainEntity,
     public void setDescription(String description) {
         registerModifiedProperty("description");
         _description = description;
-    }
-
-    /**
-     * [get] order_num: {UQ, int4(10)} <br>
-     * @return The value of the column 'order_num'. (NullAllowed even if selected: for no constraint)
-     */
-    public Integer getOrderNum() {
-        checkSpecifiedProperty("orderNum");
-        return _orderNum;
-    }
-
-    /**
-     * [set] order_num: {UQ, int4(10)} <br>
-     * @param orderNum The value of the column 'order_num'. (NullAllowed: null update allowed for no constraint)
-     */
-    public void setOrderNum(Integer orderNum) {
-        registerModifiedProperty("orderNum");
-        _orderNum = orderNum;
     }
 
     /**

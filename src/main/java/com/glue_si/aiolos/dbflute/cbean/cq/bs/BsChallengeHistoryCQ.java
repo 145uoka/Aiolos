@@ -93,6 +93,46 @@ public class BsChallengeHistoryCQ extends AbstractBsChallengeHistoryCQ {
      */
     public BsChallengeHistoryCQ addOrderBy_ChallengeHistoryId_Desc() { regOBD("challenge_history_id"); return this; }
 
+    protected ConditionValue _genreId;
+    public ConditionValue xdfgetGenreId()
+    { if (_genreId == null) { _genreId = nCV(); }
+      return _genreId; }
+    protected ConditionValue xgetCValueGenreId() { return xdfgetGenreId(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_GenreId_Asc() { regOBA("genre_id"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_GenreId_Desc() { regOBD("genre_id"); return this; }
+
+    protected ConditionValue _userName;
+    public ConditionValue xdfgetUserName()
+    { if (_userName == null) { _userName = nCV(); }
+      return _userName; }
+    protected ConditionValue xgetCValueUserName() { return xdfgetUserName(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * user_name: {NotNull, text(2147483647)}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_UserName_Asc() { regOBA("user_name"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * user_name: {NotNull, text(2147483647)}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_UserName_Desc() { regOBD("user_name"); return this; }
+
     protected ConditionValue _score;
     public ConditionValue xdfgetScore()
     { if (_score == null) { _score = nCV(); }
@@ -101,14 +141,14 @@ public class BsChallengeHistoryCQ extends AbstractBsChallengeHistoryCQ {
 
     /**
      * Add order-by as ascend. <br>
-     * score: {NotNull, int4(10)}
+     * score: {NotNull, float8(17, 17)}
      * @return this. (NotNull)
      */
     public BsChallengeHistoryCQ addOrderBy_Score_Asc() { regOBA("score"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * score: {NotNull, int4(10)}
+     * score: {NotNull, float8(17, 17)}
      * @return this. (NotNull)
      */
     public BsChallengeHistoryCQ addOrderBy_Score_Desc() { regOBD("score"); return this; }
@@ -132,26 +172,6 @@ public class BsChallengeHistoryCQ extends AbstractBsChallengeHistoryCQ {
      * @return this. (NotNull)
      */
     public BsChallengeHistoryCQ addOrderBy_AttendanceRate_Desc() { regOBD("attendance_rate"); return this; }
-
-    protected ConditionValue _userName;
-    public ConditionValue xdfgetUserName()
-    { if (_userName == null) { _userName = nCV(); }
-      return _userName; }
-    protected ConditionValue xgetCValueUserName() { return xdfgetUserName(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * user_name: {NotNull, text(2147483647)}
-     * @return this. (NotNull)
-     */
-    public BsChallengeHistoryCQ addOrderBy_UserName_Asc() { regOBA("user_name"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * user_name: {NotNull, text(2147483647)}
-     * @return this. (NotNull)
-     */
-    public BsChallengeHistoryCQ addOrderBy_UserName_Desc() { regOBD("user_name"); return this; }
 
     protected ConditionValue _elapsedTime;
     public ConditionValue xdfgetElapsedTime()
@@ -192,6 +212,26 @@ public class BsChallengeHistoryCQ extends AbstractBsChallengeHistoryCQ {
      * @return this. (NotNull)
      */
     public BsChallengeHistoryCQ addOrderBy_CorrectSum_Desc() { regOBD("correct_sum"); return this; }
+
+    protected ConditionValue _incorrectSum;
+    public ConditionValue xdfgetIncorrectSum()
+    { if (_incorrectSum == null) { _incorrectSum = nCV(); }
+      return _incorrectSum; }
+    protected ConditionValue xgetCValueIncorrectSum() { return xdfgetIncorrectSum(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_IncorrectSum_Asc() { regOBA("incorrect_sum"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_IncorrectSum_Desc() { regOBD("incorrect_sum"); return this; }
 
     protected ConditionValue _detailCleanFlag;
     public ConditionValue xdfgetDetailCleanFlag()
@@ -312,11 +352,36 @@ public class BsChallengeHistoryCQ extends AbstractBsChallengeHistoryCQ {
     //                                                                         Union Query
     //                                                                         ===========
     public void reflectRelationOnUnionQuery(ConditionQuery bqs, ConditionQuery uqs) {
+        ChallengeHistoryCQ bq = (ChallengeHistoryCQ)bqs;
+        ChallengeHistoryCQ uq = (ChallengeHistoryCQ)uqs;
+        if (bq.hasConditionQueryGenre()) {
+            uq.queryGenre().reflectRelationOnUnionQuery(bq.queryGenre(), uq.queryGenre());
+        }
     }
 
     // ===================================================================================
     //                                                                       Foreign Query
     //                                                                       =============
+    /**
+     * Get the condition-query for relation table. <br>
+     * genre by my genre_id, named 'genre'.
+     * @return The instance of condition-query. (NotNull)
+     */
+    public GenreCQ queryGenre() {
+        return xdfgetConditionQueryGenre();
+    }
+    public GenreCQ xdfgetConditionQueryGenre() {
+        String prop = "genre";
+        if (!xhasQueRlMap(prop)) { xregQueRl(prop, xcreateQueryGenre()); xsetupOuterJoinGenre(); }
+        return xgetQueRlMap(prop);
+    }
+    protected GenreCQ xcreateQueryGenre() {
+        String nrp = xresolveNRP("challenge_history", "genre"); String jan = xresolveJAN(nrp, xgetNNLvl());
+        return xinitRelCQ(new GenreCQ(this, xgetSqlClause(), jan, xgetNNLvl()), _baseCB, "genre", nrp);
+    }
+    protected void xsetupOuterJoinGenre() { xregOutJo("genre"); }
+    public boolean hasConditionQueryGenre() { return xhasQueRlMap("genre"); }
+
     protected Map<String, Object> xfindFixedConditionDynamicParameterMap(String property) {
         return null;
     }

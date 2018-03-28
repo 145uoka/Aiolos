@@ -13,7 +13,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     challenge_history_id
  *
  * [column]
- *     challenge_history_id, score, attendance_rate, user_name, elapsed_time, correct_sum, detail_clean_flag, delete_flag, register_datetime, update_datetime
+ *     challenge_history_id, genre_id, user_name, score, attendance_rate, elapsed_time, correct_sum, incorrect_sum, detail_clean_flag, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     challenge_history_challenge_history_id_seq
@@ -25,13 +25,13 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     
  *
  * [foreign table]
- *     
+ *     genre
  *
  * [referrer table]
  *     
  *
  * [foreign property]
- *     
+ *     genre
  *
  * [referrer property]
  *     
@@ -59,6 +59,13 @@ public class LoaderOfChallengeHistory {
     // ===================================================================================
     //                                                                    Pull out Foreign
     //                                                                    ================
+    protected LoaderOfGenre _foreignGenreLoader;
+    public LoaderOfGenre pulloutGenre() {
+        if (_foreignGenreLoader == null)
+        { _foreignGenreLoader = new LoaderOfGenre().ready(myBhv().pulloutGenre(_selectedList), _selector); }
+        return _foreignGenreLoader;
+    }
+
     // ===================================================================================
     //                                                                            Accessor
     //                                                                            ========

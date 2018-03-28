@@ -174,237 +174,120 @@ public abstract class AbstractBsChallengeHistoryCQ extends AbstractConditionQuer
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param score The value of score as equal. (basically NotNull: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreId The value of genreId as equal. (basically NotNull: error as default, or no condition as option)
      */
-    public void setScore_Equal(Integer score) {
-        doSetScore_Equal(score);
+    public void setGenreId_Equal(Integer genreId) {
+        doSetGenreId_Equal(genreId);
     }
 
-    protected void doSetScore_Equal(Integer score) {
-        regScore(CK_EQ, score);
+    protected void doSetGenreId_Equal(Integer genreId) {
+        regGenreId(CK_EQ, genreId);
     }
 
     /**
      * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param score The value of score as notEqual. (basically NotNull: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreId The value of genreId as notEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setScore_NotEqual(Integer score) {
-        doSetScore_NotEqual(score);
+    public void setGenreId_NotEqual(Integer genreId) {
+        doSetGenreId_NotEqual(genreId);
     }
 
-    protected void doSetScore_NotEqual(Integer score) {
-        regScore(CK_NES, score);
+    protected void doSetGenreId_NotEqual(Integer genreId) {
+        regGenreId(CK_NES, genreId);
     }
 
     /**
      * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param score The value of score as greaterThan. (basically NotNull: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreId The value of genreId as greaterThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setScore_GreaterThan(Integer score) {
-        regScore(CK_GT, score);
+    public void setGenreId_GreaterThan(Integer genreId) {
+        regGenreId(CK_GT, genreId);
     }
 
     /**
      * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param score The value of score as lessThan. (basically NotNull: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreId The value of genreId as lessThan. (basically NotNull: error as default, or no condition as option)
      */
-    public void setScore_LessThan(Integer score) {
-        regScore(CK_LT, score);
+    public void setGenreId_LessThan(Integer genreId) {
+        regGenreId(CK_LT, genreId);
     }
 
     /**
      * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param score The value of score as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreId The value of genreId as greaterEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setScore_GreaterEqual(Integer score) {
-        regScore(CK_GE, score);
+    public void setGenreId_GreaterEqual(Integer genreId) {
+        regGenreId(CK_GE, genreId);
     }
 
     /**
      * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param score The value of score as lessEqual. (basically NotNull: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreId The value of genreId as lessEqual. (basically NotNull: error as default, or no condition as option)
      */
-    public void setScore_LessEqual(Integer score) {
-        regScore(CK_LE, score);
+    public void setGenreId_LessEqual(Integer genreId) {
+        regGenreId(CK_LE, genreId);
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param minNumber The min number of score. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of score. (basically NotNull: if op.allowOneSide(), null allowed)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param minNumber The min number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param opLambda The callback for option of range-of. (NotNull)
      */
-    public void setScore_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setScore_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    public void setGenreId_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setGenreId_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
     }
 
     /**
      * RangeOf with various options. (versatile) <br>
      * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
      * And NullIgnored, OnlyOnceRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param minNumber The min number of score. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of score. (basically NotNull: if op.allowOneSide(), null allowed)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param minNumber The min number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of genreId. (basically NotNull: if op.allowOneSide(), null allowed)
      * @param rangeOfOption The option of range-of. (NotNull)
      */
-    protected void setScore_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueScore(), "score", rangeOfOption);
+    protected void setGenreId_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueGenreId(), "genre_id", rangeOfOption);
     }
 
     /**
      * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param scoreList The collection of score as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreIdList The collection of genreId as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setScore_InScope(Collection<Integer> scoreList) {
-        doSetScore_InScope(scoreList);
+    public void setGenreId_InScope(Collection<Integer> genreIdList) {
+        doSetGenreId_InScope(genreIdList);
     }
 
-    protected void doSetScore_InScope(Collection<Integer> scoreList) {
-        regINS(CK_INS, cTL(scoreList), xgetCValueScore(), "score");
+    protected void doSetGenreId_InScope(Collection<Integer> genreIdList) {
+        regINS(CK_INS, cTL(genreIdList), xgetCValueGenreId(), "genre_id");
     }
 
     /**
      * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * score: {NotNull, int4(10)}
-     * @param scoreList The collection of score as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @param genreIdList The collection of genreId as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
      */
-    public void setScore_NotInScope(Collection<Integer> scoreList) {
-        doSetScore_NotInScope(scoreList);
+    public void setGenreId_NotInScope(Collection<Integer> genreIdList) {
+        doSetGenreId_NotInScope(genreIdList);
     }
 
-    protected void doSetScore_NotInScope(Collection<Integer> scoreList) {
-        regINS(CK_NINS, cTL(scoreList), xgetCValueScore(), "score");
+    protected void doSetGenreId_NotInScope(Collection<Integer> genreIdList) {
+        regINS(CK_NINS, cTL(genreIdList), xgetCValueGenreId(), "genre_id");
     }
 
-    protected void regScore(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueScore(), "score"); }
-    protected abstract ConditionValue xgetCValueScore();
-
-    /**
-     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRate The value of attendanceRate as equal. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_Equal(Integer attendanceRate) {
-        doSetAttendanceRate_Equal(attendanceRate);
-    }
-
-    protected void doSetAttendanceRate_Equal(Integer attendanceRate) {
-        regAttendanceRate(CK_EQ, attendanceRate);
-    }
-
-    /**
-     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRate The value of attendanceRate as notEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_NotEqual(Integer attendanceRate) {
-        doSetAttendanceRate_NotEqual(attendanceRate);
-    }
-
-    protected void doSetAttendanceRate_NotEqual(Integer attendanceRate) {
-        regAttendanceRate(CK_NES, attendanceRate);
-    }
-
-    /**
-     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRate The value of attendanceRate as greaterThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_GreaterThan(Integer attendanceRate) {
-        regAttendanceRate(CK_GT, attendanceRate);
-    }
-
-    /**
-     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRate The value of attendanceRate as lessThan. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_LessThan(Integer attendanceRate) {
-        regAttendanceRate(CK_LT, attendanceRate);
-    }
-
-    /**
-     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRate The value of attendanceRate as greaterEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_GreaterEqual(Integer attendanceRate) {
-        regAttendanceRate(CK_GE, attendanceRate);
-    }
-
-    /**
-     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRate The value of attendanceRate as lessEqual. (basically NotNull: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_LessEqual(Integer attendanceRate) {
-        regAttendanceRate(CK_LE, attendanceRate);
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param minNumber The min number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param opLambda The callback for option of range-of. (NotNull)
-     */
-    public void setAttendanceRate_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
-        setAttendanceRate_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
-    }
-
-    /**
-     * RangeOf with various options. (versatile) <br>
-     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
-     * And NullIgnored, OnlyOnceRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param minNumber The min number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param maxNumber The max number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
-     * @param rangeOfOption The option of range-of. (NotNull)
-     */
-    protected void setAttendanceRate_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
-        regROO(minNumber, maxNumber, xgetCValueAttendanceRate(), "attendance_rate", rangeOfOption);
-    }
-
-    /**
-     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRateList The collection of attendanceRate as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_InScope(Collection<Integer> attendanceRateList) {
-        doSetAttendanceRate_InScope(attendanceRateList);
-    }
-
-    protected void doSetAttendanceRate_InScope(Collection<Integer> attendanceRateList) {
-        regINS(CK_INS, cTL(attendanceRateList), xgetCValueAttendanceRate(), "attendance_rate");
-    }
-
-    /**
-     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
-     * attendance_rate: {NotNull, int4(10)}
-     * @param attendanceRateList The collection of attendanceRate as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
-     */
-    public void setAttendanceRate_NotInScope(Collection<Integer> attendanceRateList) {
-        doSetAttendanceRate_NotInScope(attendanceRateList);
-    }
-
-    protected void doSetAttendanceRate_NotInScope(Collection<Integer> attendanceRateList) {
-        regINS(CK_NINS, cTL(attendanceRateList), xgetCValueAttendanceRate(), "attendance_rate");
-    }
-
-    protected void regAttendanceRate(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueAttendanceRate(), "attendance_rate"); }
-    protected abstract ConditionValue xgetCValueAttendanceRate();
+    protected void regGenreId(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueGenreId(), "genre_id"); }
+    protected abstract ConditionValue xgetCValueGenreId();
 
     /**
      * Equal(=). And NullOrEmptyIgnored, OnlyOnceRegistered. <br>
@@ -540,6 +423,240 @@ public abstract class AbstractBsChallengeHistoryCQ extends AbstractConditionQuer
 
     protected void regUserName(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueUserName(), "user_name"); }
     protected abstract ConditionValue xgetCValueUserName();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param score The value of score as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setScore_Equal(java.math.BigDecimal score) {
+        doSetScore_Equal(score);
+    }
+
+    protected void doSetScore_Equal(java.math.BigDecimal score) {
+        regScore(CK_EQ, score);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param score The value of score as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setScore_NotEqual(java.math.BigDecimal score) {
+        doSetScore_NotEqual(score);
+    }
+
+    protected void doSetScore_NotEqual(java.math.BigDecimal score) {
+        regScore(CK_NES, score);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param score The value of score as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setScore_GreaterThan(java.math.BigDecimal score) {
+        regScore(CK_GT, score);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param score The value of score as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setScore_LessThan(java.math.BigDecimal score) {
+        regScore(CK_LT, score);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param score The value of score as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setScore_GreaterEqual(java.math.BigDecimal score) {
+        regScore(CK_GE, score);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param score The value of score as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setScore_LessEqual(java.math.BigDecimal score) {
+        regScore(CK_LE, score);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param minNumber The min number of score. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of score. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setScore_RangeOf(java.math.BigDecimal minNumber, java.math.BigDecimal maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setScore_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param minNumber The min number of score. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of score. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setScore_RangeOf(java.math.BigDecimal minNumber, java.math.BigDecimal maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueScore(), "score", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param scoreList The collection of score as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setScore_InScope(Collection<java.math.BigDecimal> scoreList) {
+        doSetScore_InScope(scoreList);
+    }
+
+    protected void doSetScore_InScope(Collection<java.math.BigDecimal> scoreList) {
+        regINS(CK_INS, cTL(scoreList), xgetCValueScore(), "score");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * score: {NotNull, float8(17, 17)}
+     * @param scoreList The collection of score as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setScore_NotInScope(Collection<java.math.BigDecimal> scoreList) {
+        doSetScore_NotInScope(scoreList);
+    }
+
+    protected void doSetScore_NotInScope(Collection<java.math.BigDecimal> scoreList) {
+        regINS(CK_NINS, cTL(scoreList), xgetCValueScore(), "score");
+    }
+
+    protected void regScore(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueScore(), "score"); }
+    protected abstract ConditionValue xgetCValueScore();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRate The value of attendanceRate as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_Equal(Integer attendanceRate) {
+        doSetAttendanceRate_Equal(attendanceRate);
+    }
+
+    protected void doSetAttendanceRate_Equal(Integer attendanceRate) {
+        regAttendanceRate(CK_EQ, attendanceRate);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRate The value of attendanceRate as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_NotEqual(Integer attendanceRate) {
+        doSetAttendanceRate_NotEqual(attendanceRate);
+    }
+
+    protected void doSetAttendanceRate_NotEqual(Integer attendanceRate) {
+        regAttendanceRate(CK_NES, attendanceRate);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRate The value of attendanceRate as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_GreaterThan(Integer attendanceRate) {
+        regAttendanceRate(CK_GT, attendanceRate);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRate The value of attendanceRate as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_LessThan(Integer attendanceRate) {
+        regAttendanceRate(CK_LT, attendanceRate);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRate The value of attendanceRate as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_GreaterEqual(Integer attendanceRate) {
+        regAttendanceRate(CK_GE, attendanceRate);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRate The value of attendanceRate as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_LessEqual(Integer attendanceRate) {
+        regAttendanceRate(CK_LE, attendanceRate);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param minNumber The min number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setAttendanceRate_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setAttendanceRate_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param minNumber The min number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of attendanceRate. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setAttendanceRate_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueAttendanceRate(), "attendance_rate", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRateList The collection of attendanceRate as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_InScope(Collection<Integer> attendanceRateList) {
+        doSetAttendanceRate_InScope(attendanceRateList);
+    }
+
+    protected void doSetAttendanceRate_InScope(Collection<Integer> attendanceRateList) {
+        regINS(CK_INS, cTL(attendanceRateList), xgetCValueAttendanceRate(), "attendance_rate");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * attendance_rate: {NotNull, int4(10)}
+     * @param attendanceRateList The collection of attendanceRate as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setAttendanceRate_NotInScope(Collection<Integer> attendanceRateList) {
+        doSetAttendanceRate_NotInScope(attendanceRateList);
+    }
+
+    protected void doSetAttendanceRate_NotInScope(Collection<Integer> attendanceRateList) {
+        regINS(CK_NINS, cTL(attendanceRateList), xgetCValueAttendanceRate(), "attendance_rate");
+    }
+
+    protected void regAttendanceRate(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueAttendanceRate(), "attendance_rate"); }
+    protected abstract ConditionValue xgetCValueAttendanceRate();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
@@ -774,6 +891,123 @@ public abstract class AbstractBsChallengeHistoryCQ extends AbstractConditionQuer
 
     protected void regCorrectSum(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueCorrectSum(), "correct_sum"); }
     protected abstract ConditionValue xgetCValueCorrectSum();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSum The value of incorrectSum as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_Equal(Integer incorrectSum) {
+        doSetIncorrectSum_Equal(incorrectSum);
+    }
+
+    protected void doSetIncorrectSum_Equal(Integer incorrectSum) {
+        regIncorrectSum(CK_EQ, incorrectSum);
+    }
+
+    /**
+     * NotEqual(&lt;&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSum The value of incorrectSum as notEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_NotEqual(Integer incorrectSum) {
+        doSetIncorrectSum_NotEqual(incorrectSum);
+    }
+
+    protected void doSetIncorrectSum_NotEqual(Integer incorrectSum) {
+        regIncorrectSum(CK_NES, incorrectSum);
+    }
+
+    /**
+     * GreaterThan(&gt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSum The value of incorrectSum as greaterThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_GreaterThan(Integer incorrectSum) {
+        regIncorrectSum(CK_GT, incorrectSum);
+    }
+
+    /**
+     * LessThan(&lt;). And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSum The value of incorrectSum as lessThan. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_LessThan(Integer incorrectSum) {
+        regIncorrectSum(CK_LT, incorrectSum);
+    }
+
+    /**
+     * GreaterEqual(&gt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSum The value of incorrectSum as greaterEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_GreaterEqual(Integer incorrectSum) {
+        regIncorrectSum(CK_GE, incorrectSum);
+    }
+
+    /**
+     * LessEqual(&lt;=). And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSum The value of incorrectSum as lessEqual. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_LessEqual(Integer incorrectSum) {
+        regIncorrectSum(CK_LE, incorrectSum);
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param minNumber The min number of incorrectSum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of incorrectSum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param opLambda The callback for option of range-of. (NotNull)
+     */
+    public void setIncorrectSum_RangeOf(Integer minNumber, Integer maxNumber, ConditionOptionCall<RangeOfOption> opLambda) {
+        setIncorrectSum_RangeOf(minNumber, maxNumber, xcROOP(opLambda));
+    }
+
+    /**
+     * RangeOf with various options. (versatile) <br>
+     * {(default) minNumber &lt;= column &lt;= maxNumber} <br>
+     * And NullIgnored, OnlyOnceRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param minNumber The min number of incorrectSum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param maxNumber The max number of incorrectSum. (basically NotNull: if op.allowOneSide(), null allowed)
+     * @param rangeOfOption The option of range-of. (NotNull)
+     */
+    protected void setIncorrectSum_RangeOf(Integer minNumber, Integer maxNumber, RangeOfOption rangeOfOption) {
+        regROO(minNumber, maxNumber, xgetCValueIncorrectSum(), "incorrect_sum", rangeOfOption);
+    }
+
+    /**
+     * InScope {in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSumList The collection of incorrectSum as inScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_InScope(Collection<Integer> incorrectSumList) {
+        doSetIncorrectSum_InScope(incorrectSumList);
+    }
+
+    protected void doSetIncorrectSum_InScope(Collection<Integer> incorrectSumList) {
+        regINS(CK_INS, cTL(incorrectSumList), xgetCValueIncorrectSum(), "incorrect_sum");
+    }
+
+    /**
+     * NotInScope {not in (1, 2)}. And NullIgnored, NullElementIgnored, SeveralRegistered. <br>
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @param incorrectSumList The collection of incorrectSum as notInScope. (basically NotNull, NotEmpty: error as default, or no condition as option)
+     */
+    public void setIncorrectSum_NotInScope(Collection<Integer> incorrectSumList) {
+        doSetIncorrectSum_NotInScope(incorrectSumList);
+    }
+
+    protected void doSetIncorrectSum_NotInScope(Collection<Integer> incorrectSumList) {
+        regINS(CK_NINS, cTL(incorrectSumList), xgetCValueIncorrectSum(), "incorrect_sum");
+    }
+
+    protected void regIncorrectSum(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueIncorrectSum(), "incorrect_sum"); }
+    protected abstract ConditionValue xgetCValueIncorrectSum();
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>

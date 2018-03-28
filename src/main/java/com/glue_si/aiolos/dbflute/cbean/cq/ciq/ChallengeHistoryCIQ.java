@@ -62,11 +62,13 @@ public class ChallengeHistoryCIQ extends AbstractBsChallengeHistoryCQ {
     //                                                                Override about Query
     //                                                                ====================
     protected ConditionValue xgetCValueChallengeHistoryId() { return _myCQ.xdfgetChallengeHistoryId(); }
+    protected ConditionValue xgetCValueGenreId() { return _myCQ.xdfgetGenreId(); }
+    protected ConditionValue xgetCValueUserName() { return _myCQ.xdfgetUserName(); }
     protected ConditionValue xgetCValueScore() { return _myCQ.xdfgetScore(); }
     protected ConditionValue xgetCValueAttendanceRate() { return _myCQ.xdfgetAttendanceRate(); }
-    protected ConditionValue xgetCValueUserName() { return _myCQ.xdfgetUserName(); }
     protected ConditionValue xgetCValueElapsedTime() { return _myCQ.xdfgetElapsedTime(); }
     protected ConditionValue xgetCValueCorrectSum() { return _myCQ.xdfgetCorrectSum(); }
+    protected ConditionValue xgetCValueIncorrectSum() { return _myCQ.xdfgetIncorrectSum(); }
     protected ConditionValue xgetCValueDetailCleanFlag() { return _myCQ.xdfgetDetailCleanFlag(); }
     protected ConditionValue xgetCValueDeleteFlag() { return _myCQ.xdfgetDeleteFlag(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }

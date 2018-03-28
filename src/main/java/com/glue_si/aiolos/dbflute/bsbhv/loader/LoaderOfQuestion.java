@@ -15,7 +15,7 @@ import com.glue_si.aiolos.dbflute.cbean.*;
  *     question_id
  *
  * [column]
- *     question_id, keyword, description, order_num, delete_flag, register_datetime, update_datetime
+ *     question_id, genre_id, question_num, answer_branch_no, description, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     question_question_id_seq
@@ -30,13 +30,13 @@ import com.glue_si.aiolos.dbflute.cbean.*;
  *     
  *
  * [referrer table]
- *     challenge_detail_history
+ *     challenge_detail_history, answer
  *
  * [foreign property]
  *     
  *
  * [referrer property]
- *     challengeDetailHistoryList
+ *     challengeDetailHistoryList, answerList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -93,6 +93,40 @@ public class LoaderOfQuestion {
     public NestedReferrerLoaderGateway<LoaderOfChallengeDetailHistory> loadChallengeDetailHistory(ReferrerConditionSetupper<ChallengeDetailHistoryCB> refCBLambda) {
         myBhv().loadChallengeDetailHistory(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerChallengeDetailHistory = refLs);
         return hd -> hd.handle(new LoaderOfChallengeDetailHistory().ready(_referrerChallengeDetailHistory, _selector));
+    }
+
+    protected List<Answer> _referrerAnswer;
+
+    /**
+     * Load referrer of answerList by the set-upper of referrer. <br>
+     * answer by question_id, named 'answerList'.
+     * <pre>
+     * <span style="color: #0000C0">questionBhv</span>.<span style="color: #994747">load</span>(<span style="color: #553000">questionList</span>, <span style="color: #553000">questionLoader</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">questionLoader</span>.<span style="color: #CC4747">loadAnswer</span>(<span style="color: #553000">answerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *         <span style="color: #553000">answerCB</span>.setupSelect...
+     *         <span style="color: #553000">answerCB</span>.query().set...
+     *         <span style="color: #553000">answerCB</span>.query().addOrderBy...
+     *     }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     *     <span style="color: #3F7E5E">//}).withNestedReferrer(<span style="color: #553000">answerLoader</span> -&gt; {</span>
+     *     <span style="color: #3F7E5E">//    answerLoader.load...</span>
+     *     <span style="color: #3F7E5E">//});</span>
+     * });
+     * for (Question question : <span style="color: #553000">questionList</span>) {
+     *     ... = question.<span style="color: #CC4747">getAnswerList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setQuestionId_InScope(pkList);
+     * cb.query().addOrderBy_QuestionId_Asc();
+     * </pre>
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerLoaderGateway<LoaderOfAnswer> loadAnswer(ReferrerConditionSetupper<AnswerCB> refCBLambda) {
+        myBhv().loadAnswer(_selectedList, refCBLambda).withNestedReferrer(refLs -> _referrerAnswer = refLs);
+        return hd -> hd.handle(new LoaderOfAnswer().ready(_referrerAnswer, _selector));
     }
 
     // ===================================================================================

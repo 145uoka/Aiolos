@@ -26,7 +26,7 @@ import com.glue_si.aiolos.dbflute.cbean.*;
  *     question_id
  *
  * [column]
- *     question_id, keyword, description, order_num, delete_flag, register_datetime, update_datetime
+ *     question_id, genre_id, question_num, answer_branch_no, description, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     question_question_id_seq
@@ -41,13 +41,13 @@ import com.glue_si.aiolos.dbflute.cbean.*;
  *     
  *
  * [referrer table]
- *     challenge_detail_history
+ *     challenge_detail_history, answer
  *
  * [foreign property]
  *     
  *
  * [referrer property]
- *     challengeDetailHistoryList
+ *     challengeDetailHistoryList, answerList
  * </pre>
  * @author DBFlute(AutoGenerator)
  */
@@ -182,31 +182,6 @@ public abstract class BsQuestionBhv extends AbstractBehaviorWritable<Question, Q
     protected QuestionCB xprepareCBAsPK(Integer questionId) {
         assertObjectNotNull("questionId", questionId);
         return newConditionBean().acceptPK(questionId);
-    }
-
-    /**
-     * Select the entity by the unique-key value.
-     * @param orderNum : UQ, int4(10). (NotNull)
-     * @return The optional entity selected by the unique key. (NotNull: if no data, empty entity)
-     * @throws EntityAlreadyDeletedException When get(), required() of return value is called and the value is null, which means entity has already been deleted (not found).
-     * @throws EntityDuplicatedException When the entity has been duplicated.
-     * @throws SelectEntityConditionNotFoundException When the condition for selecting an entity is not found.
-     */
-    public OptionalEntity<Question> selectByUniqueOf(Integer orderNum) {
-        return facadeSelectByUniqueOf(orderNum);
-    }
-
-    protected OptionalEntity<Question> facadeSelectByUniqueOf(Integer orderNum) {
-        return doSelectByUniqueOf(orderNum, typeOfSelectedEntity());
-    }
-
-    protected <ENTITY extends Question> OptionalEntity<ENTITY> doSelectByUniqueOf(Integer orderNum, Class<? extends ENTITY> tp) {
-        return createOptionalEntity(doSelectEntity(xprepareCBAsUniqueOf(orderNum), tp), orderNum);
-    }
-
-    protected QuestionCB xprepareCBAsUniqueOf(Integer orderNum) {
-        assertObjectNotNull("orderNum", orderNum);
-        return newConditionBean().acceptUniqueOf(orderNum);
     }
 
     // ===================================================================================
@@ -465,6 +440,70 @@ public abstract class BsQuestionBhv extends AbstractBehaviorWritable<Question, Q
         return helpLoadReferrerInternally(questionList, option, "challengeDetailHistoryList");
     }
 
+    /**
+     * Load referrer of answerList by the set-upper of referrer. <br>
+     * answer by question_id, named 'answerList'.
+     * <pre>
+     * <span style="color: #0000C0">questionBhv</span>.<span style="color: #CC4747">loadAnswer</span>(<span style="color: #553000">questionList</span>, <span style="color: #553000">answerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">answerCB</span>.setupSelect...
+     *     <span style="color: #553000">answerCB</span>.query().set...
+     *     <span style="color: #553000">answerCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * <span style="color: #70226C">for</span> (Question question : <span style="color: #553000">questionList</span>) {
+     *     ... = question.<span style="color: #CC4747">getAnswerList()</span>;
+     * }
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setQuestionId_InScope(pkList);
+     * cb.query().addOrderBy_QuestionId_Asc();
+     * </pre>
+     * @param questionList The entity list of question. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Answer> loadAnswer(List<Question> questionList, ReferrerConditionSetupper<AnswerCB> refCBLambda) {
+        xassLRArg(questionList, refCBLambda);
+        return doLoadAnswer(questionList, new LoadReferrerOption<AnswerCB, Answer>().xinit(refCBLambda));
+    }
+
+    /**
+     * Load referrer of answerList by the set-upper of referrer. <br>
+     * answer by question_id, named 'answerList'.
+     * <pre>
+     * <span style="color: #0000C0">questionBhv</span>.<span style="color: #CC4747">loadAnswer</span>(<span style="color: #553000">question</span>, <span style="color: #553000">answerCB</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">answerCB</span>.setupSelect...
+     *     <span style="color: #553000">answerCB</span>.query().set...
+     *     <span style="color: #553000">answerCB</span>.query().addOrderBy...
+     * }); <span style="color: #3F7E5E">// you can load nested referrer from here</span>
+     * <span style="color: #3F7E5E">//}).withNestedReferrer(referrerList -&gt; {</span>
+     * <span style="color: #3F7E5E">//    ...</span>
+     * <span style="color: #3F7E5E">//});</span>
+     * ... = <span style="color: #553000">question</span>.<span style="color: #CC4747">getAnswerList()</span>;
+     * </pre>
+     * About internal policy, the value of primary key (and others too) is treated as case-insensitive. <br>
+     * The condition-bean, which the set-upper provides, has settings before callback as follows:
+     * <pre>
+     * cb.query().setQuestionId_InScope(pkList);
+     * cb.query().addOrderBy_QuestionId_Asc();
+     * </pre>
+     * @param question The entity of question. (NotNull)
+     * @param refCBLambda The callback to set up referrer condition-bean for loading referrer. (NotNull)
+     * @return The callback interface which you can load nested referrer by calling withNestedReferrer(). (NotNull)
+     */
+    public NestedReferrerListGateway<Answer> loadAnswer(Question question, ReferrerConditionSetupper<AnswerCB> refCBLambda) {
+        xassLRArg(question, refCBLambda);
+        return doLoadAnswer(xnewLRLs(question), new LoadReferrerOption<AnswerCB, Answer>().xinit(refCBLambda));
+    }
+
+    protected NestedReferrerListGateway<Answer> doLoadAnswer(List<Question> questionList, LoadReferrerOption<AnswerCB, Answer> option) {
+        return helpLoadReferrerInternally(questionList, option, "answerList");
+    }
+
     // ===================================================================================
     //                                                                   Pull out Relation
     //                                                                   =================
@@ -478,14 +517,6 @@ public abstract class BsQuestionBhv extends AbstractBehaviorWritable<Question, Q
      */
     public List<Integer> extractQuestionIdList(List<Question> questionList)
     { return helpExtractListInternally(questionList, "questionId"); }
-
-    /**
-     * Extract the value list of (single) unique key orderNum.
-     * @param questionList The list of question. (NotNull, EmptyAllowed)
-     * @return The list of the column value. (NotNull, EmptyAllowed, NotNullElement)
-     */
-    public List<Integer> extractOrderNumList(List<Question> questionList)
-    { return helpExtractListInternally(questionList, "orderNum"); }
 
     // ===================================================================================
     //                                                                       Entity Update

@@ -9,8 +9,8 @@ public class ChallengeResultDetailDto {
     private Integer questionId;
 
     private String description;
-    private String keyword;
-    private Integer orderNum;
+    private String answerBranchNo;
+    private Integer questionNum;
     public String getAnswer() {
         return answer;
     }
@@ -47,17 +47,17 @@ public class ChallengeResultDetailDto {
     public void setDescription(String description) {
         this.description = description;
     }
-    public String getKeyword() {
-        return keyword;
+    public String getAnswerBranchNo() {
+        return answerBranchNo;
     }
-    public void setKeyword(String keyword) {
-        this.keyword = keyword;
+    public void setAnswerBranchNo(String answerBranchNo) {
+        this.answerBranchNo = answerBranchNo;
     }
-    public Integer getOrderNum() {
-        return orderNum;
+    public Integer getQuestionNum() {
+        return questionNum;
     }
-    public void setOrderNum(Integer orderNum) {
-        this.orderNum = orderNum;
+    public void setQuestionNum(Integer questionNum) {
+        this.questionNum = questionNum;
     }
 
 }

@@ -38,6 +38,7 @@
               <th class="text-center">Ranking</th>
               <th class="text-center">スコア</th>
               <th class="text-center">氏名</th>
+              <th class="text-center">試験分類</th>
               <th class="text-center">正答数</th>
               <th class="text-center">正答率</th>
               <th class="text-center">経過時間</th>
@@ -56,6 +57,7 @@
             <td class="text-center"><c:out value="${status.count}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.score}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.userName}"></c:out></td>
+            <td class="text-center"><c:out value="${challengeResultDto.genreName}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.correctSum}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.attendanceRate}%"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.elapsedTime}"></c:out></td>

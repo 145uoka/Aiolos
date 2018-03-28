@@ -2,6 +2,8 @@ package com.glue_si.aiolos.form.challenge;
 
 public class ChallengeForm {
 
+    private Integer genreId;
+
     private String userName;
 
     private Long startTime;
@@ -9,6 +11,16 @@ public class ChallengeForm {
     private Long endTime;
 
     private String[] answer;
+
+
+
+    public Integer getGenreId() {
+        return genreId;
+    }
+
+    public void setGenreId(Integer genreId) {
+        this.genreId = genreId;
+    }
 
     public String getUserName() {
         return userName;

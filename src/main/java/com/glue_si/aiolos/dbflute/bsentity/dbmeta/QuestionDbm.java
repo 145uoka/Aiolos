@@ -43,9 +43,10 @@ public class QuestionDbm extends AbstractDBMeta {
     { xsetupEpg(); }
     protected void xsetupEpg() {
         setupEpg(_epgMap, et -> ((Question)et).getQuestionId(), (et, vl) -> ((Question)et).setQuestionId(cti(vl)), "questionId");
-        setupEpg(_epgMap, et -> ((Question)et).getKeyword(), (et, vl) -> ((Question)et).setKeyword((String)vl), "keyword");
+        setupEpg(_epgMap, et -> ((Question)et).getGenreId(), (et, vl) -> ((Question)et).setGenreId(cti(vl)), "genreId");
+        setupEpg(_epgMap, et -> ((Question)et).getQuestionNum(), (et, vl) -> ((Question)et).setQuestionNum(cti(vl)), "questionNum");
+        setupEpg(_epgMap, et -> ((Question)et).getAnswerBranchNo(), (et, vl) -> ((Question)et).setAnswerBranchNo((String)vl), "answerBranchNo");
         setupEpg(_epgMap, et -> ((Question)et).getDescription(), (et, vl) -> ((Question)et).setDescription((String)vl), "description");
-        setupEpg(_epgMap, et -> ((Question)et).getOrderNum(), (et, vl) -> ((Question)et).setOrderNum(cti(vl)), "orderNum");
         setupEpg(_epgMap, et -> ((Question)et).getDeleteFlag(), (et, vl) -> ((Question)et).setDeleteFlag((Boolean)vl), "deleteFlag");
         setupEpg(_epgMap, et -> ((Question)et).getRegisterDatetime(), (et, vl) -> ((Question)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
         setupEpg(_epgMap, et -> ((Question)et).getUpdateDatetime(), (et, vl) -> ((Question)et).setUpdateDatetime(ctldt(vl)), "updateDatetime");
@@ -69,10 +70,11 @@ public class QuestionDbm extends AbstractDBMeta {
     // ===================================================================================
     //                                                                         Column Info
     //                                                                         ===========
-    protected final ColumnInfo _columnQuestionId = cci("question_id", "question_id", null, null, Integer.class, "questionId", null, true, true, true, "serial", 10, 0, null, "nextval('question_question_id_seq'::regclass)", false, null, null, null, "challengeDetailHistoryList", null, false);
-    protected final ColumnInfo _columnKeyword = cci("keyword", "keyword", null, null, String.class, "keyword", null, false, false, true, "text", 2147483647, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnQuestionId = cci("question_id", "question_id", null, null, Integer.class, "questionId", null, true, true, true, "serial", 10, 0, null, "nextval('question_question_id_seq'::regclass)", false, null, null, null, "challengeDetailHistoryList,answerList", null, false);
+    protected final ColumnInfo _columnGenreId = cci("genre_id", "genre_id", null, null, Integer.class, "genreId", null, false, false, true, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnQuestionNum = cci("question_num", "question_num", null, null, Integer.class, "questionNum", null, false, false, true, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnAnswerBranchNo = cci("answer_branch_no", "answer_branch_no", null, null, String.class, "answerBranchNo", null, false, false, true, "text", 2147483647, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnDescription = cci("description", "description", null, null, String.class, "description", null, false, false, false, "text", 2147483647, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnOrderNum = cci("order_num", "order_num", null, null, Integer.class, "orderNum", null, false, false, false, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnDeleteFlag = cci("delete_flag", "delete_flag", null, null, Boolean.class, "deleteFlag", null, false, false, true, "bool", 1, 0, null, "false", false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("register_datetime", "register_datetime", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "timestamp", 26, 3, null, "now()", true, null, null, null, null, null, false);
     protected final ColumnInfo _columnUpdateDatetime = cci("update_datetime", "update_datetime", null, null, java.time.LocalDateTime.class, "updateDatetime", null, false, false, false, "timestamp", 26, 3, null, null, true, null, null, null, null, null, false);
@@ -83,20 +85,25 @@ public class QuestionDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnQuestionId() { return _columnQuestionId; }
     /**
-     * keyword: {NotNull, text(2147483647)}
+     * genre_id: {NotNull, int4(10)}
      * @return The information object of specified column. (NotNull)
      */
-    public ColumnInfo columnKeyword() { return _columnKeyword; }
+    public ColumnInfo columnGenreId() { return _columnGenreId; }
+    /**
+     * question_num: {NotNull, int4(10)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnQuestionNum() { return _columnQuestionNum; }
+    /**
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnAnswerBranchNo() { return _columnAnswerBranchNo; }
     /**
      * description: {text(2147483647)}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnDescription() { return _columnDescription; }
-    /**
-     * order_num: {UQ, int4(10)}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnOrderNum() { return _columnOrderNum; }
     /**
      * delete_flag: {NotNull, bool(1), default=[false]}
      * @return The information object of specified column. (NotNull)
@@ -116,9 +123,10 @@ public class QuestionDbm extends AbstractDBMeta {
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnQuestionId());
-        ls.add(columnKeyword());
+        ls.add(columnGenreId());
+        ls.add(columnQuestionNum());
+        ls.add(columnAnswerBranchNo());
         ls.add(columnDescription());
-        ls.add(columnOrderNum());
         ls.add(columnDeleteFlag());
         ls.add(columnRegisterDatetime());
         ls.add(columnUpdateDatetime());
@@ -136,11 +144,6 @@ public class QuestionDbm extends AbstractDBMeta {
     protected UniqueInfo cpui() { return hpcpui(columnQuestionId()); }
     public boolean hasPrimaryKey() { return true; }
     public boolean hasCompoundPrimaryKey() { return false; }
-
-    // -----------------------------------------------------
-    //                                        Unique Element
-    //                                        --------------
-    public UniqueInfo uniqueOf() { return hpcui(columnOrderNum()); }
 
     // ===================================================================================
     //                                                                       Relation Info
@@ -160,7 +163,15 @@ public class QuestionDbm extends AbstractDBMeta {
      */
     public ReferrerInfo referrerChallengeDetailHistoryList() {
         Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnQuestionId(), ChallengeDetailHistoryDbm.getInstance().columnQuestionId());
-        return cri("FK_MEMBER_MEMBER_STATUS_CODE", "challengeDetailHistoryList", this, ChallengeDetailHistoryDbm.getInstance(), mp, false, "question");
+        return cri("FK_question_detail_history_question_id", "challengeDetailHistoryList", this, ChallengeDetailHistoryDbm.getInstance(), mp, false, "question");
+    }
+    /**
+     * answer by question_id, named 'answerList'.
+     * @return The information object of referrer property. (NotNull)
+     */
+    public ReferrerInfo referrerAnswerList() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnQuestionId(), AnswerDbm.getInstance().columnQuestionId());
+        return cri("FK_question_answer_question_id", "answerList", this, AnswerDbm.getInstance(), mp, false, "question");
     }
 
     // ===================================================================================

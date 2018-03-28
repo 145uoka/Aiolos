@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.dbflute.Entity;
+import org.dbflute.optional.OptionalEntity;
 import org.dbflute.dbmeta.AbstractDBMeta;
 import org.dbflute.dbmeta.info.*;
 import org.dbflute.dbmeta.name.*;
@@ -43,11 +44,13 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
     { xsetupEpg(); }
     protected void xsetupEpg() {
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getChallengeHistoryId(), (et, vl) -> ((ChallengeHistory)et).setChallengeHistoryId(cti(vl)), "challengeHistoryId");
-        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getScore(), (et, vl) -> ((ChallengeHistory)et).setScore(cti(vl)), "score");
-        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getAttendanceRate(), (et, vl) -> ((ChallengeHistory)et).setAttendanceRate(cti(vl)), "attendanceRate");
+        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getGenreId(), (et, vl) -> ((ChallengeHistory)et).setGenreId(cti(vl)), "genreId");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getUserName(), (et, vl) -> ((ChallengeHistory)et).setUserName((String)vl), "userName");
+        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getScore(), (et, vl) -> ((ChallengeHistory)et).setScore(ctb(vl)), "score");
+        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getAttendanceRate(), (et, vl) -> ((ChallengeHistory)et).setAttendanceRate(cti(vl)), "attendanceRate");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getElapsedTime(), (et, vl) -> ((ChallengeHistory)et).setElapsedTime(ctl(vl)), "elapsedTime");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getCorrectSum(), (et, vl) -> ((ChallengeHistory)et).setCorrectSum(cti(vl)), "correctSum");
+        setupEpg(_epgMap, et -> ((ChallengeHistory)et).getIncorrectSum(), (et, vl) -> ((ChallengeHistory)et).setIncorrectSum(cti(vl)), "incorrectSum");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getDetailCleanFlag(), (et, vl) -> ((ChallengeHistory)et).setDetailCleanFlag((Boolean)vl), "detailCleanFlag");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getDeleteFlag(), (et, vl) -> ((ChallengeHistory)et).setDeleteFlag((Boolean)vl), "deleteFlag");
         setupEpg(_epgMap, et -> ((ChallengeHistory)et).getRegisterDatetime(), (et, vl) -> ((ChallengeHistory)et).setRegisterDatetime(ctldt(vl)), "registerDatetime");
@@ -55,6 +58,18 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
     }
     public PropertyGateway findPropertyGateway(String prop)
     { return doFindEpg(_epgMap, prop); }
+
+    // -----------------------------------------------------
+    //                                      Foreign Property
+    //                                      ----------------
+    protected final Map<String, PropertyGateway> _efpgMap = newHashMap();
+    { xsetupEfpg(); }
+    @SuppressWarnings("unchecked")
+    protected void xsetupEfpg() {
+        setupEfpg(_efpgMap, et -> ((ChallengeHistory)et).getGenre(), (et, vl) -> ((ChallengeHistory)et).setGenre((OptionalEntity<Genre>)vl), "genre");
+    }
+    public PropertyGateway findForeignPropertyGateway(String prop)
+    { return doFindEfpg(_efpgMap, prop); }
 
     // ===================================================================================
     //                                                                          Table Info
@@ -73,11 +88,13 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
     //                                                                         Column Info
     //                                                                         ===========
     protected final ColumnInfo _columnChallengeHistoryId = cci("challenge_history_id", "challenge_history_id", null, null, Integer.class, "challengeHistoryId", null, true, true, true, "serial", 10, 0, null, "nextval('challenge_history_challenge_history_id_seq'::regclass)", false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnScore = cci("score", "score", null, null, Integer.class, "score", null, false, false, true, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
-    protected final ColumnInfo _columnAttendanceRate = cci("attendance_rate", "attendance_rate", null, null, Integer.class, "attendanceRate", null, false, false, true, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnGenreId = cci("genre_id", "genre_id", null, null, Integer.class, "genreId", null, false, false, true, "int4", 10, 0, null, null, false, null, null, "genre", null, null, false);
     protected final ColumnInfo _columnUserName = cci("user_name", "user_name", null, null, String.class, "userName", null, false, false, true, "text", 2147483647, 0, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnScore = cci("score", "score", null, null, java.math.BigDecimal.class, "score", null, false, false, true, "float8", 17, 17, null, null, false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnAttendanceRate = cci("attendance_rate", "attendance_rate", null, null, Integer.class, "attendanceRate", null, false, false, true, "int4", 10, 0, null, null, false, null, null, null, null, null, false);
     protected final ColumnInfo _columnElapsedTime = cci("elapsed_time", "elapsed_time", null, null, Long.class, "elapsedTime", null, false, false, true, "int8", 19, 0, null, "0", false, null, null, null, null, null, false);
     protected final ColumnInfo _columnCorrectSum = cci("correct_sum", "correct_sum", null, null, Integer.class, "correctSum", null, false, false, true, "int4", 10, 0, null, "0", false, null, null, null, null, null, false);
+    protected final ColumnInfo _columnIncorrectSum = cci("incorrect_sum", "incorrect_sum", null, null, Integer.class, "incorrectSum", null, false, false, true, "int4", 10, 0, null, "0", false, null, null, null, null, null, false);
     protected final ColumnInfo _columnDetailCleanFlag = cci("detail_clean_flag", "detail_clean_flag", null, null, Boolean.class, "detailCleanFlag", null, false, false, true, "bool", 1, 0, null, "false", false, null, null, null, null, null, false);
     protected final ColumnInfo _columnDeleteFlag = cci("delete_flag", "delete_flag", null, null, Boolean.class, "deleteFlag", null, false, false, true, "bool", 1, 0, null, "false", false, null, null, null, null, null, false);
     protected final ColumnInfo _columnRegisterDatetime = cci("register_datetime", "register_datetime", null, null, java.time.LocalDateTime.class, "registerDatetime", null, false, false, true, "timestamp", 26, 3, null, "now()", true, null, null, null, null, null, false);
@@ -89,7 +106,17 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
      */
     public ColumnInfo columnChallengeHistoryId() { return _columnChallengeHistoryId; }
     /**
-     * score: {NotNull, int4(10)}
+     * genre_id: {NotNull, int4(10), FK to genre}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnGenreId() { return _columnGenreId; }
+    /**
+     * user_name: {NotNull, text(2147483647)}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnUserName() { return _columnUserName; }
+    /**
+     * score: {NotNull, float8(17, 17)}
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnScore() { return _columnScore; }
@@ -98,11 +125,6 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnAttendanceRate() { return _columnAttendanceRate; }
-    /**
-     * user_name: {NotNull, text(2147483647)}
-     * @return The information object of specified column. (NotNull)
-     */
-    public ColumnInfo columnUserName() { return _columnUserName; }
     /**
      * elapsed_time: {NotNull, int8(19), default=[0]}
      * @return The information object of specified column. (NotNull)
@@ -113,6 +135,11 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
      * @return The information object of specified column. (NotNull)
      */
     public ColumnInfo columnCorrectSum() { return _columnCorrectSum; }
+    /**
+     * incorrect_sum: {NotNull, int4(10), default=[0]}
+     * @return The information object of specified column. (NotNull)
+     */
+    public ColumnInfo columnIncorrectSum() { return _columnIncorrectSum; }
     /**
      * detail_clean_flag: {NotNull, bool(1), default=[false]}
      * @return The information object of specified column. (NotNull)
@@ -137,11 +164,13 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
     protected List<ColumnInfo> ccil() {
         List<ColumnInfo> ls = newArrayList();
         ls.add(columnChallengeHistoryId());
+        ls.add(columnGenreId());
+        ls.add(columnUserName());
         ls.add(columnScore());
         ls.add(columnAttendanceRate());
-        ls.add(columnUserName());
         ls.add(columnElapsedTime());
         ls.add(columnCorrectSum());
+        ls.add(columnIncorrectSum());
         ls.add(columnDetailCleanFlag());
         ls.add(columnDeleteFlag());
         ls.add(columnRegisterDatetime());
@@ -169,6 +198,14 @@ public class ChallengeHistoryDbm extends AbstractDBMeta {
     // -----------------------------------------------------
     //                                      Foreign Property
     //                                      ----------------
+    /**
+     * genre by my genre_id, named 'genre'.
+     * @return The information object of foreign property. (NotNull)
+     */
+    public ForeignInfo foreignGenre() {
+        Map<ColumnInfo, ColumnInfo> mp = newLinkedHashMap(columnGenreId(), GenreDbm.getInstance().columnGenreId());
+        return cfi("FK_genre_challenge_history_genre_id", "genre", this, GenreDbm.getInstance(), mp, 0, org.dbflute.optional.OptionalEntity.class, false, false, false, true, null, null, false, "challengeHistoryList", false);
+    }
 
     // -----------------------------------------------------
     //                                     Referrer Property

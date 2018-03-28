@@ -82,16 +82,30 @@ public class BsQuestionCQ extends AbstractBsQuestionCQ {
     public Map<String, ChallengeDetailHistoryCQ> xdfgetQuestionId_ExistsReferrer_ChallengeDetailHistoryList() { return xgetSQueMap("questionId_ExistsReferrer_ChallengeDetailHistoryList"); }
     public String keepQuestionId_ExistsReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq) { return xkeepSQue("questionId_ExistsReferrer_ChallengeDetailHistoryList", sq); }
 
+    public Map<String, AnswerCQ> xdfgetQuestionId_ExistsReferrer_AnswerList() { return xgetSQueMap("questionId_ExistsReferrer_AnswerList"); }
+    public String keepQuestionId_ExistsReferrer_AnswerList(AnswerCQ sq) { return xkeepSQue("questionId_ExistsReferrer_AnswerList", sq); }
+
     public Map<String, ChallengeDetailHistoryCQ> xdfgetQuestionId_NotExistsReferrer_ChallengeDetailHistoryList() { return xgetSQueMap("questionId_NotExistsReferrer_ChallengeDetailHistoryList"); }
     public String keepQuestionId_NotExistsReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq) { return xkeepSQue("questionId_NotExistsReferrer_ChallengeDetailHistoryList", sq); }
 
+    public Map<String, AnswerCQ> xdfgetQuestionId_NotExistsReferrer_AnswerList() { return xgetSQueMap("questionId_NotExistsReferrer_AnswerList"); }
+    public String keepQuestionId_NotExistsReferrer_AnswerList(AnswerCQ sq) { return xkeepSQue("questionId_NotExistsReferrer_AnswerList", sq); }
+
     public Map<String, ChallengeDetailHistoryCQ> xdfgetQuestionId_SpecifyDerivedReferrer_ChallengeDetailHistoryList() { return xgetSQueMap("questionId_SpecifyDerivedReferrer_ChallengeDetailHistoryList"); }
     public String keepQuestionId_SpecifyDerivedReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq) { return xkeepSQue("questionId_SpecifyDerivedReferrer_ChallengeDetailHistoryList", sq); }
+
+    public Map<String, AnswerCQ> xdfgetQuestionId_SpecifyDerivedReferrer_AnswerList() { return xgetSQueMap("questionId_SpecifyDerivedReferrer_AnswerList"); }
+    public String keepQuestionId_SpecifyDerivedReferrer_AnswerList(AnswerCQ sq) { return xkeepSQue("questionId_SpecifyDerivedReferrer_AnswerList", sq); }
 
     public Map<String, ChallengeDetailHistoryCQ> xdfgetQuestionId_QueryDerivedReferrer_ChallengeDetailHistoryList() { return xgetSQueMap("questionId_QueryDerivedReferrer_ChallengeDetailHistoryList"); }
     public String keepQuestionId_QueryDerivedReferrer_ChallengeDetailHistoryList(ChallengeDetailHistoryCQ sq) { return xkeepSQue("questionId_QueryDerivedReferrer_ChallengeDetailHistoryList", sq); }
     public Map<String, Object> xdfgetQuestionId_QueryDerivedReferrer_ChallengeDetailHistoryListParameter() { return xgetSQuePmMap("questionId_QueryDerivedReferrer_ChallengeDetailHistoryList"); }
     public String keepQuestionId_QueryDerivedReferrer_ChallengeDetailHistoryListParameter(Object pm) { return xkeepSQuePm("questionId_QueryDerivedReferrer_ChallengeDetailHistoryList", pm); }
+
+    public Map<String, AnswerCQ> xdfgetQuestionId_QueryDerivedReferrer_AnswerList() { return xgetSQueMap("questionId_QueryDerivedReferrer_AnswerList"); }
+    public String keepQuestionId_QueryDerivedReferrer_AnswerList(AnswerCQ sq) { return xkeepSQue("questionId_QueryDerivedReferrer_AnswerList", sq); }
+    public Map<String, Object> xdfgetQuestionId_QueryDerivedReferrer_AnswerListParameter() { return xgetSQuePmMap("questionId_QueryDerivedReferrer_AnswerList"); }
+    public String keepQuestionId_QueryDerivedReferrer_AnswerListParameter(Object pm) { return xkeepSQuePm("questionId_QueryDerivedReferrer_AnswerList", pm); }
 
     /**
      * Add order-by as ascend. <br>
@@ -107,25 +121,65 @@ public class BsQuestionCQ extends AbstractBsQuestionCQ {
      */
     public BsQuestionCQ addOrderBy_QuestionId_Desc() { regOBD("question_id"); return this; }
 
-    protected ConditionValue _keyword;
-    public ConditionValue xdfgetKeyword()
-    { if (_keyword == null) { _keyword = nCV(); }
-      return _keyword; }
-    protected ConditionValue xgetCValueKeyword() { return xdfgetKeyword(); }
+    protected ConditionValue _genreId;
+    public ConditionValue xdfgetGenreId()
+    { if (_genreId == null) { _genreId = nCV(); }
+      return _genreId; }
+    protected ConditionValue xgetCValueGenreId() { return xdfgetGenreId(); }
 
     /**
      * Add order-by as ascend. <br>
-     * keyword: {NotNull, text(2147483647)}
+     * genre_id: {NotNull, int4(10)}
      * @return this. (NotNull)
      */
-    public BsQuestionCQ addOrderBy_Keyword_Asc() { regOBA("keyword"); return this; }
+    public BsQuestionCQ addOrderBy_GenreId_Asc() { regOBA("genre_id"); return this; }
 
     /**
      * Add order-by as descend. <br>
-     * keyword: {NotNull, text(2147483647)}
+     * genre_id: {NotNull, int4(10)}
      * @return this. (NotNull)
      */
-    public BsQuestionCQ addOrderBy_Keyword_Desc() { regOBD("keyword"); return this; }
+    public BsQuestionCQ addOrderBy_GenreId_Desc() { regOBD("genre_id"); return this; }
+
+    protected ConditionValue _questionNum;
+    public ConditionValue xdfgetQuestionNum()
+    { if (_questionNum == null) { _questionNum = nCV(); }
+      return _questionNum; }
+    protected ConditionValue xgetCValueQuestionNum() { return xdfgetQuestionNum(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * question_num: {NotNull, int4(10)}
+     * @return this. (NotNull)
+     */
+    public BsQuestionCQ addOrderBy_QuestionNum_Asc() { regOBA("question_num"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * question_num: {NotNull, int4(10)}
+     * @return this. (NotNull)
+     */
+    public BsQuestionCQ addOrderBy_QuestionNum_Desc() { regOBD("question_num"); return this; }
+
+    protected ConditionValue _answerBranchNo;
+    public ConditionValue xdfgetAnswerBranchNo()
+    { if (_answerBranchNo == null) { _answerBranchNo = nCV(); }
+      return _answerBranchNo; }
+    protected ConditionValue xgetCValueAnswerBranchNo() { return xdfgetAnswerBranchNo(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @return this. (NotNull)
+     */
+    public BsQuestionCQ addOrderBy_AnswerBranchNo_Asc() { regOBA("answer_branch_no"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * answer_branch_no: {NotNull, text(2147483647)}
+     * @return this. (NotNull)
+     */
+    public BsQuestionCQ addOrderBy_AnswerBranchNo_Desc() { regOBD("answer_branch_no"); return this; }
 
     protected ConditionValue _description;
     public ConditionValue xdfgetDescription()
@@ -146,26 +200,6 @@ public class BsQuestionCQ extends AbstractBsQuestionCQ {
      * @return this. (NotNull)
      */
     public BsQuestionCQ addOrderBy_Description_Desc() { regOBD("description"); return this; }
-
-    protected ConditionValue _orderNum;
-    public ConditionValue xdfgetOrderNum()
-    { if (_orderNum == null) { _orderNum = nCV(); }
-      return _orderNum; }
-    protected ConditionValue xgetCValueOrderNum() { return xdfgetOrderNum(); }
-
-    /**
-     * Add order-by as ascend. <br>
-     * order_num: {UQ, int4(10)}
-     * @return this. (NotNull)
-     */
-    public BsQuestionCQ addOrderBy_OrderNum_Asc() { regOBA("order_num"); return this; }
-
-    /**
-     * Add order-by as descend. <br>
-     * order_num: {UQ, int4(10)}
-     * @return this. (NotNull)
-     */
-    public BsQuestionCQ addOrderBy_OrderNum_Desc() { regOBD("order_num"); return this; }
 
     protected ConditionValue _deleteFlag;
     public ConditionValue xdfgetDeleteFlag()

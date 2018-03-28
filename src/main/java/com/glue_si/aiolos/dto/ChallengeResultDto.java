@@ -1,22 +1,37 @@
 package com.glue_si.aiolos.dto;
 
+import java.math.BigDecimal;
+
 public class ChallengeResultDto {
 
     private Integer attendanceRate;
     private Integer challengeHistoryId;
     private String elapsedTime;
     private Integer correctSum;
-    private Integer score;
+    private Integer incorrectSum;
+    private BigDecimal score;
     private String userName;
     private String registerDatetime;
     private Boolean today = false;
     private Boolean detailCleanFlag;
+    private Integer genreId;
+    private String genreName;
 
+
+    public String getGenreName() {
+        return genreName;
+    }
+    public void setGenreName(String genreName) {
+        this.genreName = genreName;
+    }
+    public Integer getGenreId() {
+        return genreId;
+    }
+    public void setGenreId(Integer genreId) {
+        this.genreId = genreId;
+    }
     public Integer getAttendanceRate() {
         return attendanceRate;
-    }
-    public void setAttendanceRate(Integer attendanceRate) {
-        this.attendanceRate = attendanceRate;
     }
     public Integer getChallengeHistoryId() {
         return challengeHistoryId;
@@ -36,10 +51,16 @@ public class ChallengeResultDto {
     public void setCorrectSum(Integer correctSum) {
         this.correctSum = correctSum;
     }
-    public Integer getScore() {
+    public Integer getIncorrectSum() {
+        return incorrectSum;
+    }
+    public void setIncorrectSum(Integer incorrectSum) {
+        this.incorrectSum = incorrectSum;
+    }
+    public BigDecimal getScore() {
         return score;
     }
-    public void setScore(Integer score) {
+    public void setScore(BigDecimal score) {
         this.score = score;
     }
     public String getUserName() {
@@ -66,7 +87,8 @@ public class ChallengeResultDto {
     public void setDetailCleanFlag(Boolean detailCleanFlag) {
         this.detailCleanFlag = detailCleanFlag;
     }
-
-
+    public void setAttendanceRate(Integer attendanceRate) {
+        this.attendanceRate = attendanceRate;
+    }
 
 }

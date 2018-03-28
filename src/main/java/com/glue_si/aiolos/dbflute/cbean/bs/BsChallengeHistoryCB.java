@@ -237,6 +237,26 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
     // ===================================================================================
     //                                                                         SetupSelect
     //                                                                         ===========
+    /**
+     * Set up relation columns to select clause. <br>
+     * genre by my genre_id, named 'genre'.
+     * <pre>
+     * <span style="color: #0000C0">challengeHistoryBhv</span>.selectEntity(<span style="color: #553000">cb</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     <span style="color: #553000">cb</span>.<span style="color: #CC4747">setupSelect_Genre()</span>; <span style="color: #3F7E5E">// ...().with[nested-relation]()</span>
+     *     <span style="color: #553000">cb</span>.query().set...
+     * }).alwaysPresent(<span style="color: #553000">challengeHistory</span> <span style="color: #90226C; font-weight: bold"><span style="font-size: 120%">-</span>&gt;</span> {
+     *     ... = <span style="color: #553000">challengeHistory</span>.<span style="color: #CC4747">getGenre()</span>; <span style="color: #3F7E5E">// you can get by using SetupSelect</span>
+     * });
+     * </pre>
+     */
+    public void setupSelect_Genre() {
+        assertSetupSelectPurpose("genre");
+        if (hasSpecifiedLocalColumn()) {
+            specify().columnGenreId();
+        }
+        doSetupSelect(() -> query().queryGenre());
+    }
+
     // [DBFlute-0.7.4]
     // ===================================================================================
     //                                                                             Specify
@@ -278,6 +298,7 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
     }
 
     public static class HpSpecification extends HpAbstractSpecification<ChallengeHistoryCQ> {
+        protected GenreCB.HpSpecification _genre;
         public HpSpecification(ConditionBean baseCB, HpSpQyCall<ChallengeHistoryCQ> qyCall
                              , HpCBPurpose purpose, DBMetaProvider dbmetaProvider
                              , HpSDRFunctionFactory sdrFuncFactory)
@@ -288,7 +309,17 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnChallengeHistoryId() { return doColumn("challenge_history_id"); }
         /**
-         * score: {NotNull, int4(10)}
+         * genre_id: {NotNull, int4(10), FK to genre}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnGenreId() { return doColumn("genre_id"); }
+        /**
+         * user_name: {NotNull, text(2147483647)}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnUserName() { return doColumn("user_name"); }
+        /**
+         * score: {NotNull, float8(17, 17)}
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnScore() { return doColumn("score"); }
@@ -297,11 +328,6 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnAttendanceRate() { return doColumn("attendance_rate"); }
-        /**
-         * user_name: {NotNull, text(2147483647)}
-         * @return The information object of specified column. (NotNull)
-         */
-        public SpecifiedColumn columnUserName() { return doColumn("user_name"); }
         /**
          * elapsed_time: {NotNull, int8(19), default=[0]}
          * @return The information object of specified column. (NotNull)
@@ -312,6 +338,11 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
          * @return The information object of specified column. (NotNull)
          */
         public SpecifiedColumn columnCorrectSum() { return doColumn("correct_sum"); }
+        /**
+         * incorrect_sum: {NotNull, int4(10), default=[0]}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnIncorrectSum() { return doColumn("incorrect_sum"); }
         /**
          * detail_clean_flag: {NotNull, bool(1), default=[false]}
          * @return The information object of specified column. (NotNull)
@@ -337,9 +368,33 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
         @Override
         protected void doSpecifyRequiredColumn() {
             columnChallengeHistoryId(); // PK
+            if (qyCall().qy().hasConditionQueryGenre()
+                    || qyCall().qy().xgetReferrerQuery() instanceof GenreCQ) {
+                columnGenreId(); // FK or one-to-one referrer
+            }
         }
         @Override
         protected String getTableDbName() { return "challenge_history"; }
+        /**
+         * Prepare to specify functions about relation table. <br>
+         * genre by my genre_id, named 'genre'.
+         * @return The instance for specification for relation table to specify. (NotNull)
+         */
+        public GenreCB.HpSpecification specifyGenre() {
+            assertRelation("genre");
+            if (_genre == null) {
+                _genre = new GenreCB.HpSpecification(_baseCB
+                    , xcreateSpQyCall(() -> _qyCall.has() && _qyCall.qy().hasConditionQueryGenre()
+                                    , () -> _qyCall.qy().queryGenre())
+                    , _purpose, _dbmetaProvider, xgetSDRFnFc());
+                if (xhasSyncQyCall()) { // inherits it
+                    _genre.xsetSyncQyCall(xcreateSpQyCall(
+                        () -> xsyncQyCall().has() && xsyncQyCall().qy().hasConditionQueryGenre()
+                      , () -> xsyncQyCall().qy().queryGenre()));
+                }
+            }
+            return _genre;
+        }
         /**
          * Prepare for (Specify)MyselfDerived (SubQuery).
          * @return The object to set up a function for myself table. (NotNull)

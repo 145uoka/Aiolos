@@ -1,7 +1,6 @@
 package com.glue_si.aiolos.service;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.ArrayList;
@@ -39,9 +38,10 @@ public class ChallengeService {
 
     private static final Logger logger = LoggerFactory.getLogger(ChallengeService.class);
 
-    public ListResultBean<Question> findAllQuestion() {
+    public ListResultBean<Question> findQuestionByGenre(Integer genreId) {
         return questionBhv.selectList(cb-> {
-            cb.query().addOrderBy_OrderNum_Asc();
+            cb.query().setGenreId_Equal(genreId);
+            cb.query().addOrderBy_QuestionNum_Asc();
         });
     }
 
@@ -50,10 +50,11 @@ public class ChallengeService {
         ChallengeHistory challengeHistory = new ChallengeHistory();
         challengeHistory.setChallengeHistoryId(challengeHistoryBhv.selectNextVal());
 
-        ListResultBean<Question> questionList = findAllQuestion();
+        ListResultBean<Question> questionList = findQuestionByGenre(form.getGenreId());
 
         List<ChallengeDetailHistory> challengeDetailHistoryList = new ArrayList<ChallengeDetailHistory>();
         int correctCount = 0;
+        int incorrectCount = 0;
         for (int i = 0; i < form.getAnswer().length; i++) {
             for (Question question : questionList) {
                 if (question.getQuestionId() == i) {
@@ -63,26 +64,28 @@ public class ChallengeService {
                     challengeDetailHistory.setAnswer(form.getAnswer()[i]);
                     challengeDetailHistory.setChallengeHistoryId(challengeHistory.getChallengeHistoryId());
 
-                    if (StringUtils.equals(question.getKeyword(), form.getAnswer()[i])) {
-                        challengeDetailHistory.setCorrectFlag(true);
-                        correctCount++;
-                    } else {
-                        challengeDetailHistory.setCorrectFlag(false);
+                    if (StringUtils.isNotEmpty(form.getAnswer()[i])) {
+                        if (StringUtils.equals(question.getAnswerBranchNo(), form.getAnswer()[i])) {
+                            challengeDetailHistory.setCorrectFlag(true);
+                            correctCount++;
+                        } else {
+                            challengeDetailHistory.setCorrectFlag(false);
+                            incorrectCount++;
+                        }
+                        challengeDetailHistoryList.add(challengeDetailHistory);
                     }
-                    challengeDetailHistoryList.add(challengeDetailHistory);
                 }
             }
         }
 
+        challengeHistory.setGenreId(form.getGenreId());
         challengeHistory.setCorrectSum(correctCount);
+        challengeHistory.setIncorrectSum(incorrectCount);
         challengeHistory.setAttendanceRate(correctCount * 100 / challengeDetailHistoryList.size());
         challengeHistory.setUserName(form.getUserName());
         challengeHistory.setDetailCleanFlag(false);
         challengeHistory.setElapsedTime(form.getEndTime() - form.getStartTime());
-
-        int score = calcScore(challengeHistory.getAttendanceRate(), challengeHistory.getElapsedTime(),
-                challengeDetailHistoryList.size());
-        challengeHistory.setScore(score);
+        challengeHistory.setScore(calcScore(correctCount, incorrectCount));
 
         challengeHistoryBhv.insert(challengeHistory);
         challengeDetailHistoryBhv.batchInsert(challengeDetailHistoryList);
@@ -90,17 +93,14 @@ public class ChallengeService {
         return challengeHistory.getChallengeHistoryId();
     }
 
-    private int calcScore(int attendanceRate, Long elapsedTime, int questionNum) {
+    private BigDecimal calcScore(int correctCount, int incorrectCount) {
 
-        BigDecimal baseScore = new BigDecimal(attendanceRate * 100);
-        BigDecimal elapsedTimeBigDecimal = new BigDecimal(elapsedTime * 100);
+        BigDecimal incorrectCountScore = new BigDecimal(incorrectCount * 0.25);
+        BigDecimal correctCountScore = new BigDecimal(correctCount);
 
-        BigDecimal questionNumDiv = new BigDecimal(questionNum * 2000);
-        BigDecimal minusScore = elapsedTimeBigDecimal.divide(questionNumDiv, 0, RoundingMode.HALF_UP);
-        minusScore = minusScore.multiply(new BigDecimal(10));
-        BigDecimal score = baseScore.subtract(minusScore);
+        BigDecimal score = correctCountScore.subtract(incorrectCountScore);
 
-        return score.intValue();
+        return score;
     }
 
     public void cleaningDetailHistory() {
