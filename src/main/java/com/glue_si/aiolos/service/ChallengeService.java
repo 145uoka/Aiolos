@@ -2,6 +2,8 @@ package com.glue_si.aiolos.service;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
 
 import com.glue_si.aiolos.dbflute.exbhv.ChallengeDetailHistoryBhv;
 import com.glue_si.aiolos.dbflute.exbhv.ChallengeHistoryBhv;
@@ -74,6 +77,7 @@ public class ChallengeService {
         challengeHistory.setCorrectSum(correctCount);
         challengeHistory.setAttendanceRate(correctCount * 100 / challengeDetailHistoryList.size());
         challengeHistory.setUserName(form.getUserName());
+        challengeHistory.setDetailCleanFlag(false);
         challengeHistory.setElapsedTime(form.getEndTime() - form.getStartTime());
 
         int score = calcScore(challengeHistory.getAttendanceRate(), challengeHistory.getElapsedTime(),
@@ -97,5 +101,27 @@ public class ChallengeService {
         BigDecimal score = baseScore.subtract(minusScore);
 
         return score.intValue();
+    }
+
+    public void cleaningDetailHistory() {
+        List<Integer> cleaningHistoryIdList = new ArrayList<Integer>();
+        LocalDateTime today = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
+        challengeHistoryBhv.selectList(cb->{
+            cb.query().setDetailCleanFlag_Equal(false);
+            cb.query().setRegisterDatetime_LessThan(today.minusDays(1));
+        }).forEach(entity->{
+            cleaningHistoryIdList.add(entity.getChallengeHistoryId());
+        });
+
+        if (!CollectionUtils.isEmpty(cleaningHistoryIdList)) {
+            ChallengeHistory challengeHistory = new ChallengeHistory();
+            challengeHistory.setDetailCleanFlag(true);
+            challengeHistoryBhv.queryUpdate(challengeHistory, cb->{
+                cb.query().setChallengeHistoryId_InScope(cleaningHistoryIdList);
+            });
+            challengeDetailHistoryBhv.queryDelete(cb->{
+                cb.query().setChallengeHistoryId_InScope(cleaningHistoryIdList);
+            });
+        }
     }
 }

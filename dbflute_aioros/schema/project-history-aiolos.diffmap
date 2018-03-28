@@ -1,4 +1,42 @@
 map:{
+    ; 2018/03/28 13:10:09 = map:{
+        ; diffDate = 2018/03/28 13:10:09
+        ; tableDiff = map:{
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; detail_clean_flag = map:{
+                        ; columnName = detail_clean_flag
+                        ; diffType = CHANGE
+                        ; defaultValueDiff = map:{
+                            ; next = "false"
+                            ; previous = null
+                        }
+                        ; notNullDiff = map:{
+                            ; next = true
+                            ; previous = false
+                        }
+                    }
+                }
+            }
+        }
+    }
+    ; 2018/03/28 12:53:39 = map:{
+        ; diffDate = 2018/03/28 12:53:39
+        ; tableDiff = map:{
+            ; challenge_history = map:{
+                ; tableName = challenge_history
+                ; diffType = CHANGE
+                ; columnDiff = map:{
+                    ; detail_clean_flag = map:{
+                        ; columnName = detail_clean_flag
+                        ; diffType = ADD
+                    }
+                }
+            }
+        }
+    }
     ; 2018/02/23 01:09:38 = map:{
         ; diffDate = 2018/02/23 01:09:38
         ; tableDiff = map:{

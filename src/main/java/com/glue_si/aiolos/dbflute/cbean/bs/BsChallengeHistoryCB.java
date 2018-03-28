@@ -313,6 +313,11 @@ public class BsChallengeHistoryCB extends AbstractConditionBean {
          */
         public SpecifiedColumn columnCorrectSum() { return doColumn("correct_sum"); }
         /**
+         * detail_clean_flag: {NotNull, bool(1), default=[false]}
+         * @return The information object of specified column. (NotNull)
+         */
+        public SpecifiedColumn columnDetailCleanFlag() { return doColumn("detail_clean_flag"); }
+        /**
          * delete_flag: {NotNull, bool(1), default=[false]}
          * @return The information object of specified column. (NotNull)
          */

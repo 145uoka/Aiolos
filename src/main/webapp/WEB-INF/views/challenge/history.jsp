@@ -45,7 +45,14 @@
             </tr>
           </thead>
           <c:forEach var="challengeResultDto" items="${challengeResultDtoList}" varStatus="status">
-          <tr data-href="${pageContext.request.contextPath}/challenge/history/${challengeResultDto.challengeHistoryId}">
+          <c:choose>
+                <c:when test="${challengeResultDto.detailCleanFlag}">
+                  <tr>
+                </c:when>
+                <c:otherwise>
+                  <tr data-href="${pageContext.request.contextPath}/challenge/history/${challengeResultDto.challengeHistoryId}">
+                </c:otherwise>
+              </c:choose>
             <td class="text-center"><c:out value="${status.count}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.score}"></c:out></td>
             <td class="text-center"><c:out value="${challengeResultDto.userName}"></c:out></td>

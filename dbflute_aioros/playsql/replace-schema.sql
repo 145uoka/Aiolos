@@ -29,6 +29,7 @@ CREATE TABLE aiolos.challenge_history
 	user_name text NOT NULL,
 	elapsed_time bigint DEFAULT 0 NOT NULL,
 	correct_sum int DEFAULT 0 NOT NULL,
+	detail_clean_flag boolean DEFAULT 'false' NOT NULL,
 	delete_flag boolean DEFAULT 'false' NOT NULL,
 	register_datetime timestamp(3) DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	update_datetime timestamp(3),

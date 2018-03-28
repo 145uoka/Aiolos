@@ -777,6 +777,18 @@ public abstract class AbstractBsChallengeHistoryCQ extends AbstractConditionQuer
 
     /**
      * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
+     * detail_clean_flag: {NotNull, bool(1), default=[false]}
+     * @param detailCleanFlag The value of detailCleanFlag as equal. (basically NotNull: error as default, or no condition as option)
+     */
+    public void setDetailCleanFlag_Equal(Boolean detailCleanFlag) {
+        regDetailCleanFlag(CK_EQ, detailCleanFlag);
+    }
+
+    protected void regDetailCleanFlag(ConditionKey ky, Object vl) { regQ(ky, vl, xgetCValueDetailCleanFlag(), "detail_clean_flag"); }
+    protected abstract ConditionValue xgetCValueDetailCleanFlag();
+
+    /**
+     * Equal(=). And NullIgnored, OnlyOnceRegistered. <br>
      * delete_flag: {NotNull, bool(1), default=[false]}
      * @param deleteFlag The value of deleteFlag as equal. (basically NotNull: error as default, or no condition as option)
      */

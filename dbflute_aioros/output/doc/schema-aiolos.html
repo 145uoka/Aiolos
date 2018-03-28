@@ -365,7 +365,7 @@ dl.procedurelist dd.column pre {
 	</tr>
 	<tr>
 		<td class="rownumcell">2</td>
-		<td class="namecell" data-name="challenge_history"><a href="#challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=9">challenge_history</a></td>
+		<td class="namecell" data-name="challenge_history"><a href="#challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=10">challenge_history</a></td>
 		<td class="typecell">TABLE</td>
 		<td class="relcell">&nbsp;</td>
 		<td class="relcell">&nbsp;</td>
@@ -496,7 +496,7 @@ challenge_detail_history
 	</tr>
 </table>
 
-<h2 id="challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=9">
+<h2 id="challenge_history" title="type=TABLE, primaryKey={challenge_history_id}, nameLength=17, columnCount=10">
 challenge_history
 </h2>
 <div class="tablecomment challenge_history_comment" data-name="challenge_history"><pre></pre></div>
@@ -637,6 +637,24 @@ challenge_history
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell">*</td>
+		<td class=" columnnamecell" id="challenge_history_detail_clean_flag">detail_clean_flag</td>
+		<td class="typecell">bool</td>
+		<td class="sizecell"> 1 </td>
+		<td class="defvalcell"> false</td>
+		<td class="relcell">&nbsp;&nbsp;</td>
+		<td class="relcell">&nbsp;</td>
+		<td class="relcell"> &nbsp;</td>
+		<td class="commentcell"><pre>&nbsp;</pre></td>
+		<td class="subcell">detailCleanFlag</td>
+		<td class="subcell">Boolean</td>
+	</tr>
+	<tr>
+		<td class="rownumcell">8</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell"> &nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">&nbsp;</td>
+		<td class="flgcell">*</td>
 		<td class=" columnnamecell" id="challenge_history_delete_flag">delete_flag</td>
 		<td class="typecell">bool</td>
 		<td class="sizecell"> 1 </td>
@@ -649,7 +667,7 @@ challenge_history
 		<td class="subcell">Boolean</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">8</td>
+		<td class="rownumcell">9</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -667,7 +685,7 @@ challenge_history
 		<td class="subcell">LocalDateTime</td>
 	</tr>
 	<tr>
-		<td class="rownumcell">9</td>
+		<td class="rownumcell">10</td>
 		<td class="flgcell">&nbsp;</td>
 		<td class="flgcell"> &nbsp;</td>
 		<td class="flgcell">&nbsp;</td>
@@ -1258,6 +1276,9 @@ function Decomment() {
 					'databaseComment': ''
 				}
 				, 'correct_sum': {
+					'databaseComment': ''
+				}
+				, 'detail_clean_flag': {
 					'databaseComment': ''
 				}
 				, 'delete_flag': {

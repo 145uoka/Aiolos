@@ -67,6 +67,7 @@ public class ChallengeHistoryCIQ extends AbstractBsChallengeHistoryCQ {
     protected ConditionValue xgetCValueUserName() { return _myCQ.xdfgetUserName(); }
     protected ConditionValue xgetCValueElapsedTime() { return _myCQ.xdfgetElapsedTime(); }
     protected ConditionValue xgetCValueCorrectSum() { return _myCQ.xdfgetCorrectSum(); }
+    protected ConditionValue xgetCValueDetailCleanFlag() { return _myCQ.xdfgetDetailCleanFlag(); }
     protected ConditionValue xgetCValueDeleteFlag() { return _myCQ.xdfgetDeleteFlag(); }
     protected ConditionValue xgetCValueRegisterDatetime() { return _myCQ.xdfgetRegisterDatetime(); }
     protected ConditionValue xgetCValueUpdateDatetime() { return _myCQ.xdfgetUpdateDatetime(); }

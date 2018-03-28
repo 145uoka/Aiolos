@@ -34,6 +34,8 @@
         <column dbType="int4" default="0" javaType="Integer"
             name="correct_sum" required="true" size="10" type="INTEGER"/>
         <column dbType="bool" default="false" javaType="Boolean"
+            name="detail_clean_flag" required="true" size="1" type="BIT"/>
+        <column dbType="bool" default="false" javaType="Boolean"
             name="delete_flag" required="true" size="1" type="BIT"/>
         <column dbType="timestamp" default="now()"
             javaType="java.time.LocalDateTime" name="register_datetime"

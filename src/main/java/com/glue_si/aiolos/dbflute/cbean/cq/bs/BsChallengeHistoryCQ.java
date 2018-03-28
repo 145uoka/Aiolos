@@ -193,6 +193,26 @@ public class BsChallengeHistoryCQ extends AbstractBsChallengeHistoryCQ {
      */
     public BsChallengeHistoryCQ addOrderBy_CorrectSum_Desc() { regOBD("correct_sum"); return this; }
 
+    protected ConditionValue _detailCleanFlag;
+    public ConditionValue xdfgetDetailCleanFlag()
+    { if (_detailCleanFlag == null) { _detailCleanFlag = nCV(); }
+      return _detailCleanFlag; }
+    protected ConditionValue xgetCValueDetailCleanFlag() { return xdfgetDetailCleanFlag(); }
+
+    /**
+     * Add order-by as ascend. <br>
+     * detail_clean_flag: {NotNull, bool(1), default=[false]}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_DetailCleanFlag_Asc() { regOBA("detail_clean_flag"); return this; }
+
+    /**
+     * Add order-by as descend. <br>
+     * detail_clean_flag: {NotNull, bool(1), default=[false]}
+     * @return this. (NotNull)
+     */
+    public BsChallengeHistoryCQ addOrderBy_DetailCleanFlag_Desc() { regOBD("detail_clean_flag"); return this; }
+
     protected ConditionValue _deleteFlag;
     public ConditionValue xdfgetDeleteFlag()
     { if (_deleteFlag == null) { _deleteFlag = nCV(); }

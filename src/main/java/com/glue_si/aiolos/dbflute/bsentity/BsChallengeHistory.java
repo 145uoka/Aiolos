@@ -17,7 +17,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  *     challenge_history_id
  *
  * [column]
- *     challenge_history_id, score, attendance_rate, user_name, elapsed_time, correct_sum, delete_flag, register_datetime, update_datetime
+ *     challenge_history_id, score, attendance_rate, user_name, elapsed_time, correct_sum, detail_clean_flag, delete_flag, register_datetime, update_datetime
  *
  * [sequence]
  *     challenge_history_challenge_history_id_seq
@@ -48,6 +48,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  * String userName = entity.getUserName();
  * Long elapsedTime = entity.getElapsedTime();
  * Integer correctSum = entity.getCorrectSum();
+ * Boolean detailCleanFlag = entity.getDetailCleanFlag();
  * Boolean deleteFlag = entity.getDeleteFlag();
  * java.time.LocalDateTime registerDatetime = entity.getRegisterDatetime();
  * java.time.LocalDateTime updateDatetime = entity.getUpdateDatetime();
@@ -57,6 +58,7 @@ import com.glue_si.aiolos.dbflute.exentity.*;
  * entity.setUserName(userName);
  * entity.setElapsedTime(elapsedTime);
  * entity.setCorrectSum(correctSum);
+ * entity.setDetailCleanFlag(detailCleanFlag);
  * entity.setDeleteFlag(deleteFlag);
  * entity.setRegisterDatetime(registerDatetime);
  * entity.setUpdateDatetime(updateDatetime);
@@ -92,6 +94,9 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
 
     /** correct_sum: {NotNull, int4(10), default=[0]} */
     protected Integer _correctSum;
+
+    /** detail_clean_flag: {NotNull, bool(1), default=[false]} */
+    protected Boolean _detailCleanFlag;
 
     /** delete_flag: {NotNull, bool(1), default=[false]} */
     protected Boolean _deleteFlag;
@@ -170,6 +175,7 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
         sb.append(dm).append(xfND(_userName));
         sb.append(dm).append(xfND(_elapsedTime));
         sb.append(dm).append(xfND(_correctSum));
+        sb.append(dm).append(xfND(_detailCleanFlag));
         sb.append(dm).append(xfND(_deleteFlag));
         sb.append(dm).append(xfND(_registerDatetime));
         sb.append(dm).append(xfND(_updateDatetime));
@@ -299,6 +305,24 @@ public abstract class BsChallengeHistory extends AbstractEntity implements Domai
     public void setCorrectSum(Integer correctSum) {
         registerModifiedProperty("correctSum");
         _correctSum = correctSum;
+    }
+
+    /**
+     * [get] detail_clean_flag: {NotNull, bool(1), default=[false]} <br>
+     * @return The value of the column 'detail_clean_flag'. (basically NotNull if selected: for the constraint)
+     */
+    public Boolean getDetailCleanFlag() {
+        checkSpecifiedProperty("detailCleanFlag");
+        return _detailCleanFlag;
+    }
+
+    /**
+     * [set] detail_clean_flag: {NotNull, bool(1), default=[false]} <br>
+     * @param detailCleanFlag The value of the column 'detail_clean_flag'. (basically NotNull if update: for the constraint)
+     */
+    public void setDetailCleanFlag(Boolean detailCleanFlag) {
+        registerModifiedProperty("detailCleanFlag");
+        _detailCleanFlag = detailCleanFlag;
     }
 
     /**

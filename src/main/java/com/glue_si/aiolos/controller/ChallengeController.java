@@ -119,6 +119,12 @@ public class ChallengeController {
         return "/challenge/history";
     }
 
+    @RequestMapping(value = "/history/clean", method = RequestMethod.GET)
+    public String cleanDetail() {
+        challengeService.cleaningDetailHistory();
+        return null;
+    }
+
     @RequestMapping(value = "/history/{challengeHistoryId}", method = RequestMethod.GET)
     public String detailHistory(@PathVariable Integer challengeHistoryId, Locale locale, Model model) {
 

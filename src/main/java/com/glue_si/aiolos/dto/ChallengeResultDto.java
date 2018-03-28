@@ -10,6 +10,8 @@ public class ChallengeResultDto {
     private String userName;
     private String registerDatetime;
     private Boolean today = false;
+    private Boolean detailCleanFlag;
+
     public Integer getAttendanceRate() {
         return attendanceRate;
     }
@@ -57,6 +59,12 @@ public class ChallengeResultDto {
     }
     public void setToday(Boolean today) {
         this.today = today;
+    }
+    public Boolean getDetailCleanFlag() {
+        return detailCleanFlag;
+    }
+    public void setDetailCleanFlag(Boolean detailCleanFlag) {
+        this.detailCleanFlag = detailCleanFlag;
     }
 
 

@@ -191,6 +191,20 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<configuration>
+					<systemPropertyVariables>
+						<!-- At least one of the following needs to be set: -->
+						<coverage-output>html</coverage-output>     <!-- or: html-nocp, serial, serial-append -->
+						<coverage-metrics>all</coverage-metrics>    <!-- or: line, path, data -->
+						<coverage-classes>loaded</coverage-classes> <!-- or a "*" expression for class names -->
+
+						<!-- Other properties, if needed: -->
+					</systemPropertyVariables>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 </project>
