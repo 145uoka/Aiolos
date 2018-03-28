@@ -9,8 +9,7 @@
       </div>
       <!-- メニュー -->
       <ul class="nav navbar-nav">
-        <li><a href="${pageContext.request.contextPath}/challenge">TRY!!</a></li>
-        <li><a href="${pageContext.request.contextPath}/question">Description</a></li>
+        <li><a href="${pageContext.request.contextPath}/challenge/1">TRY!!</a></li>
       </ul>
     </div>
   </nav>

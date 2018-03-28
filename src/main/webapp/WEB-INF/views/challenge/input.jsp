@@ -79,9 +79,9 @@
                   <td class="text-center">${status.count}</td>
                   <td class="col-md-5 text-right"><c:out value="${list.description}"></c:out></td>
                   <c:forEach var="answerList" items="${list.answerDtoList}" varStatus="status">
-                    <td class="col-md-1 text-center"><form:radiobutton path="answer[${list.questionId}]" value="${answerList.branchNo}" /><span><c:out value="${answerList.label}"></c:out></span></td>
+                    <td class="col-md-1 text-center"><form:radiobutton path="answer[${list.questionId}]" value="${answerList.branchNo}" disabled="true"/><span><c:out value="${answerList.label}"></c:out></span></td>
                   </c:forEach>
-                  <td class="col-md-3 text-center"><form:radiobutton path="answer[${list.questionId}]" /><span><c:out value="未回答"></c:out></span></td>
+                  <td class="col-md-3 text-center"><form:radiobutton path="answer[${list.questionId}]" disabled="true"/><span><c:out value="未回答"></c:out></span></td>
               </c:forEach>
             </table>
           </div>
