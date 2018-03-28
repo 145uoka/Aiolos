@@ -81,7 +81,12 @@ public class ChallengeService {
         challengeHistory.setGenreId(form.getGenreId());
         challengeHistory.setCorrectSum(correctCount);
         challengeHistory.setIncorrectSum(incorrectCount);
-        challengeHistory.setAttendanceRate(correctCount * 100 / challengeDetailHistoryList.size());
+        if (CollectionUtils.isEmpty(challengeDetailHistoryList)) {
+            challengeHistory.setAttendanceRate(0);
+        } else {
+            challengeHistory.setAttendanceRate(correctCount * 100 / challengeDetailHistoryList.size());
+        }
+
         challengeHistory.setUserName(form.getUserName());
         challengeHistory.setDetailCleanFlag(false);
         challengeHistory.setElapsedTime(form.getEndTime() - form.getStartTime());

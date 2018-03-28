@@ -24,70 +24,34 @@
         </div>
       </div>
 
-      <%-- メッセージ領域 --%>
       <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-          <div class="alert alert-info" role="alert" align="left">
-            <h5>
-              <c:out value="ルール" />
-            </h5>
-            <ul>
-            </ul>
-          </div>
-
-          <%@include file="/WEB-INF/fragment/messages.jspf"%>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-          <div class="panel panel-default main-border-color">
-            <div class="panel-body sub-background-color">
-              <div class="form-group">
-                <label class="col-md-2 control-label"><span class="label label-danger" style="margin-right: 10px">必須</span>氏名</label>
-                <div class="col-md-4">
-                  <form:input path="userName" class="form-control" />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-offset-1 col-md-10" align="center">
-          <table style="margin-bottom: 20px">
+        <table class="table table-striped table-bordered">
+          <thead class="main-background-color">
             <tr>
-              <td style="vertical-align: middle;">
-              <td style="vertical-align: middle;">
-                <button id="startButton" type="button" class="btn btn-success" onClick="challengeStart()">
-                  <i class="glyphicon glyphicon-play-circle"></i>&nbsp;&nbsp;&nbsp;開始
-                </button>
-              </td>
+              <th class="text-center">No</th>
+              <th class="text-center">法則</th>
+              <th class="text-center">回答</th>
             </tr>
-          </table>
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="panel panel-default main-border-color">
-          <div class="panel-body sub-background-color">
-            <table class="table table-striped table-bordered ">
-              <c:forEach var="list" items="${questionDtoList}" varStatus="status">
-
-                <tr>
-                  <td class="text-center">${status.count}</td>
-                  <td class="col-md-5 text-right"><c:out value="${list.description}"></c:out></td>
+          </thead>
+          <c:forEach var="list" items="${questionDtoList}" varStatus="status">
+            <tr>
+              <td class="col-md-1 text-center">${status.count}</td>
+              <td class="col-md-4 text-right position"><c:out value="${list.description}"></c:out></td>
+              <td class="text-center">
+                <div class="btn-group btn-group-justified" data-toggle="buttons">
                   <c:forEach var="answerList" items="${list.answerDtoList}" varStatus="status">
-                    <td class="col-md-1 text-center"><form:radiobutton path="answer[${list.questionId}]" value="${answerList.branchNo}" disabled="true"/><span><c:out value="${answerList.label}"></c:out></span></td>
+                    <label class="btn btn-default"> <form:radiobutton path="answer[${list.questionId}]" value="${answerList.branchNo}" /> <c:out value="${answerList.label}"></c:out>
+                    </label>
                   </c:forEach>
-                  <td class="col-md-3 text-center"><form:radiobutton path="answer[${list.questionId}]" disabled="true"/><span><c:out value="未回答"></c:out></span></td>
-              </c:forEach>
-            </table>
-          </div>
-        </div>
+                  <label class="btn btn-default active"> <form:radiobutton path="answer[${list.questionId}]" value="${answerList.branchNo}" checked="true" /> <c:out value="未回答"></c:out>
+                  </label>
+                </div>
+              </td>
+          </c:forEach>
+        </table>
       </div>
 
+      <form:hidden path="userName" />
       <form:hidden path="startTime" />
       <form:hidden path="endTime" />
       <form:hidden path="genreId" />
@@ -97,7 +61,7 @@
           <table style="margin-bottom: 20px">
             <tr>
               <td style="vertical-align: middle;">
-                <button id="answerButton" type="button" class="btn btn-info" onClick="answer()" disabled="true">
+                <button id="answerButton" type="button" class="btn btn-info" onClick="answer()" >
                   <i class="glyphicon glyphicon-floppy-save"></i>&nbsp;&nbsp;&nbsp;回答
                 </button>
               </td>
@@ -111,52 +75,41 @@
   <jsp:include page="../common/footer.jsp" />
 
   <script type="text/javascript">
-  function challengeStart() {
 
-    // 「OK」時の処理終了
+  $("#startTime").val((new Date).getTime());
 
-    if ($("#userName").val() == "") {
-        alert("氏名を入力してください");
-        return;
-    }
+            function answer() {
+                if(window.confirm("回答します。よろしいですか?\n一度回答すると取り消しはできません。")) {
+                    blocUIOn();
+                    $("#endTime").val((new Date).getTime());
+                    $("#loading").hide();
+                    document.form.submit();
+                }
 
-    if (window.confirm('開始しますか？')) {
-        $("input").prop('disabled', false);
-        $("#startButton").prop('disabled', true);
-        $("#answerButton").prop('disabled', false);
-        $("#startTime").val((new Date).getTime());
-        $('#answer1').focus();
-    }
-  }
+            }
 
-  function answer() {
-      blocUIOn();
-      $("#endTime").val((new Date).getTime());
-      $("#loading").hide();
-      document.form.submit();
-  }
+            function blocUIOn() {
+                $
+                        .blockUI({
+                            message : '<p><img src="${pageContext.request.contextPath}/resources/img/gif-load.gif" style="vertical-align:middle;" /> 読み込み中...</p>',
+                            css : {
+                                border : 'none',
+                                padding : '10px',
+                                backgroundColor : '#333',
+                                opacity : .5,
+                                color : '#fff'
+                            },
+                            overlayCSS : {
+                                backgroundColor : '#000',
+                                opacity : 0.6
+                            }
+                        });
+            }
 
-  function blocUIOn() {
-      $.blockUI({
-          message: '<p><img src="${pageContext.request.contextPath}/resources/img/gif-load.gif" style="vertical-align:middle;" /> 読み込み中...</p>' ,
-          css: {
-              border: 'none',
-              padding: '10px',
-              backgroundColor: '#333',
-              opacity: .5,
-              color: '#fff'
-          },
-          overlayCSS: {
-              backgroundColor: '#000',
-              opacity: 0.6
-          }
-      });
-  }
-
-  function blocUIOff() {
-      $.unblockUI();
-  }
-</script>
+            function blocUIOff() {
+                $.unblockUI();
+            }
+        </script>
 
 </body>
 </html>

@@ -19,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -58,11 +59,20 @@ public class ChallengeController {
 
     private static final Logger logger = LoggerFactory.getLogger(ChallengeController.class);
 
-    @RequestMapping(value = "/{genreId}", method = {RequestMethod.GET})
-    public String index(@PathVariable Integer genreId, ChallengeForm form, BindingResult bindingResult
+    @RequestMapping(value = "/{genreId}/confirm", method = {RequestMethod.GET})
+    public String confirm(@PathVariable Integer genreId, ChallengeForm form
             , Locale locale, Model model) {
 
-        ListResultBean<Question> questionList = challengeService.findQuestionByGenre(form.getGenreId());
+        model.addAttribute("form", form);
+
+        return "/challenge/confirm";
+    }
+
+    @RequestMapping(value = "/{genreId}", method = {RequestMethod.GET})
+    public String challenge(@PathVariable Integer genreId, @ModelAttribute("form") ChallengeForm form, BindingResult bindingResult
+            , Locale locale, Model model) {
+
+        ListResultBean<Question> questionList = challengeService.findQuestionByGenre(genreId);
 
         questionBhv.loadAnswer(questionList, cb->{
             cb.query().addOrderBy_BranchNo_Asc();
@@ -86,10 +96,12 @@ public class ChallengeController {
         }
 
         model.addAttribute("questionDtoList", questionDtoList);
+
         model.addAttribute("form", form);
 
         return "/challenge/input";
     }
+
 
     @RequestMapping(value = "/answer", method = RequestMethod.POST)
     public String answer(ChallengeForm form, BindingResult bindingResult, RedirectAttributes redirectAttributes,
