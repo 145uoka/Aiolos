@@ -116,6 +116,8 @@ public class ChallengeController {
 
         model.addAttribute("challengeResultDtoList", challengeResultDtoList);
 
+        challengeService.cleaningDetailHistory();
+
         return "/challenge/history";
     }
 
