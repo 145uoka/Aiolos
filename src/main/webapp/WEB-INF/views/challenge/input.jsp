@@ -17,7 +17,7 @@
 
       <%-- 画面タイトル --%>
       <div class="row">
-        <div class="col-md-offset-1 col-md-10">
+        <div class="col-sm-offset-1 col-sm-10">
           <h3>
             <c:out value="${displayTitle}" />
           </h3>
@@ -35,10 +35,10 @@
           </thead>
           <c:forEach var="list" items="${questionDtoList}" varStatus="status">
             <tr>
-              <td class="col-md-1 text-center">${status.count}</td>
-              <td class="col-md-4 text-right position"><c:out value="${list.description}"></c:out></td>
-              <td class="text-center">
-                <div class="btn-group btn-group-justified" data-toggle="buttons">
+              <td class="col-sm-1 text-center">${status.count}</td>
+              <td class="col-sm-5 text-right position"><c:out value="${list.description}"></c:out></td>
+              <td class="col-sm-6 text-center">
+                <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
                   <c:forEach var="answerList" items="${list.answerDtoList}" varStatus="status">
                     <label class="btn btn-default"> <form:radiobutton path="answer[${list.questionId}]" value="${answerList.branchNo}" /> <c:out value="${answerList.label}"></c:out>
                     </label>
@@ -57,7 +57,7 @@
       <form:hidden path="genreId" />
 
       <div class="row">
-        <div class="col-md-offset-1 col-md-10" align="center">
+        <div class="col-sm-offset-1 col-sm-10" align="center">
           <table style="margin-bottom: 20px">
             <tr>
               <td style="vertical-align: middle;">

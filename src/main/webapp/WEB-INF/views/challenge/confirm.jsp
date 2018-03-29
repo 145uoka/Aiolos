@@ -27,47 +27,48 @@
       <%@include file="/WEB-INF/fragment/messages.jspf"%>
     </div>
 
-    <div class="row">
-      次のような問題があります。<br>いくつかの文字が一定の規則で並んでいます。<br> あなたはその規則を見つけ出し、配列を完成させてください。次の例題Wをご覧ください。
-    </div>
-    <p>
-    <div class="row">
-      <table class="table table-striped table-bordered">
-        <thead class="main-background-color">
+      <div class="row">
+        次のような問題があります。<br>いくつかの文字が一定の規則で並んでいます。<br> あなたはその規則を見つけ出し、配列を完成させてください。次の例題Wをご覧ください。
+      </div>
+      <p>
+      <div class="row">
+        <table class="table table-striped table-bordered">
+          <thead class="main-background-color">
+            <tr>
+              <th class="text-center">例題</th>
+              <th class="text-center">法則</th>
+              <th class="text-center">回答</th>
+            </tr>
+          </thead>
           <tr>
-            <th class="text-center">No</th>
-            <th class="text-center">法則</th>
-            <th class="text-center">回答</th>
-          </tr>
-        </thead>
-        <tr>
-          <td class="col-md-1 text-center">W</td>
-          <td class="col-md-4 text-right position"><c:out value="a　b　a　b　a　b　a　b"></c:out></td>
-          <td class="text-center">
-            <div class="btn-group btn-group-justified" data-toggle="buttons">
-              <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="a"></c:out>
-              </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="b"></c:out>
-              </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="c"></c:out>
-              </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="d"></c:out>
-              </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="e"></c:out>
-              </label> <label class="btn btn-default active"> <input type=radio name="w" checked /> <c:out value="未回答"></c:out>
-              </label>
-            </div>
-          </td>
-      </table>
-    </div>
-
+            <td class="col-sm-1 text-center">W</td>
+            <td class="col-sm-5 text-right position"><c:out value="a　b　a　b　a　b　a　b"></c:out></td>
+            <td class="col-sm-6 text-center">
+              <div class="btn-group btn-group-sm btn-group-justified" data-toggle="buttons">
+                <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="a"></c:out>
+                </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="b"></c:out>
+                </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="c"></c:out>
+                </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="d"></c:out>
+                </label> <label class="btn btn-default"> <input type=radio name="w" /> <c:out value="e"></c:out>
+                </label> <label class="btn btn-default active"> <input type=radio name="w" checked /> <c:out value="未回答"></c:out>
+                </label>
+              </div>
+            </td>
+        </table>
+      </div>
+      <div class="row">
+        この問題では配列が「ab&nbsp;ab&nbsp;ab&nbsp;ab」 という順になっています。<br>したがって次に来る文字は<span class="label label-danger" style="margin: 0px 5px">a</span>となりますので、回答欄の選択肢より<span class="label label-danger" style="margin: 0px 5px">a</span>を選択しててください。
+      </div>
+      <p>
 
     <form:form modelAttribute="form" method="get" autocomplete="off" name="form" action="${pageContext.request.contextPath}/challenge/${genreId}" class="form-horizontal">
       <div class="row">
-        <div class="col-md-offset-1 col-md-10">
-          <div class="panel panel-default main-border-color">
-            <div class="panel-body sub-background-color">
-              <div class="form-group">
-                <label class="col-md-2 control-label"><span class="label label-danger" style="margin-right: 10px">必須</span>氏名</label>
-                <div class="col-md-4">
-                  <form:input path="userName" class="form-control" />
-                </div>
+        <div class="panel panel-default main-border-color">
+          <div class="panel-body sub-background-color">
+            <div class="form-group">
+              <label class="col-sm-3 control-label"><span class="label label-danger" style="margin-right: 10px">必須</span>受験者番号</label>
+              <div class="col-sm-4">
+                <form:input path="userName" class="form-control" />
               </div>
             </div>
           </div>
@@ -75,7 +76,7 @@
       </div>
 
       <div class="row">
-        <div class="col-md-offset-1 col-md-10" align="center">
+        <div class="col-sm-offset-1 col-sm-10" align="center">
           <table style="margin-bottom: 20px">
             <tr>
               <td style="vertical-align: middle;">
@@ -101,19 +102,18 @@
                 // 「OK」時の処理終了
 
                 if ($("#userName").val() == "") {
-                    alert("氏名を入力してください");
+                    alert("受験者番号を入力してください");
                     return;
                 }
 
-                if (window.confirm('開始しますか？')) {
+                if (window.confirm('開始します。よろしいですか。\n制限時間は10分です。')) {
                     blocUIOn();
                     document.form.submit();
                 }
             }
 
             function blocUIOn() {
-                $
-                        .blockUI({
+                $.blockUI({
                             message : '<p><img src="${pageContext.request.contextPath}/resources/img/gif-load.gif" style="vertical-align:middle;" /> 読み込み中...</p>',
                             css : {
                                 border : 'none',
